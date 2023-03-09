@@ -1,32 +1,65 @@
 <script>
+    import { musicSubmitted } from "../../lib/stores";
+    import { onDestroy, onMount } from 'svelte';
     import AudioInterface from "./AudioInterface.svelte";
     import SearchBar from "./SearchBar.svelte";
     import Results from "./Results.svelte";
+    import SpotifyLib from "../../lib/SpotifyLib.svelte";
 
-    let music_searched = [
+    let isLoaded = false;
+
+    let allMusic = [
         {
-            "name": "minha musica 1",
-            "artist": "meu artista 1"
+            "id": 1234,
+            "name": "Red",
+            "artist": "Artista 1"
         },
         {
-            "name": "minha musica 2",
-            "artist": "meu artista 2"
+            "id": 2345,
+            "name": "Blue",
+            "artist": "Artista 2"
+        },
+        {
+            "id": 3456,
+            "name": "Red Green",
+            "artist": "Artista 1"
         }
     ];
 
-    let searchedText = "pesquisado";
+    let indexSelected;
+    let searchedText;
+    $: enableSubmit = indexSelected != -1;
 
+    const unsubSubmitted = musicSubmitted.subscribe(value => {
+        if (value != -1) {
+            console.log("Musica submetida: ", value);
+        }
+    })
+
+    onMount(() => {
+        musicSubmitted.set(-1);
+    })
+    
+    onDestroy(unsubSubmitted);
 </script>
 
+<!-- <SpotifyLib on:loaded="{() => {isLoaded = true}}" />   -->
+
 <div class="play-screen">
-    <!-- inteface de audio-->
     <AudioInterface />
 
-    <!-- barra de pesquisa -->
-    <SearchBar bind:searchedText />
+    <SearchBar 
+        bind:searchedText
+        enableSubmit={enableSubmit}
+    />
 
-    <!-- resultados da pesquisa -->
-    <Results content={music_searched} />
+    <spam>Current music: ({indexSelected})</spam>
+
+    <Results 
+        fullContent={allMusic} 
+        searchedText={searchedText} 
+        bind:indexSelected
+    />
 </div>
 
 
@@ -38,5 +71,6 @@
         align-items: center;
         padding-left: 100px;
         padding-right: 100px;
+        padding-top: 200px;
     }
 </style>
