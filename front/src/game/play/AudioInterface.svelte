@@ -6,10 +6,6 @@
     <!-- player de audio -->
     <AudioPlayer />
 
-    <!-- botao de pause -->
-    <button id="pause-button">
-        pause
-    </button>
     <!-- botao de tocar do inicio -->
     <button id="replay-button">
         replay

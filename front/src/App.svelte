@@ -1,6 +1,31 @@
 <script>
     import PlayScreen from "./game/play/PlayScreen.svelte";
+
+    let isReady = false;
+
 </script>
 
+<!-- HEADER -->
+<div class="header">
+    <div class="header-title">Guessify</div>
+    <div class="header-copyright">Leinadium @ 2023</div>
+</div>
 
 <PlayScreen />
+
+
+<style>
+    .header {
+        width: auto;
+        height: 50px;
+        background-color: lightblue;
+    }
+
+    .header-title {
+        float: left;
+    }
+
+    .header-copyright {
+        float: right
+    }
+</style>
