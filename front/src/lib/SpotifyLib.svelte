@@ -1,9 +1,6 @@
 <script>
     // Based on code from https://stackoverflow.com/questions/59629947/how-do-i-load-an-external-js-library-in-svelte-sapper
     import { onMount, createEventDispatcher } from "svelte";
-    import { writable } from "svelte/store";
-
-    export const player = writable(undefined);
 
     const src = "https://sdk.scdn.co/spotify-player.js";
     const dispatch = createEventDispatcher();
