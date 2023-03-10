@@ -36,6 +36,10 @@
         }
     })
 
+    function replayMusic() {
+        // TODO
+    }
+
     onMount(() => {
         musicSubmitted.set(-1);
     })
@@ -46,7 +50,7 @@
 <!-- <SpotifyLib on:loaded="{() => {isLoaded = true}}" />   -->
 
 <div class="play-screen">
-    <AudioInterface />
+    <AudioInterface on:click={replayMusic}/>
 
     <SearchBar 
         bind:searchedText

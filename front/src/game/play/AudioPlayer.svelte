@@ -1,9 +1,10 @@
 <script>
     // the audio time style was based on this code from "Ychnightder-both"
     // https://codepen.io/bold02/pen/XWKMXNe
-
+    import VolumeSlider from "./VolumeSlider.svelte";
     export let currentPerc = 0.2;
     export let maxTimeSecs = 0;
+    export let currentVolume = 0.7;
 
     // https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript
     $: currentTimeStr = new Date(maxTimeSecs * currentPerc * 1000).toISOString().substring(14, 19)
@@ -18,8 +19,7 @@
         <div class="progress-bar" style="width: {currentPerc * 100}%;"></div>
     </div>
 
-    <input type=range class="volume">
-
+    <VolumeSlider value={currentVolume}/>
 
 </div>
 
@@ -40,7 +40,14 @@
         height: 30px;
     }
 
+    spam {
+        width: 10%;
+        font-size: small;
+
+    }
+
     .progress-player {
+        flex: 5 1 auto;
         box-sizing: border-box;
         height: 100%;
         width: 100%;

@@ -7,7 +7,7 @@
     <AudioPlayer />
 
     <!-- botao de tocar do inicio -->
-    <button id="replay-button">
+    <button id="replay-button" on:click>
         replay
     </button>
 </div>
