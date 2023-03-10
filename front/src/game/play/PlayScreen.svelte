@@ -1,7 +1,7 @@
 <script>
     import { musicSubmitted } from "../../lib/stores";
     import { onDestroy, onMount } from 'svelte';
-    import AudioInterface from "./AudioInterface.svelte";
+    import AudioInterface from "./audio/AudioInterface.svelte";
     import SearchBar from "./SearchBar.svelte";
     import Results from "./Results.svelte";
     import SpotifyLib from "../../lib/SpotifyLib.svelte";
