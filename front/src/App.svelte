@@ -1,8 +1,6 @@
 <script>
     import PlayScreen from "./game/play/PlayScreen.svelte";
 
-    let isReady = false;
-
 </script>
 
 <!-- HEADER -->

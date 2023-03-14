@@ -1,10 +1,12 @@
 <script>
-    import { musicSubmitted } from '../../lib/stores'; 
     import Result from "./Result.svelte";
+    import { createEventDispatcher } from "svelte";
 
     export let searchedText;
     export let fullContent = [];
     export let indexSelected = 0;
+
+    let dispatch = createEventDispatcher();
 
     // a list with only the name and the artist of a music 
     let parsedContent = fullContent.map(v => {
@@ -56,7 +58,7 @@
         else if (e.key === "ArrowUp") decSelected();
         // submit
         if ((e.key === "Enter" || e.key === "Tab") && indexSelected != -1) {
-            musicSubmitted.set(indexSelected);
+            dispatch("submit", {})
         }
     }
 

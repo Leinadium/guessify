@@ -14,6 +14,7 @@
     "vite": "^4.1.0"
   },
   "dependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.2"
+    "@sveltejs/vite-plugin-svelte": "^2.0.2",
+    "spotify-web-api-js": "^1.5.2"
   }
 }
