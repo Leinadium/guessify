@@ -2,12 +2,16 @@
     // the audio time style was based on this code from "Ychnightder-both"
     // https://codepen.io/bold02/pen/XWKMXNe
     import VolumeSlider from "./VolumeSlider.svelte";
-    export let currentPerc = 0.2;
-    export let maxTimeSecs = 0;
+    export let currentMillis = 0;
+    export let maxMillis = 1000;
     export let currentVolume = 0.7;
 
+    // to protected agains -1, 0 or undefined. who knows?
+    $: safeCurrent = currentMillis > 0 ? currentMillis : 0.0;
+    $: safeMax = maxMillis > 0 ? maxMillis : 1000;
+
     // https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript
-    $: currentTimeStr = new Date(maxTimeSecs * currentPerc * 1000).toISOString().substring(14, 19)
+    $: currentTimeStr = new Date(safeCurrent).toISOString().substring(14, 19)
 </script>
 
 
@@ -16,7 +20,7 @@
     <spam>{currentTimeStr}</spam>
 
     <div class="progress-player">
-        <div class="progress-bar" style="width: {currentPerc * 100}%;"></div>
+        <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
     </div>
 
     <VolumeSlider value={currentVolume}/>

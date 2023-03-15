@@ -57,7 +57,7 @@
         // decrement
         else if (e.key === "ArrowUp") decSelected();
         // submit
-        if ((e.key === "Enter" || e.key === "Tab") && indexSelected != -1) {
+        if ((e.key === "Enter" ) && indexSelected != -1) {
             dispatch("submit", {})
         }
     }

@@ -1,15 +1,21 @@
 <script>
     import AudioPlayer from "./AudioPlayer.svelte";
+    
+    export let playing = false;
+    export let maxMillis;
+    export let currentMillis;
+    export let currentVolume = 0.7;
 </script>
 
 <div class="audio-interface">
     <!-- player de audio -->
-    <AudioPlayer />
+    <AudioPlayer 
+        {currentMillis}
+        {maxMillis}
+        {currentVolume}
+    />
 
-    <!-- botao de tocar do inicio -->
-    <button id="replay-button" on:click>
-        replay
-    </button>
+    <button on:click>{#if playing}Pause{:else}Play{/if}</button>
 </div>
 
 
@@ -25,7 +31,7 @@
     }
 
     button {
-        flex: 1 1 auto;
-        color: blue;
-    }    
+        width: 20%;
+
+    }
 </style>

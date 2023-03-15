@@ -2,7 +2,6 @@ import { readable, writable } from "svelte/store";
 import SpotifyWebApi from "spotify-web-api-js";
 
 // game loop
-export const isLoggedIn = writable(false);
 export const isPlaying = writable(false);
 
 // spotify handlers
