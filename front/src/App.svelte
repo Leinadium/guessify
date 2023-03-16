@@ -1,5 +1,5 @@
 <script>
-    import PlayScreen from "./game/play/PlayScreen.svelte";
+    import GamePlay from "./game/GamePlay.svelte";
 
 </script>
 
@@ -9,7 +9,7 @@
     <div class="header-copyright">Leinadium @ 2023</div>
 </div>
 
-<PlayScreen />
+<GamePlay />
 
 
 <style>

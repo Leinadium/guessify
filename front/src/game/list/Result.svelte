@@ -3,6 +3,8 @@
 
     export let content;
     export let selected;
+
+    const artists = content.artists.map((e) => e.name).join(", ");
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -11,7 +13,7 @@
     in:fly|local="{{ y: 30, duration: 300}}"
     out:fade|local="{{duration: 100}}"
 >
-    <spam>{content.name}</spam> ({content.artist})
+    <spam>{content.name}</spam> ({artists})
 </div>
 
 <style>

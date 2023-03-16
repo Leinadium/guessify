@@ -4,35 +4,44 @@
 
     export let searchedText;
     export let fullContent = [];
-    export let indexSelected = 0;
+    export let selectedIndex = 0;
+    let indexAvailable = 0;
 
     let dispatch = createEventDispatcher();
 
     // a list with only the name and the artist of a music 
-    let parsedContent = fullContent.map(v => {
-        return `${v.name.toLowerCase()} ${v.artist.toLowerCase()}`;
+    const parsedContent = fullContent.map(v => {
+        return v.name.toLowerCase() + " " + v.artists.map((a) => a.name.toLowerCase()).join(" ");
     });
 
-    // list of indexes of musics with the searched term inside the parsed string above
-    $: showStatusContent = parsedContent.map((v) => v.includes(searchedText));
+    let showStatusContent = [];
+    let availableIndexes = [];
 
-    // list of current available indexes to be selected
-    $: availableIndexes = showStatusContent.reduce((acc, v, i) => {
-        if (v) { return [...acc, i] }
-        return acc;
-    }, [])
-    let indexAvailable = 0;
+    $: {
+        // list of indexes of musics with the searched term inside the parsed string above
+        showStatusContent = parsedContent.map((v) => v.includes(searchedText));
 
-    // updating indexSelected on text change
-    $: { indexSelected = (availableIndexes.length === 0 || searchedText === "") ?
-        -1 : indexSelected = availableIndexes[0]; 
+        // list of current available indexes to be selected
+        availableIndexes = showStatusContent.reduce((acc, v, i) => {
+            if (v) { return [...acc, i] }
+            return acc;
+        }, [])
+
+        // updating selectedIndex on text change
+        if (availableIndexes.length === 0 || searchedText === "") {
+            selectedIndex = -1;
+        } else {
+            indexAvailable = 0;
+            selectedIndex = availableIndexes[0]; 
+        }
+        console.log("indexA: ", indexAvailable);
     }
 
     // increment the indexes
     function incSelected() {
         if (indexAvailable < availableIndexes.length - 1) {
             indexAvailable++;
-            indexSelected = availableIndexes[indexAvailable];
+            selectedIndex = availableIndexes[indexAvailable];
         }
     }
 
@@ -40,13 +49,13 @@
     function decSelected() {
         if (indexAvailable > 0) {
             indexAvailable--;
-            indexSelected = availableIndexes[indexAvailable];
+            selectedIndex = availableIndexes[indexAvailable];
         }
     }
 
     // handle a direct click to a result
     function handleResultClick(trueIndex) {
-        indexSelected = trueIndex;
+        selectedIndex = trueIndex;
         indexAvailable = availableIndexes.indexOf(trueIndex);
     }
 
@@ -57,7 +66,7 @@
         // decrement
         else if (e.key === "ArrowUp") decSelected();
         // submit
-        if ((e.key === "Enter" ) && indexSelected != -1) {
+        if ((e.key === "Enter" ) && selectedIndex != -1) {
             dispatch("submit", {})
         }
     }
@@ -68,10 +77,10 @@
 
 <div class="results">
     {#each fullContent as music, i (music.id)}
-        {#if (showStatusContent[i] && searchedText != "")}
+        {#if (showStatusContent[i])}
             <Result 
                 content={music} 
-                selected={i===availableIndexes[indexAvailable]}
+                selected={i===selectedIndex}
                 on:click="{() => {handleResultClick(i)}}"
             />
         {/if}
