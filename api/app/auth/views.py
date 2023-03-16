@@ -6,14 +6,14 @@ from flask import session, request, redirect
 
 # https://github.com/spotify/web-playback-sdk/issues/11#issuecomment-609160530
 # TODO: verificar quais escopos sao realmente necessarios
-scope = "user-read-playback-state user-modify-playback-state user-read-currently-playing"  \
-        "app-remote-control streaming user-read-email user-read-private user-library-read" \
-        "playlist-read-private playlist-read-collaborative"
+scope = "user-read-playback-state user-modify-playback-state user-read-currently-playing "  \
+        "app-remote-control streaming user-read-email user-read-private user-library-read " \
+        "playlist-read-private playlist-read-collaborative "
 
 # TODO: importar variaveis diretamente de um .env
-environ['SPOTIPY_CLIENT_ID'] = ''
-environ['SPOTIPY_CLIENT_SECRET'] = ''
-environ['SPOTIPY_REDIRECT_URI'] = ''
+# environ['SPOTIPY_CLIENT_ID'] = ''
+# environ['SPOTIPY_CLIENT_SECRET'] = ''
+# environ['SPOTIPY_REDIRECT_URI'] = ''
 
 
 
