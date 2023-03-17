@@ -17,7 +17,7 @@
     let showStatusContent = [];
     let availableIndexes = [];
 
-    // updates lists whenver the search has beem updated
+    // updates lists whenver the search has been updated
     $: searchedText, updateLists();
     function updateLists() {
         // list of indexes of musics with the searched term inside the parsed string above

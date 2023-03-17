@@ -16,7 +16,7 @@
 
 
     // Based on code from https://stackoverflow.com/questions/59629947/how-do-i-load-an-external-js-library-in-svelte-sapper
-    import { onMount, createEventDispatcher } from "svelte";
+    import { onMount, createEventDispatcher, onDestroy } from "svelte";
 
     export let spotifyPlayer = undefined;
     export let deviceId = undefined;
@@ -35,7 +35,7 @@
             if (spotifyPlayer === undefined) {
                 // @ts-ignore
                 spotifyPlayer = new window.Spotify.Player({
-                    name: 'Guessify Player',
+                    name: 'Guessify Player #' + Math.floor(Math.random() * 1000000),
                     getOAuthToken: cb => { cb(access_token); },
                     volume: 0.7
                 });
@@ -52,7 +52,7 @@
                 });
 
                 spotifyPlayer.addListener('player_state_changed', (args) => {
-                    console.log("Player state has changed");
+                    console.log("Player state has changed: ", args);
                     dispatch('state', args);
                 });
 
@@ -105,6 +105,13 @@
                 "text": "Error loading Spotify Player SDK"
             });
         });
+    });
+
+    onDestroy(() => {
+        if (spotifyPlayer != undefined) {
+            console.log("Disconnecting");
+            spotifyPlayer.disconnect();
+        }
     });
 </script>
 

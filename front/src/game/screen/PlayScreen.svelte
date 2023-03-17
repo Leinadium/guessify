@@ -13,7 +13,6 @@
     // currentScore update logic
     $: if (currentInfo.playedMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
         currentInfo.roundScore = 1000 * (1 - (currentInfo.playedMs / currentInfo.musicInfo['duration_ms']));
-        currentInfo = currentInfo;
     }
 
     let searchedText = "";
