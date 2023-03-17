@@ -133,6 +133,7 @@
         currentRound={currentInfo.round}
         maxRounds={gameInfo.maxRounds}
         currentScore={currentInfo.roundScore}
+        totalScore={gameInfo.score}
         on:click={startRound}
     />
 

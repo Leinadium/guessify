@@ -17,7 +17,9 @@
     let showStatusContent = [];
     let availableIndexes = [];
 
-    $: {
+    // updates lists whenver the search has beem updated
+    $: searchedText, updateLists();
+    function updateLists() {
         // list of indexes of musics with the searched term inside the parsed string above
         showStatusContent = parsedContent.map((v) => v.includes(searchedText));
 
@@ -27,34 +29,44 @@
             return acc;
         }, [])
 
-        // updating selectedIndex on text change
-        if (availableIndexes.length === 0 || searchedText === "") {
+        // if results is empty
+        if (availableIndexes.length === 0) {
             selectedIndex = -1;
-        } else {
+            indexAvailable = -1;
+        } 
+        // if there are some results, select the first one
+        else {
             indexAvailable = 0;
-            selectedIndex = availableIndexes[0]; 
+            selectedIndex = availableIndexes[0];
         }
-        console.log("indexA: ", indexAvailable);
+        console.log("indexA: ", indexAvailable, " selectedI: ", selectedIndex);
     }
 
     // increment the indexes
     function incSelected() {
-        if (indexAvailable < availableIndexes.length - 1) {
-            indexAvailable++;
+        console.log("incrementa. sI: ", selectedIndex, " iA: ", indexAvailable);
+        if (selectedIndex === -1 && availableIndexes.length > 0) {
+            indexAvailable = 0;
+            selectedIndex = 0;
+        } else if (indexAvailable < availableIndexes.length - 1) {
+            indexAvailable = indexAvailable + 1;
             selectedIndex = availableIndexes[indexAvailable];
         }
+        console.log("resultado: sI: ", selectedIndex, " iA: ", indexAvailable);
     }
 
     // decrement the indexes
     function decSelected() {
+        console.log("decrementa");
         if (indexAvailable > 0) {
-            indexAvailable--;
+            indexAvailable = indexAvailable - 1;
             selectedIndex = availableIndexes[indexAvailable];
         }
     }
 
     // handle a direct click to a result
     function handleResultClick(trueIndex) {
+        console.log("click: ", trueIndex);
         selectedIndex = trueIndex;
         indexAvailable = availableIndexes.indexOf(trueIndex);
     }

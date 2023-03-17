@@ -8,6 +8,13 @@
 
     onMount(() => {
         inputElement.focus();
+
+        // disabling keyup and keydown
+        // https://stackoverflow.com/questions/22383952/detect-or-disable-cursor-movement-in-input-field
+        inputElement.addEventListener('keydown', (e) => {
+            if (e.key == "ArrowDown" || e.key == "ArrowUp")
+                e.preventDefault();
+        })
     })
 </script>
 
