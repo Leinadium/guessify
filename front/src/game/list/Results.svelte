@@ -88,7 +88,8 @@
 <svelte:window on:keydown={handleKey}></svelte:window>
 
 <div class="results">
-    {#each fullContent as music, i (music.id)}
+    <!-- TODO: catch duplicate music -->
+    {#each fullContent as music, i (music.uri)}
         {#if (showStatusContent[i])}
             <Result 
                 content={music} 
