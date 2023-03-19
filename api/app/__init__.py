@@ -8,7 +8,6 @@ def create_app():
         load_dotenv()
 
     app = Flask(__name__)
-    app.config.from_file
 
     from .auth import api_blueprint
     app.register_blueprint(api_blueprint)

@@ -15,6 +15,8 @@ scope = "user-read-playback-state user-modify-playback-state user-read-currently
 def index():
     """Faz a autenticacao do usuario com o spotify"""
 
+    print(session.get("token_info"))
+
     # faz o cache usando a sessao do Flask
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     # faz a autenticacao usando as variaveis definidas
@@ -23,17 +25,17 @@ def index():
                                                show_dialog=True)
     
     # a autenticacao é separada em tres partes:
+    # parte 2: autorizado pelo spotify, agora pega os tokens
+    if "code" in request.args:
+        auth_manager.get_access_token(request.args.get('code'))
+        return redirect('/')
+
     # parte 1: nao esta logado ou autorizado. redireciona pro spotify
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         auth_url = auth_manager.get_authorize_url()
         return redirect(auth_url)
 
-    # parte 2: autorizado pelo spotify, agora pega os tokens
-    if "code" in request.args:
-        auth_manager.get_access_token(request.args.get('code'))
-
     # parte 3: logado. vai para o jogo
     token: dict = session.get("token_info")
     access_token = token.get('access_token')
     return redirect(f'http://localhost:5173?token={access_token}')
-
