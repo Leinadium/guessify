@@ -1,13 +1,24 @@
 <script>
+    import { onMount, createEventDispatcher } from "svelte";
+
     export let currentInfo;
     export let gameInfo;
     export let endInfo;
+
+    let dispatch = createEventDispatcher();
+
+    let showCorrectMusic = !endInfo.success;
+    function returnToGame() {
+        showCorrectMusic = false;
+        dispatch("click", {});
+    }
+
 </script>
 
 <div>
     <spam>Success: {endInfo.success}</spam>
 
-    {#if !endInfo.success }
+    {#if showCorrectMusic }
         <spam>Correct track: {currentInfo.musicInfo.name}</spam>
     {/if}
 
@@ -18,7 +29,7 @@
     <spam>Total score: {gameInfo.score}</spam>
 </div>
 
-<button on:click>Ready</button>
+<button on:click={returnToGame}>Ready</button>
 
 <style>
     div {

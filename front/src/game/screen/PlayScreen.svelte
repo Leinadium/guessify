@@ -44,9 +44,6 @@
         on:click={submission}
     />
 
-    <spam>Current music: ({selectedIndex})</spam>
-    <spam>Current isPlaying: {$isPlaying}</spam>
-
     <Results 
         fullContent={gameInfo.musicPlaylist} 
         searchedText={searchedText} 
