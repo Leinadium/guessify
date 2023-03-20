@@ -6,6 +6,7 @@
     import { spotifyAPIHandler, isPlaying } from "../lib/stores"
     import GameTick from "../lib/GameTick.svelte";
     import { onMount } from "svelte";
+    import { getFullPlaylistInfo, removeDuplicates } from "../lib/utils";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
@@ -16,7 +17,7 @@
         playlistUri: ""
     }
 
-    export let playlistId = "37i9dQZF1F0sijgNaJdgit";   
+    export let playlistId = "37i9dQZF1DX4o1oenSJRJd";   
 
     let currentInfo = {
         state: "start",     // possible states: [start, game, ready, end, error]
@@ -44,12 +45,17 @@
     let spotifySdkPlayer;
     let spotifyDeviceId;
 
-    function handleOnToogle() {}
+    function handleOnToggle() {
+        spotifySdkPlayer.togglePlay();
+    }
 
     function errorHandler(args) {
         console.log("error: ", args);
     }
-    function stateHandler(state) {}
+    function stateHandler(state) {
+        // https://developer.spotify.com/documentation/web-playback-sdk/reference/#object-web-playback-state
+        $isPlaying = !state.paused;
+    }
 
     /* resets variable and updates currentState */
     function startRound() {
@@ -96,13 +102,17 @@
 
     function setPlayback() {
         // set to shuffle
-        $spotifyAPIHandler.getPlaylist(playlistId, {
-            fields: "uri,name,images,tracks.items.track(uri,id,name,artists.name,duration_ms)"
-        }).then((val) => {
+       getFullPlaylistInfo($spotifyAPIHandler, playlistId).then((val) => {
             // setting up variables
-            console.log(val);
             gameInfo.playlistUri = val.uri;
-            gameInfo.musicPlaylist = val.tracks.items.map(v => v.track);
+            gameInfo.musicPlaylist = val.tracks.map(v => v.track);
+            
+            // filtering duplicates
+            gameInfo.musicPlaylist = removeDuplicates(gameInfo.musicPlaylist);
+            
+            // test: showing total number of tracks
+            console.log("Total tracks: ", gameInfo.musicPlaylist.length);
+
             gameStatus.apiLoaded = true;
         
         // after a lot of 502 bad gateways errors, it seems there are more chances of success
@@ -168,14 +178,14 @@
         bind:currentInfo={currentInfo}
         on:submit="{(e) => {endRound(e.detail.index)}}"
         on:giveup="{() => {endRound(-1)}}"
+        on:pauseplay={handleOnToggle}
     />
 
 {:else if currentInfo.state === "ready"}
-    <ReadyScreen 
-        currentRound={currentInfo.round}
-        maxRounds={gameInfo.maxRounds}
+    <ReadyScreen
+        gameInfo={gameInfo}
+        currentInfo={currentInfo}
         endInfo={endInfo}
-        totalScore={gameInfo.score}
         on:click={startRound}
     />
 

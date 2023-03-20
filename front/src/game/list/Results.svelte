@@ -11,7 +11,10 @@
 
     // a list with only the name and the artist of a music 
     const parsedContent = fullContent.map(v => {
-        return v.name.toLowerCase() + " " + v.artists.map((a) => a.name.toLowerCase()).join(" ");
+        return (
+            v.name.toLowerCase() + " " + 
+            v.artists.map((a) => a.name.toLowerCase()).join(" ")) + " " +
+            v.album.name.toLowerCase();
     });
 
     let showStatusContent = [];

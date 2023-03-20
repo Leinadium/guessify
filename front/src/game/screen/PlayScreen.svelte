@@ -26,7 +26,7 @@
     })
 
     $: submission = () => {dispatch("submit", {text: searchedText, index: selectedIndex})};
-    let givingUp = () => {dispatch("giveup", {})};
+    const givingUp = () => {dispatch("giveup", {})};
 
 </script>
 
@@ -35,7 +35,7 @@
         currentMillis={currentInfo.playedMs}
         maxMillis={currentInfo.musicInfo['duration_ms']}
         playing={$isPlaying}
-        on:click={submission}
+        on:pauseplay
     />
 
     <SearchBar 
@@ -64,6 +64,6 @@
         align-items: center;
         padding-left: 100px;
         padding-right: 100px;
-        padding-top: 200px;
+        padding-top: 50px;
     }
 </style>
