@@ -23,7 +23,7 @@
 
     <div class="track-text">
         <div class="track-name-artist">
-            <div class="track-name">{content.name}</div>
+            <div class="track-name">{trackName}</div>
             <div class="track-artist">{artists}</div>
         </div>
         
@@ -33,7 +33,6 @@
 
 <style>
     /* flex box S2 */
-
     .result {
         border: 2px solid black;
         padding: 5px;
@@ -88,6 +87,10 @@
     }
 
     .selected {
-        background-color: lightgreen !important;
+        background-color: rgb(34, 224, 34) !important;
+    }
+
+    .result {
+        font-family: 'Circular Std';
     }
 </style>

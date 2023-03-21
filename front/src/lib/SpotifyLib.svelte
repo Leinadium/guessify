@@ -13,8 +13,6 @@
                 -> the state has updated (or not)
                 -> https://developer.spotify.com/documentation/web-playback-sdk/reference/#object-web-playback-state
     */
-
-
     // Based on code from https://stackoverflow.com/questions/59629947/how-do-i-load-an-external-js-library-in-svelte-sapper
     import { onMount, createEventDispatcher, onDestroy } from "svelte";
 
@@ -116,6 +114,5 @@
 </script>
 
 <svelte:head>
-    <script bind:this={script} {src}>
-    </script>
+    <script bind:this={script} {src}></script>
 </svelte:head>
