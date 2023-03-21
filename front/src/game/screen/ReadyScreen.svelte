@@ -19,7 +19,7 @@
     <spam>Success: {endInfo.success}</spam>
 
     {#if showCorrectMusic }
-        <spam>Correct track: {currentInfo.musicInfo.name}</spam>
+        <spam>Correct track: {endInfo.correctTrack.name}</spam>
     {/if}
 
     <spam>Current round: {currentInfo.round}/{gameInfo.maxRounds}</spam>
