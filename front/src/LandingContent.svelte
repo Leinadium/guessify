@@ -1,19 +1,38 @@
+<script>
+    import { fade, fly } from 'svelte/transition';
+    import { onDestroy } from 'svelte';
+
+    let showText = false;
+    let initialTransition = setTimeout(() => {
+        showText = true;
+    }, 500);
+
+    onDestroy(() => {
+        clearTimeout(initialTransition);
+    });
+
+</script>
+
 <div class="landing">
+    {#if showText}
     <div class="texts">
-        <div class="short-description">
-            Xxx xxxxx xxx xxxxx?
+        <div class="short-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
+            Do you know your music?
         </div>
         
-        <div class="long-description">
-            zzzz zzzzzzz zzz zzzzzz zzzzzz, zzzzzz zzzzzzzz zzzzzz z zzzzz zzzz zzzz,
-            zzzz zzzz zzzzzz, zzz zzzz zzzzz zzzz zzzzz!
+        <div class="long-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
+            Some description, some description some description some description some description!
         </div>
     </div>
 
-    <button>
-        <spam class="login">Login with <img class="spotify-logo-button" src="/assets/spotify-logo-black.png" alt="Spotify"></spam>
+    <div class="div-login">
         <spam class="requires">Requires Spotify Premium</spam>
-    </button>
+        <button in:fade>
+            <spam class="login">Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify"></spam>
+        </button>
+    </div>
+
+    {/if}
 
 </div>
 
@@ -38,22 +57,27 @@
 
     .short-description {
         color: #fff;
-        font-size: 10vh;
+        font-size: min(8vw, 10vh);
         font-weight: 700;
         margin-bottom: 10vh;
     }
 
     .long-description {
         color: #fefefe;
-        font-size: 5vh;
+        font-size: min(4vw, 5vh);
         font-weight: 300;
     }
 
     button {
-        width: 20vw;
+        width: max(20vw, 25vh);
         aspect-ratio: 3 / 1;
-        border-radius: 3vw;
-        background-color: #1DB954;
+        border-radius: max(3vw, 4vh);
+        
+        /* background-color: #1ed760; */
+        /* background: rgb(34,237,106); */
+
+        background-image: linear-gradient(to right, rgba(34,237,106,1) 0%, rgba(30,215,96,1) 100%); 
+
         border: 0.2vw solid black;
         box-sizing: border-box;
         cursor: pointer;
@@ -69,14 +93,20 @@
     }
 
     button:hover {
-        background-color: darkgreen;
+        transform: scale(1.03) perspective(1px);
     }
 
+    .div-login {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+    }
     .login {
         font-family: 'Circular Std';
-        font-size: 1.6vw;
+        font-size: max(1.6vw, 2vh);
         font-weight: bold;
-        color: #191414;
+        color: #fff;
 
         display: flex;
         flex-flow: row nowrap;
@@ -85,17 +115,17 @@
     }
 
     .spotify-logo-button {
-        height: 2.3vw;
+        height: max(2.3vw, 2.87vh);
         aspect-ratio: 3.37 / 1;
     }
 
     .requires {
-        margin-top: 1vh;
+        margin-top: max(0.8vw, 1vh);
         font-family: 'Circular Std';
-        font-size: 1 vh;
+        font-size: max(1.2vw, 1.5vh);
         font-weight: 300;
         font-style: italic;
-        color: #222326;
+        color: #f0f0f0;
     }
 
     

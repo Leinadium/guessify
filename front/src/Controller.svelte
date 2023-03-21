@@ -13,4 +13,4 @@
 
 </script>
 
-<GamePlay />
+<LandingContent />
