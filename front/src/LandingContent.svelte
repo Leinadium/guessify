@@ -1,6 +1,7 @@
 <script>
     import { fade, fly } from 'svelte/transition';
     import { onDestroy } from 'svelte';
+    import SpotifyAuth from './lib/SpotifyAuth.svelte';
 
     let showText = false;
     let initialTransition = setTimeout(() => {
@@ -11,31 +12,51 @@
         clearTimeout(initialTransition);
     });
 
+    let authentication = false;
+    let auth_error = "";
+    function resetError() {
+        authentication = false;
+        auth_error = "";
+    }
+
 </script>
 
 <div class="landing">
     {#if showText}
-    <div class="texts">
-        <div class="short-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
-            Do you know your music?
+        <div class="texts">
+            <div class="short-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
+                Do you know your music?
+            </div>
+            
+            <div class="long-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
+                Some description, some description some description some description some description!
+            </div>
         </div>
-        
-        <div class="long-description" in:fly="{{ y: 30, duration: 1000}}" out:fade>
-            Some description, some description some description some description some description!
+
+        <div class="div-login">
+            <spam class="requires">Requires Spotify Premium</spam>
+            <button in:fade on:click="{() => {authentication = true;}}">
+                <spam class="login">Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify"></spam>
+            </button>
         </div>
-    </div>
-
-    <div class="div-login">
-        <spam class="requires">Requires Spotify Premium</spam>
-        <button in:fade>
-            <spam class="login">Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify"></spam>
-        </button>
-    </div>
-
     {/if}
 
-</div>
+    {#if authentication && auth_error === "" }
+        <SpotifyAuth 
+            on:refresh
+            on:error="{(e) => {auth_error = e.detail.description}}"
+        />
+    {/if}
 
+    {#if auth_error !== ""}
+        <div class="black-fade"></div>
+        <div class="error-message">
+            <spam>Authentication Error</spam>
+            <p>An error occurred while authenticating with Spotify: {auth_error}</p>
+            <button on:click={resetError}>Close</button>
+        </div>
+    {/if}
+</div>
 
 
 <style>
@@ -128,5 +149,30 @@
         color: #f0f0f0;
     }
 
-    
+    .black-fade {
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 10;
+    }
+
+    .error-message {
+        display: flex;
+        position: absolute;
+        top: 25vh;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        padding: 16px;
+        border: 16px solid orange;
+        background-color: white;
+        z-index: 12;
+        overflow: auto;
+    }
+
+
 </style>

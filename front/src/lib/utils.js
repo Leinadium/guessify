@@ -1,5 +1,13 @@
 const PAGE_LIMIT = 50;
 
+const BASE_URL = "http://localhost:5000"
+
+export const AUTH_URL = `${BASE_URL}/auth`;
+export const CB_URL = `http://localhost:5173`;         // TODO: change to real api callback
+export const REFRESH_URL = `${BASE_URL}/get_refresh`;
+export const ACCESS_URL = `${BASE_URL}/get_access`;
+export const REFRESH_KEY = "refresh";
+
 /** Get all the tracks recursively of a spotify playlist, paginating through all
  *  the pages of the api request. Uses the `spotify-web-api-js` library.
  * 

@@ -16,7 +16,7 @@
         playlistUri: ""
     }
 
-    export let playlistId = "37i9dQZF1DX4o1oenSJRJd";   
+    export let playlistId = "";   
 
     let currentInfo = {
         state: "start",     // possible states: [start, game, ready, end, error]
