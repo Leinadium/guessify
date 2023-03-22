@@ -1,7 +1,18 @@
 from . import api_blueprint
 
-import spotipy
-from flask import session, request, redirect
+import requests
+from os import getenv
+from base64 import b64encode
+from urllib.parse import urlencode, quote
+from flask import session, request, redirect, make_response
+
+COOKIE_REFRESH = "guessify:refresh"
+SPOTIFY_AUTHORIZE = "https://accounts.spotify.com/authorize"
+SPOTIFY_TOKEN = "https://accounts.spotify.com/api/token"
+
+SECRET = b64encode(
+    f"{getenv('SPOTIPY_CLIENT_ID')}:{getenv('SPOTIPY_CLIENT_SECRET')}".encode()
+).decode() 
 
 # https://github.com/spotify/web-playback-sdk/issues/11#issuecomment-609160530
 # TODO: verificar quais escopos sao realmente necessarios
@@ -10,32 +21,81 @@ scope = "user-read-playback-state user-modify-playback-state user-read-currently
         "playlist-read-private playlist-read-collaborative "
 
 
+@api_blueprint.route("/auth", methods=["GET"])
+def auth():
+    """First endpoint for authentication"""
+    args = {
+        "client_id": getenv("SPOTIPY_CLIENT_ID"),
+        "response_type": "code",
+        "redirect_uri": "http://localhost:5000/cb",
+        "scope": scope,
+        "show_dialog": False
+    }
+    return redirect(f"{SPOTIFY_AUTHORIZE}?{urlencode(args)}")
 
-@api_blueprint.route("/", methods=["GET", "POST"])
-def index():
-    """Faz a autenticacao do usuario com o spotify"""
 
-    print(session.get("token_info"))
-
-    # faz o cache usando a sessao do Flask
-    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
-    # faz a autenticacao usando as variaveis definidas
-    auth_manager = spotipy.oauth2.SpotifyOAuth(scope=scope,
-                                               cache_handler=cache_handler,
-                                               show_dialog=True)
-    
-    # a autenticacao é separada em tres partes:
-    # parte 2: autorizado pelo spotify, agora pega os tokens
+@api_blueprint.route("/cb", methods=["GET"])
+def callback():
     if "code" in request.args:
-        auth_manager.get_access_token(request.args.get('code'))
-        return redirect('/')
+        return "<h1>Authenticated</h1>"
+    elif "error" in request.args:
+        return "<h1>Error</h>"
+    else:
+        return "<h3>Unknown error</h3>"
 
-    # parte 1: nao esta logado ou autorizado. redireciona pro spotify
-    if not auth_manager.validate_token(cache_handler.get_cached_token()):
-        auth_url = auth_manager.get_authorize_url()
-        return redirect(auth_url)
 
-    # parte 3: logado. vai para o jogo
-    token: dict = session.get("token_info")
-    access_token = token.get('access_token')
-    return redirect(f'http://localhost:5173?token={access_token}')
+@api_blueprint.route("/get_refresh/<code>", methods=["GET"])
+def refresh(code: str):
+    payload = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": "http://localhost:5000/cb"
+    }
+
+    headers = {
+        "Authorization": f"Basic {SECRET}",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    r = requests.post(
+        url=SPOTIFY_TOKEN,
+        params=payload,
+        headers=headers
+    )
+
+    if r.status_code == 200:
+        parsed = r.json()
+        return {
+            "access_token": parsed["access_token"],
+            "refresh_token": parsed["refresh_token"] 
+        }, 200
+    else:
+        # error / error_description
+        return r.json(), r.status_code
+
+
+@api_blueprint.route("/get_access/<refresh>", methods=["GET"])
+def access(refresh: str):
+    payload = {
+        "grant_type": "refresh_token",
+        "refresh_token": refresh
+    }
+    headers = {
+        "Authorization": f"Basic {SECRET}",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    r = requests.post(
+        url=SPOTIFY_TOKEN,
+        params=payload,
+        headers=headers
+    )
+
+    if r.status_code == 200:
+        parsed = r.json()
+        return {
+            "access_token": parsed["access_token"],
+            "refresh_token": parsed.get("refresh_token")    # might not be
+        }
+    else:
+        return r.json(), r.status_code
