@@ -36,12 +36,14 @@ def auth():
 
 @api_blueprint.route("/cb", methods=["GET"])
 def callback():
-    if "code" in request.args:
-        return "<h1>Authenticated</h1>"
-    elif "error" in request.args:
-        return "<h1>Error</h>"
-    else:
-        return "<h3>Unknown error</h3>"
+    return redirect(f"http://localhost:5173?{urlencode(request.args)}")
+
+    # if "code" in request.args:
+    #     return "<h1>Authenticated</h1>"
+    # elif "error" in request.args:
+    #     return "<h1>Error</h>"
+    # else:
+    #     return "<h3>Unknown error</h3>"
 
 
 @api_blueprint.route("/get_refresh/<code>", methods=["GET"])
