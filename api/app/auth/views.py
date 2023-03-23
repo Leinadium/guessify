@@ -11,7 +11,7 @@ SPOTIFY_AUTHORIZE = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN = "https://accounts.spotify.com/api/token"
 
 SECRET = b64encode(
-    f"{getenv('SPOTIPY_CLIENT_ID')}:{getenv('SPOTIPY_CLIENT_SECRET')}".encode()
+    f"{getenv('CLIENT_ID')}:{getenv('CLIENT_SECRET')}".encode()
 ).decode() 
 
 # https://github.com/spotify/web-playback-sdk/issues/11#issuecomment-609160530
