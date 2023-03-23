@@ -1,7 +1,8 @@
 <script>
+    import { onDestroy, createEventDispatcher } from 'svelte';
     import { fade, fly } from 'svelte/transition';
-    import { onDestroy } from 'svelte';
-    import SpotifyAuth from './lib/SpotifyAuth.svelte';
+    import { refreshToken, isAuthValid, username } from '../lib/stores';
+    import SpotifyAuth from '../lib/SpotifyAuth.svelte';
 
     let showText = false;
     let initialTransition = setTimeout(() => {
@@ -12,12 +13,18 @@
         clearTimeout(initialTransition);
     });
 
-    let authentication = false;
     let auth_error = "";
+    let startAuth = false;
     function resetError() {
-        authentication = false;
         auth_error = "";
+        startAuth = false;
     }
+
+    function resetAuth() {
+        startAuth = false;
+        dispatch("reset")
+    }
+    let dispatch = createEventDispatcher();
 
 </script>
 
@@ -34,20 +41,38 @@
         </div>
 
         <div class="div-login">
-            <spam class="requires">Requires Spotify Premium</spam>
-            <button in:fade on:click="{() => {authentication = true;}}">
-                <spam class="login">Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify"></spam>
-            </button>
+            {#if !$isAuthValid}
+                <button class="btn-landing btn-login" in:fade on:click="{() => {startAuth = true;}}">
+                    <spam class="login">
+                        Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify">
+                    </spam>
+                    <spam class="requires">
+                        Requires Spotify Premium
+                    </spam>
+                </button>
+            {:else}
+                <!-- svelte-ignore a11y-invalid-attribute -->
+                <a href="#" class="requires logout" on:click={resetAuth}>
+                    Not {$username}? Logout
+                </a>
+                <button class="btn-landing btn-continue" in:fade on:click="{() => {dispatch('ready')}}">
+                    <spam class="continue">Play as</spam>
+                    <spam class="continue-username">{$username}</spam>
+                </button>
+            {/if}
+            
         </div>
+        
     {/if}
 
-    {#if authentication && auth_error === "" }
-        <SpotifyAuth 
-            on:refresh
+    <div>
+        {#if startAuth && auth_error === "" }
+        <SpotifyAuth
             on:error="{(e) => {auth_error = e.detail.description}}"
         />
     {/if}
-
+    </div>
+    
     {#if auth_error !== ""}
         <div class="black-fade"></div>
         <div class="error-message">
@@ -89,7 +114,7 @@
         font-weight: 300;
     }
 
-    button {
+    .btn-landing {
         width: max(20vw, 25vh);
         aspect-ratio: 3 / 1;
         border-radius: max(3vw, 4vh);
@@ -99,7 +124,7 @@
 
         background-image: linear-gradient(to right, rgba(34,237,106,1) 0%, rgba(30,215,96,1) 100%); 
 
-        border: 0.2vw solid black;
+        border: 0px;
         box-sizing: border-box;
         cursor: pointer;
 
@@ -113,8 +138,16 @@
         transition-duration: 0.4s;
     }
 
-    button:hover {
+    .btn-landing:hover {
         transform: scale(1.03) perspective(1px);
+    }
+
+    .btn-login {
+        background-image: linear-gradient(to right, rgba(34,237,106,1) 0%, rgba(30,215,96,1) 100%);
+    }
+
+    .btn-continue {
+        background-image: linear-gradient(to right, rgb(34, 37, 237) 0%, rgba(30,215,96,1) 100%);
     }
 
     .div-login {
@@ -123,6 +156,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .login {
         font-family: 'Circular Std';
         font-size: max(1.6vw, 2vh);
@@ -135,6 +169,21 @@
         gap: 0.5vw;
     }
 
+    .continue {
+        font-family: 'Circular Std';
+        font-size: max(1.6vw, 2vh);
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .continue-username {
+        font-family: 'Circular Std';
+        font-size: max(1.2vw, 1.5vh);
+        font-weight: 300;
+        color: #fff;
+        overflow: hidden;
+    } 
+
     .spotify-logo-button {
         height: max(2.3vw, 2.87vh);
         aspect-ratio: 3.37 / 1;
@@ -143,10 +192,19 @@
     .requires {
         margin-top: max(0.8vw, 1vh);
         font-family: 'Circular Std';
-        font-size: max(1.2vw, 1.5vh);
+        font-size: max(0.8vw, 1.0vh);
         font-weight: 300;
         font-style: italic;
-        color: #f0f0f0;
+        color: #404040;
+    }
+
+    .logout {
+        color: #a0a0a0 !important;
+        margin-bottom: 1vh;
+    }
+
+    .logout:hover {
+        cursor: pointer;
     }
 
     .black-fade {

@@ -1,35 +1,45 @@
 <script>
     import Controller from "./Controller.svelte";
+
+    // TODO: change spotify callback
+    const params = new URLSearchParams(window.location.search);
+    const showContent = !params.has("code");
+
 </script>
 
 <svelte:head>
     <link href="https://fonts.cdnfonts.com/css/circular-std" rel="stylesheet">
 </svelte:head>
 
-<div class="main">
-    <!-- HEADER -->
-    <div class="header">
-        <div class="header-title">Guessify</div>
-        <div class="header-actions">
-            <div class="share">
-                <img class="icon" src="/assets/share-icon.svg" alt="Share">
+{#if showContent}
+    <div class="main">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-title">
+                <a href="/">Guessify</a>
             </div>
-            <div class="github">
-                <a href="https://github.com/Leinadium/guessify">
-                    <img class="icon" src="/assets/github-mark.svg" alt="Github Logo">
-                </a>
+            <div class="header-actions">
+                <div class="share">
+                    <img class="icon" src="/assets/share-icon.svg" alt="Share">
+                </div>
+                <div class="github">
+                    <a href="https://github.com/Leinadium/guessify">
+                        <img class="icon" src="/assets/github-mark.svg" alt="Github Logo">
+                    </a>
+                </div>
             </div>
         </div>
+        <!-- MAIN CONTENT -->
+        <div class="content">
+            <Controller />
+        </div>
+        <div class="footer">
+            <div class="footer-copyright">Leinadium @ 2023</div>
+        </div>
     </div>
-    <!-- MAIN CONTENT -->
-    <div class="content">
-        <Controller />
-    </div>
-    <div class="footer">
-        <div class="footer-copyright">Leinadium @ 2023</div>
-    </div>
-</div>
-
+{:else}
+    <p>Authenticated. You can close this window<p>
+{/if}
 
 <style>
     :global(html), :global(body) {
@@ -46,7 +56,6 @@
         position: relative;
         background-color: #151757;
     }
-
 
     .header {
         width: 100vw;
@@ -69,6 +78,11 @@
         font-family: 'Circular Std';
         font-weight: 700;
         padding-left: 5vw;
+    }
+
+    .header-title > a {
+        text-decoration: none;
+        color: inherit;
     }
 
     .header-actions {

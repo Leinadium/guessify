@@ -1,7 +1,8 @@
 <script>
-    import { refreshToken, accessToken, spotifyAPIHandler } from "./lib/stores";
+    import { refreshToken, accessToken, spotifyAPIHandler, username, isAuthValid } from "./lib/stores";
+    import LoadAuth from "./lib/LoadAuth.svelte";
     import GamePlay from "./game/GamePlay.svelte";
-    import LandingContent from "./LandingContent.svelte";
+    import LandingContent from "./landing/LandingContent.svelte";
 
     let currentMode = "landing";    // landing | selection | game
 
@@ -20,11 +21,25 @@
         }
     }
 
+    function resetAll() {
+        $refreshToken = null;
+        $username = null;
+        $isAuthValid = null;
+        goToLanding();
+    }
+
+    function goToLanding() {
+        currentMode = "landing";
+    }
+
 </script>
+
+<LoadAuth />
 
 {#if currentMode == "landing"}
     <LandingContent 
-        on:refresh={goToSelection}
+        on:ready={goToSelection}
+        on:reset={resetAll}
     />
 
 {:else if currentMode == "selection"}

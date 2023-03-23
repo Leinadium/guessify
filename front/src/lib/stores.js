@@ -15,3 +15,9 @@ refreshToken.subscribe((v) => localStorage.setItem(REFRESH_KEY, v));
 
 // access token
 export const accessToken = writable(null);
+
+// refresh and access token is valid
+export const isAuthValid = writable(false);
+
+// spotify username
+export const username = writable(null);

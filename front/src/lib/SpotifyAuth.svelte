@@ -1,7 +1,8 @@
 <script>
     import { onMount, createEventDispatcher, onDestroy } from "svelte";
-    import { AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
+    import { ACCESS_URL, AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
     import { refreshToken, accessToken } from "./stores";
+    import { username, isAuthValid, spotifyAPIHandler } from "./stores";
 
     // https://javascript.plainenglish.io/how-to-create-a-popup-for-oauth-login-38dee97f5f3b
     let popup = undefined;
@@ -9,7 +10,7 @@
 
     let dispatch = createEventDispatcher();
 
-    onMount(() => {
+    function popupLogic() {
         popup = window.open(AUTH_URL, "popup", "popup=true");
         checkPopup = setInterval(() => {
             if (popup.window.location.href.includes(CB_URL)) {
@@ -29,7 +30,18 @@
                             if (data["refresh_token"]) {
                                 $refreshToken = data["refresh_token"];
                                 $accessToken = data["access_token"];
-                                dispatch("refresh", {});
+                                
+                                // update name
+                                $spotifyAPIHandler.setAccessToken($accessToken);
+                                $spotifyAPIHandler.getMe()
+                                    .then((data) => {
+                                        $username = data.display_name || data.id;
+                                        $isAuthValid = true;        // finally, auth is finished
+                                    })
+                                    .catch(() => {
+                                        dispatch("error", {description: "Error fetching username"});
+                                    })
+
                             } else {
                                 dispatch("error", {description: data["error_description"]});
                             }
@@ -43,7 +55,9 @@
             if (!popup || !popup.closed) return;
             clearInterval(checkPopup);
         }, 1000);
-    });
+    }
+
+    onMount(popupLogic);
 
     onDestroy(() => {
         if (checkPopup !== undefined) {
