@@ -199,7 +199,7 @@
 
 {:else if currentInfo.state === "end"}
     <!-- TODO: End screen -->
-    <spam>End score: {gameInfo.score}</spam>
+    <span>End score: {gameInfo.score}</span>
 
 {:else }
     <!-- TODO: Error screen -->

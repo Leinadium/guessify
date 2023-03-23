@@ -3,8 +3,9 @@
     import LoadAuth from "./lib/LoadAuth.svelte";
     import GamePlay from "./game/GamePlay.svelte";
     import LandingContent from "./landing/LandingContent.svelte";
+    import PreGameScreen from "./pregame/PreGameScreen.svelte";
 
-    let currentMode = "landing";    // landing | selection | game
+    let currentMode = "landing";    // landing | pregame | game
 
     let playlistId = "37i9dQZF1DZ06evO4bbJPq";
     let gameInfo = {
@@ -17,7 +18,7 @@
     function goToSelection() {
         if ($refreshToken && $accessToken) {
             $spotifyAPIHandler.setAccessToken($accessToken);
-            currentMode = "game"    // TODO: selection
+            currentMode = "pregame"    // TODO: selection
         }
     }
 
@@ -42,8 +43,9 @@
         on:reset={resetAll}
     />
 
-{:else if currentMode == "selection"}
-    <!-- TODO: Selection -->
+{:else if currentMode == "pregame"}
+    <!-- TODO: Pregame -->
+    <PreGameScreen />
 
 {:else}
     <GamePlay 

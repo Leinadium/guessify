@@ -16,17 +16,17 @@
 </script>
 
 <div>
-    <spam>Success: {endInfo.success}</spam>
+    <span>Success: {endInfo.success}</span>
 
     {#if showCorrectMusic }
-        <spam>Correct track: {endInfo.correctTrack.name}</spam>
+        <span>Correct track: {endInfo.correctTrack.name}</span>
     {/if}
 
-    <spam>Current round: {currentInfo.round}/{gameInfo.maxRounds}</spam>
+    <span>Current round: {currentInfo.round}/{gameInfo.maxRounds}</span>
 
-    <spam>Score earned: {endInfo.scoreEarned}</spam>
+    <span>Score earned: {endInfo.scoreEarned}</span>
 
-    <spam>Total score: {gameInfo.score}</spam>
+    <span>Total score: {gameInfo.score}</span>
 </div>
 
 <button on:click={returnToGame}>Ready</button>

@@ -17,7 +17,7 @@
 
 <div class="audio-player">
     
-    <spam>{currentTimeStr}</spam>
+    <span>{currentTimeStr}</span>
 
     <div class="progress-player">
         <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
@@ -29,7 +29,7 @@
 
 
 <style>
-    .audio-player spam {
+    .audio-player span {
         color: #333333;
     }
 
@@ -44,7 +44,7 @@
         height: 30px;
     }
 
-    spam {
+    span {
         width: 10%;
         font-size: small;
 

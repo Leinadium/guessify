@@ -43,21 +43,21 @@
         <div class="div-login">
             {#if !$isAuthValid}
                 <button class="btn-landing btn-login" in:fade on:click="{() => {startAuth = true;}}">
-                    <spam class="login">
+                    <span class="login">
                         Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify">
-                    </spam>
-                    <spam class="requires">
-                        Requires Spotify Premium
-                    </spam>
+                    </span>
                 </button>
+                <span class="requires">
+                    Requires Spotify Premium
+                </span>
             {:else}
                 <!-- svelte-ignore a11y-invalid-attribute -->
                 <a href="#" class="requires logout" on:click={resetAuth}>
                     Not {$username}? Logout
                 </a>
                 <button class="btn-landing btn-continue" in:fade on:click="{() => {dispatch('ready')}}">
-                    <spam class="continue">Play as</spam>
-                    <spam class="continue-username">{$username}</spam>
+                    <span class="continue">Play as</span>
+                    <span class="continue-username">{$username}</span>
                 </button>
             {/if}
             
@@ -76,7 +76,7 @@
     {#if auth_error !== ""}
         <div class="black-fade"></div>
         <div class="error-message">
-            <spam>Authentication Error</spam>
+            <span>Authentication Error</span>
             <p>An error occurred while authenticating with Spotify: {auth_error}</p>
             <button on:click={resetError}>Close</button>
         </div>
@@ -143,7 +143,7 @@
     }
 
     .btn-login {
-        background-image: linear-gradient(to right, rgba(34,237,106,1) 0%, rgba(30,215,96,1) 100%);
+        background-image: linear-gradient(to right, rgba(34,237,106,1) 0%, rgba(29,185,84,1) 100%);
     }
 
     .btn-continue {
@@ -185,7 +185,9 @@
     } 
 
     .spotify-logo-button {
+        /* https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo */
         height: max(2.3vw, 2.87vh);
+        padding-left: max(1.15vw, 1.435vh);
         aspect-ratio: 3.37 / 1;
     }
 

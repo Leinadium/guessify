@@ -47,7 +47,7 @@
         height: 100%;
     }
 
-    :global(spam) {
+    :global(span) {
         color:rgb(255, 255, 255)
     }
 
@@ -61,9 +61,9 @@
         width: 100vw;
         height: 10vh;
         
-        background: rgb(51,56,214);
-        background: linear-gradient(0deg, rgba(51,56,214,1) 0%, rgba(51,56,214,1) 16%, rgba(51,56,214,1) 100%); 
-
+        background-image: linear-gradient(to right, rgb(34, 37, 237) 0%, rgba(30,215,96,1) 100%);
+        /* background: rgb(51,56,214); */
+        /* background: linear-gradient(0deg, rgba(51,56,214,1) 0%, rgba(51,56,214,1) 16%, rgba(51,56,214,1) 100%); */ 
         /* background: linear-gradient(0deg, rgba(0,32,51,1) 0%, rgba(7,46,121,1) 40%, rgba(0,42,83,1) 100%); */
         box-shadow: 0px 4px 16px rgba(17,17,26,0.1), 0px 8px 24px rgba(17,17,26,0.1), 0px 16px 56px rgba(17,17,26,0.1);
         display: flex;

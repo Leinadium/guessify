@@ -5,5 +5,5 @@
 {#if enable }
     <button on:click>Start</button>
 {:else }
-    <spam>Loading...</spam>
+    <span>Loading...</span>
 {/if}
