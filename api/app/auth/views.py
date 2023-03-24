@@ -6,7 +6,7 @@ from base64 import b64encode
 from urllib.parse import urlencode, quote
 from flask import session, request, redirect, make_response
 
-COOKIE_REFRESH = "guessify:refresh"
+
 SPOTIFY_AUTHORIZE = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN = "https://accounts.spotify.com/api/token"
 
@@ -25,7 +25,7 @@ scope = "user-read-playback-state user-modify-playback-state user-read-currently
 def auth():
     """First endpoint for authentication"""
     args = {
-        "client_id": getenv("SPOTIPY_CLIENT_ID"),
+        "client_id": getenv("CLIENT_ID"),
         "response_type": "code",
         "redirect_uri": "http://localhost:5000/cb",
         "scope": scope,
