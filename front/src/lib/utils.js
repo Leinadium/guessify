@@ -1,4 +1,5 @@
 const PAGE_LIMIT = 50;
+const ALBUM_LIMIT = 10;    // lower limit to prevent loading all tracks of an album
 
 const BASE_URL = "http://localhost:5000"
 
@@ -60,8 +61,8 @@ export function removeDuplicates(tracks) {
     let trackIds = new Set();
     let uniqueTracks = [];
     tracks.forEach((track) => {
-        if (!trackIds.has(track.id)) {
-            trackIds.add(track.id);
+        if (!trackIds.has(track.uri)) {
+            trackIds.add(track.uri);
             uniqueTracks.push(track);
         }
     });
@@ -69,3 +70,92 @@ export function removeDuplicates(tracks) {
 }
 
 
+/** Get information of all the playlists of an user, paginating through all the
+ * pages of the api request. Uses the `spotify-web-api-js` library.
+ * 
+ * @param spotifyConnection - The spotify connection object
+ */
+export function getPlaylists(spotifyConnection) {
+    /* generated via copilot :D */
+    return new Promise((resolve, reject) => {
+        spotifyConnection.getUserPlaylists({
+            limit: PAGE_LIMIT
+        }).then((data) => {
+            let playlists = data.items;
+            let totalPlaylists = data.total;
+            let offset = PAGE_LIMIT;
+            let getPlaylists = (offset) => {
+                spotifyConnection.getUserPlaylists({
+                    offset: offset,
+                    limit: PAGE_LIMIT
+                }).then((data) => {
+                    playlists = playlists.concat(data.items);
+                    if (playlists.length < totalPlaylists) {
+                        getPlaylists(offset + PAGE_LIMIT);
+                    } else {
+                        resolve(playlists);
+                    }
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+            };
+            getPlaylists(offset);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+/**Get information of all liked albums of an user, pagination through all the
+ * pages of the api request. Uses the `spotify-web-api-js` library.
+ * @param spotifyConnection - The spotify connection object
+*/
+export function getAlbums(spotifyConnection) {
+    return new Promise((resolve, reject) => {
+        // note: the following command is wrong according to Typescript 
+        // (i had to set usernameId as undefined), but this is a known
+        // problem in this library: 
+        // https://github.com/JMPerez/spotify-web-api-js/issues/181
+        // luckily, i am not using typescript :D
+        spotifyConnection.getMySavedAlbums({
+            limit: ALBUM_LIMIT
+        }).then((data) => {
+            let albums = data.items;
+            let totalAlbums = data.total;
+            let offset = ALBUM_LIMIT;
+            let getAlbums = (offset) => {
+                spotifyConnection.getMySavedAlbums({
+                    offset: offset,
+                    limit: ALBUM_LIMIT
+                }).then((data) => {
+                    albums = albums.concat(data.items);
+                    if (albums.length < totalAlbums) {
+                        getAlbums(offset + ALBUM_LIMIT);
+                    } else {
+                        resolve(albums);
+                    }
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+            };
+            getAlbums(offset);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+
+/**Get the first image of a track
+ * If there is no image available, return null
+ */
+export function getImage(images) {
+    if (images.length > 0) {
+        return images[0].url;
+    }
+    return null;
+}

@@ -10,6 +10,8 @@
 
     let dispatch = createEventDispatcher();
 
+    $spotifyAPIHandler.getUserPlaylists
+
     function popupLogic() {
         popup = window.open(AUTH_URL, "popup", "popup=true");
         checkPopup = setInterval(() => {

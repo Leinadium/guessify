@@ -1,94 +1,88 @@
 <script>
     import { onMount } from "svelte";
-    import { removeDuplicates } from "../lib/utils";
+    import { removeDuplicates, getPlaylists, getAlbums } from "../lib/utils";
     import { spotifyAPIHandler } from "../lib/stores";
-    import PlaylistInfo from "./PlaylistInfo.svelte";
+    import ContentBox from "./ContentBox.svelte";
+    import ContentContainer from "./ContentContainer.svelte";
 
-    let playlists = {
-        featured: [],
-        user: []
+    let playlistsList = [];
+    let albumsList = [];
+    let loadingReady = 0;   // 2 when ready
+
+    // adding all the playlists and albums into one list
+    let contentList = [];
+    $: {
+        contentList = [];
+        contentList.push(...playlistsList);
+        contentList.push(...albumsList);
+        console.log(contentList);
     }
 
-    let isCustom = false;
+    async function loadContent() {
+        await getPlaylists($spotifyAPIHandler)
+            .then(playlists => {playlistsList = playlists.filter(p => p.tracks.total > 0)})
+            .then(() => { 
+                console.log("Playlists collected: ", playlistsList.length);
+                loadingReady++; 
+            })
+            .catch(err => { console.log("Error collecting liked playlists: ", err); });
 
-    function getFeatured() {
-        $spotifyAPIHandler.getFeaturedPlaylists({limit: 50})
-            .then((data) => {
-                console.log(data.message);
-                playlists.featured = removeDuplicates(data.playlists.items);
+        await getAlbums($spotifyAPIHandler)
+            .then(albums => {
+                albumsList = albums.map(a => {
+                    return {
+                        uri: a.album.uri,
+                        id: a.album.id,
+                        name: a.album.name,
+                        images: a.album.images,
+                        tracks: {total: a.album.tracks.total},
+                        external_urls: {spotify: a.album.external_urls}
+                    }
+                });
             })
-            .catch((e) => {
-                console.error("Error retrieving featured playlists", e);
+            .then(() => { 
+                console.log("Albums collected: ", albumsList.length);
+                loadingReady++; 
             })
+            .catch(err => { console.log("Error collecting liked albums: ", err); })
     }
 
-    function getPersonal() {
-        $spotifyAPIHandler.getUserPlaylists("", {limit: 50})
-            .then((data) => {
-                playlists.user = removeDuplicates(data.items);
-            })
-            .catch((e) => {
-                console.error("Error retrieving personal playlists", e);
-            })
-    }
 
     onMount(() => {
-        getFeatured();
-        getPersonal();
+        if (loadingReady === 0) 
+            loadContent();
     })
 
 </script>
 
 
 <div class="pregame-screen">
-    {#if !isCustom}
-        <div class="user-screen">
-            <div class="screen-text">
-                <span class="screen-title">Your playlists</span>
-                <span class="screen-description">Playlists owned or followed by you</span>
-            </div>
-
-            <div class="playlist-container">
-                {#each playlists.user as p (p.id) }
-                    <PlaylistInfo
-                        name={p.name}
-                        image={p.images[0].url || null}
-                        total={p.tracks.total}
-                        externUrl={p.external_urls.spotify}
-                    />
-                {/each}
-            </div>
+    
+    <div class="selection-box">
+        <div class="pregame-left"> 
+            <ContentContainer 
+                content={contentList}
+                loaded={loadingReady === 2}
+            />
         </div>
-        
-        <div class="featured-screen">
-            <div class="screen-text">
-                <span class="screen-title">Featured playlists</span>
-                <span class="screen-description">Spotify recommendations for you</span>
-            </div>
-
-            <div class="playlist-container">
-                {#each playlists.featured as p (p.id) }
-                    <PlaylistInfo
-                        name={p.name}
-                        image={p.images[0].url || null}
-                        total={p.tracks.total}
-                        externUrl={p.external_urls.spotify}
-                    />
-                {/each}
-            </div>
+    
+        <div class="pregame-right">
+            s
         </div>
-    {:else}
-        <div class="custom-screen">
-
-        </div>
-    {/if}
-
-    <div class="custom-buttom">
-
     </div>
-
-    <div class="start-buttom">
-
-    </div>
+    
+    
 </div>
 
+
+<style>
+    .pregame-screen {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-top: 3vh;
+    }
+</style>

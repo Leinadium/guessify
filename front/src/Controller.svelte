@@ -7,7 +7,7 @@
 
     let currentMode = "landing";    // landing | pregame | game
 
-    let playlistId = "37i9dQZF1DZ06evO4bbJPq";
+    let playlistId = "1szWU1SGQwoqnEHwkXUDGH";
     let gameInfo = {
         score: 0,
         maxRounds: 7,
@@ -44,7 +44,6 @@
     />
 
 {:else if currentMode == "pregame"}
-    <!-- TODO: Pregame -->
     <PreGameScreen />
 
 {:else}

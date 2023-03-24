@@ -59,7 +59,7 @@
 
     .header {
         width: 100vw;
-        height: 10vh;
+        height: 8vh;
         
         background-image: linear-gradient(to right, rgb(34, 37, 237) 0%, rgba(30,215,96,1) 100%);
         /* background: rgb(51,56,214); */
@@ -74,7 +74,7 @@
 
     .header-title {
         color: rgb(255, 255, 255);
-        font-size: 6vh;
+        font-size: 5vh;
         font-family: 'Circular Std';
         font-weight: 700;
         padding-left: 5vw;

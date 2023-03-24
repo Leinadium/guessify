@@ -55,7 +55,7 @@
             indexAvailable = indexAvailable + 1;
             selectedIndex = availableIndexes[indexAvailable];
         }
-        console.log("resultado: sI: ", selectedIndex, " iA: ", indexAvailable);
+        
     }
 
     // decrement the indexes
@@ -69,7 +69,9 @@
 
     // handle a direct click to a result
     function handleResultClick(trueIndex) {
-        console.log("click: ", trueIndex);
+        if (selectedIndex === trueIndex) {
+            dispatch("submit", {})
+        }
         selectedIndex = trueIndex;
         indexAvailable = availableIndexes.indexOf(trueIndex);
     }
