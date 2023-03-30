@@ -29,6 +29,7 @@
                 </a>
             </div>
             <div class="footer-description">
+                Guessify has no association with Spotify.
                 Guessify doesn't use cookies and doesn't track you data
             </div>
         </div>
