@@ -42,14 +42,14 @@
 
         <div class="div-login">
             {#if !$isAuthValid}
+                <span class="requires">
+                    Requires Spotify Premium
+                </span>
                 <button class="btn-landing btn-login" in:fade on:click="{() => {startAuth = true;}}">
                     <span class="login">
                         Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify">
                     </span>
                 </button>
-                <span class="requires">
-                    Requires Spotify Premium
-                </span>
             {:else}
                 <!-- svelte-ignore a11y-invalid-attribute -->
                 <a href="#" class="requires logout" on:click={resetAuth}>
@@ -197,7 +197,7 @@
         font-size: max(0.8vw, 1.0vh);
         font-weight: 300;
         font-style: italic;
-        color: #404040;
+        color: #d0d0d0;
     }
 
     .logout {

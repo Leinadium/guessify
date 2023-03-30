@@ -7,7 +7,8 @@
 
     let currentMode = "landing";    // landing | pregame | game
 
-    let playlistId = "1szWU1SGQwoqnEHwkXUDGH";
+    let playlistId = "1Hno5OKWwHag0fuRBrXzWL";
+    
     let gameInfo = {
         score: 0,
         maxRounds: 7,
@@ -18,7 +19,7 @@
     function goToSelection() {
         if ($refreshToken && $accessToken) {
             $spotifyAPIHandler.setAccessToken($accessToken);
-            currentMode = "pregame"    // TODO: selection
+            currentMode = "pregame";
         }
     }
 
@@ -37,13 +38,13 @@
 
 <LoadAuth />
 
-{#if currentMode == "landing"}
+{#if currentMode === "landing"}
     <LandingContent 
         on:ready={goToSelection}
         on:reset={resetAll}
     />
 
-{:else if currentMode == "pregame"}
+{:else if currentMode === "pregame"}
     <PreGameScreen />
 
 {:else}

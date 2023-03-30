@@ -89,7 +89,7 @@
         // update round
         currentInfo.round += 1;
         // update score
-        if (idx != -1 && currentInfo.musicIndex === idx) {
+        if (idx !== -1 && currentInfo.musicIndex === idx) {
             gameInfo.score += currentInfo.roundScore;
             endInfo.scoreEarned = currentInfo.roundScore;
             endInfo.success = true;

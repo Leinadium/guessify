@@ -4,6 +4,7 @@
     import { spotifyAPIHandler } from "../lib/stores";
     import ContentBox from "./ContentBox.svelte";
     import ContentContainer from "./ContentContainer.svelte";
+  import OtherContainer from "./OtherContainer.svelte";
 
     let playlistsList = [];
     let albumsList = [];
@@ -58,17 +59,19 @@
 
 <div class="pregame-screen">
     
-    <div class="selection-box">
-        <div class="pregame-left"> 
+    <div class="pregame-left">
+        <spam class="title">Choose from your library...</spam>
+        <div class="selection-container"> 
             <ContentContainer 
                 content={contentList}
                 loaded={loadingReady === 2}
             />
         </div>
-    
-        <div class="pregame-right">
-            s
-        </div>
+    </div>
+
+    <div class="pregame-right">
+        <spam class="title">or load some other playlist/album</spam>
+        <OtherContainer />
     </div>
     
     
@@ -84,5 +87,21 @@
         justify-content: space-between;
         align-items: flex-start;
         padding-top: 3vh;
+    }
+
+    .pregame-left, .pregame-right {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2vh;
+
+        color: #fff;
+        font-family: 'Circular Std';
+    }
+
+    .title {
+        font-size: 2vw;
+        font-weight: 500;
     }
 </style>
