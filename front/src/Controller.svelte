@@ -6,6 +6,7 @@
     import PreGameScreen from "./pregame/PreGameScreen.svelte";
 
     let currentMode = "landing";    // landing | pregame | game
+    let nextMode = currentMode;
 
     let playlistId = "1Hno5OKWwHag0fuRBrXzWL";
     
@@ -19,7 +20,8 @@
     function goToSelection() {
         if ($refreshToken && $accessToken) {
             $spotifyAPIHandler.setAccessToken($accessToken);
-            currentMode = "pregame";
+            nextMode = "pregame";
+            currentMode = "";
         }
     }
 
@@ -31,7 +33,11 @@
     }
 
     function goToLanding() {
-        currentMode = "landing";
+        nextMode = "landing";
+    }
+
+    function update() {
+        currentMode = nextMode;
     }
 
 </script>
@@ -42,12 +48,13 @@
     <LandingContent 
         on:ready={goToSelection}
         on:reset={resetAll}
+        on:outroend={update}
     />
 
 {:else if currentMode === "pregame"}
     <PreGameScreen />
 
-{:else}
+{:else if currentMode === "game"}
     <GamePlay 
         playlistId={playlistId} 
         gameInfo={gameInfo}

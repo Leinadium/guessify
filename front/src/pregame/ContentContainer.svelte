@@ -21,7 +21,7 @@
                 />
             {/each}
         {:else}
-            <p>No content found</p>
+            <p>No albums or playlist found</p>
         {/if}
     {:else}
         <p>Loading...</p>
@@ -47,8 +47,8 @@
     }
 
     .container {
-        width: 40vw;
-        height: 50vh;
+        width: 60vw;
+        height: 40vh;
         overflow-y: scroll;
 
         display: flex;
@@ -56,7 +56,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1vh;
-        padding: 2vh 1vw 2vh 1vw;
+        padding: 1vh 1vw 2vh 1vw;
         background-color: black;
     }
 </style>

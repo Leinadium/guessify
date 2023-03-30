@@ -58,7 +58,9 @@
 
 <div class="landing">
     {#if showText}
-        <LandingDescription />
+        <LandingDescription 
+            on:outroend
+        />
         <LandingButton 
             valid={$isAuthValid}
             username={$username}

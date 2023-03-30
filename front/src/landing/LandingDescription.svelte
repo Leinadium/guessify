@@ -1,5 +1,8 @@
 <script>
     import { fade, fly } from 'svelte/transition';
+    import { createEventDispatcher } from 'svelte';
+    
+    let dispatch = createEventDispatcher();
     let page = "main";      // main, tutorial, about
     let nextPage = "none";
 
@@ -10,6 +13,7 @@
 
     function update() {
         page = nextPage;
+        dispatch("outroend");
     }
 
 </script>

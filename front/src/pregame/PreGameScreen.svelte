@@ -4,7 +4,7 @@
     import { spotifyAPIHandler } from "../lib/stores";
     import ContentBox from "./ContentBox.svelte";
     import ContentContainer from "./ContentContainer.svelte";
-  import OtherContainer from "./OtherContainer.svelte";
+    import OtherContainer from "./OtherContainer.svelte";
 
     let playlistsList = [];
     let albumsList = [];
@@ -58,19 +58,17 @@
 
 
 <div class="pregame-screen">
-    
-    <div class="pregame-left">
-        <spam class="title">Choose from your library...</spam>
-        <div class="selection-container"> 
-            <ContentContainer 
-                content={contentList}
-                loaded={loadingReady === 2}
-            />
-        </div>
+
+    <div class="pregame-select">
+        <spam class="title">Choose from your library</spam>
+        <ContentContainer 
+            content={contentList}
+            loaded={loadingReady === 2}
+        />
     </div>
 
-    <div class="pregame-right">
-        <spam class="title">or load some other playlist/album</spam>
+    <div class="pregame-new">
+        <spam class="title">or load some from an URL</spam>
         <OtherContainer />
     </div>
     
@@ -83,18 +81,20 @@
         width: 100%;
         height: 100%;
         display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: flex-start;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
         padding-top: 3vh;
+        gap: 3vh;
     }
 
-    .pregame-left, .pregame-right {
+    .pregame-select, .pregame-new {
+        width: 100%;
         display: flex;
         flex-flow: column wrap;
         justify-content: flex-start;
         align-items: center;
-        gap: 2vh;
+        gap: 1vh;
 
         color: #fff;
         font-family: 'Circular Std';
@@ -102,6 +102,6 @@
 
     .title {
         font-size: 2vw;
-        font-weight: 500;
+        font-weight: 200;
     }
 </style>

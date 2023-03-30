@@ -29,7 +29,7 @@
     .content-box {
         flex-shrink: 0;
         width: 95%;
-        height: min(9vh, 6vw);
+        height: min(6vh, 4vw);
         padding: 1vh 1vh 1vh 1vh;
         background: rgb(24,20,20);
         background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);  
@@ -62,7 +62,7 @@
         white-space: break-spaces;
         text-overflow: ellipsis;
         overflow: hidden;
-        font-size: min(1.5vh, 1.5vw);
+        font-size: min(2vh, 1.75vw);
         font-weight: bold;
     }
     .total {
