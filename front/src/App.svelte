@@ -15,26 +15,22 @@
     <div class="main">
         <!-- HEADER -->
         <div class="header">
-            <div class="header-title">
-                <a href="/">Guessify</a>
-            </div>
-            <div class="header-actions">
-                <div class="share">
-                    <img class="icon" src="/assets/share-icon.svg" alt="Share">
-                </div>
-                <div class="github">
-                    <a href="https://github.com/Leinadium/guessify">
-                        <img class="icon" src="/assets/github-mark.svg" alt="Github Logo">
-                    </a>
-                </div>
-            </div>
+            <a class="header-title" href="/">Guessify</a>
         </div>
         <!-- MAIN CONTENT -->
         <div class="content">
             <Controller />
         </div>
         <div class="footer">
-            <div class="footer-copyright">Leinadium @ 2023</div>
+            <div class="footer-copyright">
+                Copyright © 2023 Leinadium
+                <a href="https://github.com/Leinadium/guessify">
+                    <img class="icon" src='/assets/github-mark.svg' alt="Github">
+                </a>
+            </div>
+            <div class="footer-description">
+                Guessify doesn't use cookies and doesn't track you data
+            </div>
         </div>
     </div>
 {:else}
@@ -45,6 +41,7 @@
     :global(html), :global(body) {
         margin: 0px;
         height: 100%;
+        font-family: 'Circular Std', Sans-Serif, helvetica, Arial;
     }
 
     :global(span) {
@@ -59,43 +56,18 @@
 
     .header {
         width: 100vw;
-        height: 8vh;
-        
-        background-image: linear-gradient(to right, rgb(34, 37, 237) 0%, rgba(30,215,96,1) 100%);
-        /* background: rgb(51,56,214); */
-        /* background: linear-gradient(0deg, rgba(51,56,214,1) 0%, rgba(51,56,214,1) 16%, rgba(51,56,214,1) 100%); */ 
-        /* background: linear-gradient(0deg, rgba(0,32,51,1) 0%, rgba(7,46,121,1) 40%, rgba(0,42,83,1) 100%); */
-        box-shadow: 0px 4px 16px rgba(17,17,26,0.1), 0px 8px 24px rgba(17,17,26,0.1), 0px 16px 56px rgba(17,17,26,0.1);
+        height: 8vh;        
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
     }
 
     .header-title {
-        color: rgb(255, 255, 255);
-        font-size: 5vh;
-        font-family: 'Circular Std';
-        font-weight: 700;
-        padding-left: 5vw;
-    }
-
-    .header-title > a {
         text-decoration: none;
-        color: inherit;
-    }
-
-    .header-actions {
-        height: 4vh;
-        padding-right: 3vw;
-        display: flex;
-        flex-flow: row nowrap;
-        gap: 2vw;
-    }
-
-    .icon {
-        height: 4vh;
-        aspect-ratio: 1 / 1;
+        color: #ffffff;
+        font-size: 5vh;
+        font-weight: 700;
     }
 
     .footer {
@@ -103,22 +75,32 @@
         left: 0;
         bottom: 0;
         width: 100vw;
-        height: 5vh;
+        height: fit-content;
+        margin-bottom: 1vh;
 
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: column nowrap;
         justify-content: center;
-        align-items: stretch;
+        align-items: center;
+        color: #B9B9B9;
+    }
+
+    .icon {
+        height: 1.5vh;
+        aspect-ratio: 1 / 1;
     }
 
     .footer-copyright {
-        color: rgb(158, 158, 158);
-        font-size: 2vh;
-        font-family: 'Circular Std';
+        font-size: 1.5vh;
         font-weight: 300;
-        
         display: flex;
         align-items: center;
+        gap: 0.5vw;
+    }
+
+    .footer-description {
+        font-size: 1.3vh;
+        font-weight: 100;
     }
 
     .content {
