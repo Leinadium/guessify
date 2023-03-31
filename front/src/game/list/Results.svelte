@@ -79,9 +79,15 @@
     // handle all the key presses during the game
     function handleKey(e) {
         // increment
-        if (e.key === "ArrowDown") incSelected();
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            incSelected();
+        }
         // decrement
-        else if (e.key === "ArrowUp") decSelected();
+        else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            decSelected()
+        };
         // submit
         if ((e.key === "Enter" ) && selectedIndex != -1) {
             dispatch("submit", {})
@@ -90,7 +96,7 @@
 
 </script>
 
-<svelte:window on:keydown={handleKey}></svelte:window>
+<svelte:window on:keypress={handleKey}></svelte:window>
 
 <div class="results">
     <!-- TODO: catch duplicate music -->

@@ -12,7 +12,7 @@
     // enables the base description
     let showText = false;
     // if has error
-    let hasError = true;
+    let hasError = false;
     // transitoin for base description 
     let initialTransition = setTimeout(() => {
         showText = true;

@@ -150,12 +150,13 @@ export function getAlbums(spotifyConnection) {
 }
 
 
-/**Get the first image of a track
+/**Get the last image of a track (smallest possible)
  * If there is no image available, return null
  */
 export function getImage(images) {
-    if (images.length > 0) {
-        return images[0].url;
+    const l = images.length; 
+    if (l > 0) {
+        return images[l - 1].url;
     }
     return null;
 }

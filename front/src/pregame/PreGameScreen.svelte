@@ -1,14 +1,29 @@
 <script>
-    import { onMount } from "svelte";
-    import { removeDuplicates, getPlaylists, getAlbums } from "../lib/utils";
+    import { onMount, createEventDispatcher } from "svelte";
+    import { getPlaylists, getAlbums } from "../lib/utils";
     import { spotifyAPIHandler } from "../lib/stores";
-    import ContentBox from "./ContentBox.svelte";
     import ContentContainer from "./ContentContainer.svelte";
     import OtherContainer from "./OtherContainer.svelte";
+    import PreGameButton from "./PreGameButton.svelte";
+    import Error from "../commom/Error.svelte";
 
     let playlistsList = [];
     let albumsList = [];
     let loadingReady = 0;   // 2 when ready
+    let selectedInfo = {
+        uri: "",
+        name: "",
+    }
+    let selectedContext = "select";     // select | new
+
+    let pregameError = {
+        title: "",
+        quickDescription: "",
+        fullDescription: "",
+        show: false,
+    }
+
+    let dispatch = createEventDispatcher();
 
     // adding all the playlists and albums into one list
     let contentList = [];
@@ -26,7 +41,16 @@
                 console.log("Playlists collected: ", playlistsList.length);
                 loadingReady++; 
             })
-            .catch(err => { console.log("Error collecting liked playlists: ", err); });
+            .catch(err => {
+                console.log("Error collecting liked playlists: ", err); 
+                pregameError = {
+                    "title": "Error collecting liked playlists",
+                    "quickDescription": "Spotify couldn't load your liked playlists. Please refresh the page or try again later.",
+                    "fullDescription": JSON.parse(err.responseText).error.message,
+                    show: true,
+                }
+                
+            });
 
         await getAlbums($spotifyAPIHandler)
             .then(albums => {
@@ -45,17 +69,33 @@
                 console.log("Albums collected: ", albumsList.length);
                 loadingReady++; 
             })
-            .catch(err => { console.log("Error collecting liked albums: ", err); })
+            .catch(err => {
+                console.log("Error collecting liked albums: ", err); 
+                pregameError = {
+                    "title": "Error collecting liked albums",
+                    "quickDescription": "Spotify couldn't load your liked albums. Please refresh the page or try again later.",
+                    "fullDescription": JSON.parse(err.responseText).error.message,
+                    show: true,
+                }
+                
+            })
+    }
+
+    function handleSelectUpdate(e) {
+        selectedContext = e.detail.type;
+        selectedInfo.uri = e.detail.uri;
+        selectedInfo.name = e.detail.name;
     }
 
 
     onMount(() => {
-        if (loadingReady === 0) 
-            loadContent();
+        if (loadingReady === 0) loadContent();
+        pregameError.show = false;
     })
 
 </script>
 
+<Error {...pregameError} on:close={() => dispatch("reset")} />
 
 <div class="pregame-screen">
 
@@ -64,15 +104,24 @@
         <ContentContainer 
             content={contentList}
             loaded={loadingReady === 2}
+            isSelected={selectedContext === "select"}
+            on:select={handleSelectUpdate}
         />
     </div>
 
     <div class="pregame-new">
-        <spam class="title">or load some from an URL</spam>
-        <OtherContainer />
+        <spam class="title">or load from an URL</spam>
+        <OtherContainer
+            isSelected={selectedContext === "new"}
+            on:select={handleSelectUpdate}
+        />
     </div>
-    
-    
+
+    <PreGameButton
+        valid={selectedInfo.uri !== ""}
+        name={selectedInfo.name}
+    />
+
 </div>
 
 
@@ -85,7 +134,7 @@
         justify-content: flex-start;
         align-items: center;
         padding-top: 3vh;
-        gap: 3vh;
+        gap: 1.5vh;
     }
 
     .pregame-select, .pregame-new {
@@ -94,14 +143,19 @@
         flex-flow: column wrap;
         justify-content: flex-start;
         align-items: center;
-        gap: 1vh;
+        gap: 0.3vh;
 
         color: #fff;
         font-family: 'Circular Std';
     }
 
+    .pregame-new {
+        margin-bottom: 4vh;
+    }
+
     .title {
-        font-size: 2vw;
-        font-weight: 200;
+        font-size: 2vh;
+        font-weight: 500;
+        color: #EEEEEE;
     }
 </style>

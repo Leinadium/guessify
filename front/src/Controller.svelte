@@ -34,6 +34,7 @@
 
     function goToLanding() {
         nextMode = "landing";
+        currentMode = nextMode;
     }
 
     function update() {
@@ -52,7 +53,9 @@
     />
 
 {:else if currentMode === "pregame"}
-    <PreGameScreen />
+    <PreGameScreen 
+        on:reset={goToLanding}   
+    />
 
 {:else if currentMode === "game"}
     <GamePlay 
