@@ -12,11 +12,10 @@
     export let gameInfo = {
         score: 0,           // total score of all rounds combined
         maxRounds: 5,       // number of rounds to be played
-        musicPlaylist: [],  // playlist
-        playlistUri: ""
+        content: {}         // playlist/album object
     }
 
-    export let playlistId = "";   
+    // export let playlistId = "";   
 
     let currentInfo = {
         state: "start",     // possible states: [start, game, ready, end, error]
@@ -62,9 +61,9 @@
     function startRound() {
 
         // getting random music
-        const newIdx = Math.floor(Math.random() * gameInfo.musicPlaylist.length);
+        const newIdx = Math.floor(Math.random() * gameInfo.content.tracks.length);
         currentInfo.musicIndex = newIdx;
-        currentInfo.musicInfo = gameInfo.musicPlaylist[newIdx];
+        currentInfo.musicInfo = gameInfo.content.tracks[newIdx];
         currentInfo.playedMs = 0;
 
         // playing music
@@ -104,18 +103,18 @@
 
     function setPlayback() {
         // getFullPlayListInfo --> calls getPlaylist and getPlaylistTracks
-        getFullPlaylistInfo($spotifyAPIHandler, playlistId).then((val) => {
-            // setting up variables
-            gameInfo.playlistUri = val.uri;
-            gameInfo.musicPlaylist = removeDuplicates(val.tracks.map(v => v.track));
-            gameStatus.apiLoaded = true; 
-        }).then(() => {
-            // to avoid some 502 bad gateways during transfer,
-            // https://github.com/spotify/web-api/issues/700#issuecomment-340192774
-            // attempting to play something before transfer
-            $spotifyAPIHandler.play().catch(() => {
-                console.log("Attempting to play before transfer failed. That's ok");
-            })
+        // getFullPlaylistInfo($spotifyAPIHandler, playlistId).then((val) => {
+        //     // setting up variables
+        //     gameInfo.playlistUri = val.uri;
+        //     gameInfo.musicPlaylist = removeDuplicates(val.tracks.map(v => v.track));
+        //     gameStatus.apiLoaded = true; 
+
+        gameStatus.apiLoaded = true;
+        // to avoid some 502 bad gateways during transfer,
+        // https://github.com/spotify/web-api/issues/700#issuecomment-340192774
+        // attempting to play something before transfer
+        $spotifyAPIHandler.play().catch(() => {
+            console.log("Attempting to play before transfer failed. That's ok");
         }).then(() =>
             // transfering playback to new device id 
             $spotifyAPIHandler.transferMyPlayback([spotifyDeviceId]).catch(() => {
@@ -126,7 +125,7 @@
                     console.log("Plan B (2): using /play directly");
                     return $spotifyAPIHandler.play({
                         device_id: spotifyDeviceId,
-                        context_uri: gameInfo.playlistUri
+                        context_uri: gameInfo.content.uri
                     }).then(() => {
                         console.log("Plan B (3): pausing playback");
                         return spotifySdkPlayer.pause();

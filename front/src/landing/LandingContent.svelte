@@ -5,7 +5,7 @@
 
     import LandingButton from './LandingButton.svelte';
     import LandingDescription from './LandingDescription.svelte';
-    import Error from '../commom/Error.svelte';
+    import Error from '../common/Error.svelte';
 
     let dispatch = createEventDispatcher();
     

@@ -1,13 +1,11 @@
 <script>
-    import { fade } from "svelte/transition";
-    
     export let valid = true;
-    export let name = "ABCDE";
+    export let name = "";
 
 </script>
 
 {#if valid}
-    <button class="btn-play" class:valid={valid}>
+    <button class="btn-play" class:valid={valid} on:click>
         <spam class="play">Play</spam>
         <spam class="name">{name}</spam>       
     </button>

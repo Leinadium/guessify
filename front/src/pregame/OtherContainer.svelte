@@ -65,7 +65,7 @@
                 });
 
             } else if (current.category === 'playlist') {
-                $spotifyAPIHandler.getPlaylist(current.id, { fields: "name,images,tracks.total" }).then((res) => {
+                $spotifyAPIHandler.getPlaylist(current.id, { fields: "uri,name,images,tracks.total,external_urls" }).then((res) => {
                     current.content = {
                         uri: res.uri,
                         name: res.name,

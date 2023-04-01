@@ -1,5 +1,6 @@
 const PAGE_LIMIT = 50;
 const ALBUM_LIMIT = 10;    // lower limit to prevent loading all tracks of an album
+const MIN_TRACKS = 5;
 
 const BASE_URL = "http://localhost:5000"
 
@@ -20,7 +21,7 @@ export const REFRESH_KEY = "refresh";
 export function getFullPlaylistInfo(spotifyConnection, playlistId) {
     /* generated via copilot :D */
     return new Promise((resolve, reject) => {
-        spotifyConnection.getPlaylist(playlistId, {
+        return spotifyConnection.getPlaylist(playlistId, {
             fields: "uri,name,images,tracks.items",
             limit: PAGE_LIMIT
         }).then((playlist) => {
@@ -28,7 +29,7 @@ export function getFullPlaylistInfo(spotifyConnection, playlistId) {
             let totalTracks = playlist.tracks.total;
             let offset = PAGE_LIMIT;
             let getTracks = (offset) => {
-                spotifyConnection.getPlaylistTracks(playlistId, {
+                return spotifyConnection.getPlaylistTracks(playlistId, {
                     offset: offset,
                     fields: "items.track(uri,id,name,artists.name,duration_ms,album(images,name))"
                 }).then((data) => {
@@ -48,7 +49,11 @@ export function getFullPlaylistInfo(spotifyConnection, playlistId) {
                     reject(err);
                 });
             };
-            getTracks(offset);
+            // skip pagination if there is only one page
+            if (totalTracks > PAGE_LIMIT) 
+                getTracks(offset);
+            else
+                resolve({ uri: playlist.uri, name: playlist.name, images: playlist.images, tracks: tracks });
         })
         .catch((err) => {
             reject(err);
@@ -100,7 +105,11 @@ export function getPlaylists(spotifyConnection) {
                     reject(err);
                 });
             };
-            getPlaylists(offset);
+            // skip paginating if there is only one page
+            if (totalPlaylists > PAGE_LIMIT)
+                getPlaylists(offset);
+            else
+                resolve(playlists);
         })
         .catch((err) => {
             reject(err);
@@ -141,7 +150,11 @@ export function getAlbums(spotifyConnection) {
                     reject(err);
                 });
             };
-            getAlbums(offset);
+            // skip pagination if there is only one page
+            if (totalAlbums > ALBUM_LIMIT)
+                getAlbums(offset);
+            else
+                resolve(albums);
         })
         .catch((err) => {
             reject(err);
@@ -159,4 +172,101 @@ export function getImage(images) {
         return images[l - 1].url;
     }
     return null;
+}
+
+function createErrorMessage(uriType) {
+    return {
+        responseText: JSON.stringify({
+            error: 
+                {message: `${uriType} must have at least ${MIN_TRACKS} unique tracks`
+            }
+        })
+    }; 
+}
+
+
+/**Validates the playlist/album, removing duplicates tracks,
+ * checking if there are more than 5 unique tracks, and returning
+ * the playlist/album object
+ */
+export async function validadeAndReturn(spotifyApi, uri) {
+    /* of course, auto generated via copilot :D */
+    const uriSplit = uri.split(":");
+    const uriType = uriSplit[1];
+    const uriId = uriSplit[2];
+
+    console.log(uri);
+
+    // if you thought the previous code was bad, wait until you see this
+    if (uriType === "playlist") {
+        return getFullPlaylistInfo(spotifyApi, uriId)
+            .then((playlist) => {
+                // removing duplicates and checking the number of tracks
+                return new Promise((resolve, reject) => {
+                    playlist.tracks = removeDuplicates(playlist.tracks.map(v => v.track));
+                    if (playlist.tracks.length < 5) {
+                        reject(createErrorMessage("Playlist"));
+                    }
+                    resolve(playlist);
+                });
+            });
+    }
+    else if (uriType === "album") {
+        // paginating is required, unfortunately
+        return new Promise((resolve, reject) => {
+            return spotifyApi.getAlbumTracks(uriId, {
+                limit: PAGE_LIMIT
+            }).then((album) => {
+                let tracks = album.items;
+                let totalTracks = album.total;
+                let offset = PAGE_LIMIT;
+                let getTracks = (offset) => {
+                    return spotifyApi.getAlbumTracks(uriId, {
+                        offset: offset,
+                        limit: PAGE_LIMIT
+                    }).then((album) => {
+                        tracks = tracks.concat(album.items);
+                        if (tracks.length < totalTracks) {
+                            getTracks(offset + PAGE_LIMIT);
+                        } else {
+                            if (tracks.length < MIN_TRACKS) {
+                                reject(createErrorMessage("Album"));
+                            }
+                            resolve({
+                                uri: uri,
+                                name: album.name,
+                                images: album.images,
+                                tracks: tracks
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+                };
+                // skip pagination if there is only one page
+                if (totalTracks > PAGE_LIMIT)
+                    getTracks(offset);
+                else {
+                    if (tracks.length < MIN_TRACKS) {
+                        reject(createErrorMessage("Album"));
+                    }
+                    resolve({
+                        uri: uri,
+                        name: album.name,
+                        images: album.images,
+                        tracks: tracks
+                    });
+                }
+            })
+            .catch((err) => {
+                reject(err);
+            });
+        });
+    }
+    else {
+        return new Promise((_resolve, reject) => {
+            reject("Invalid URI");
+        });
+    }
 }

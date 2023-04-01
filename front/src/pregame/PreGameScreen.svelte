@@ -1,11 +1,11 @@
 <script>
     import { onMount, createEventDispatcher } from "svelte";
-    import { getPlaylists, getAlbums } from "../lib/utils";
+    import { getPlaylists, getAlbums, validadeAndReturn } from "../lib/utils";
     import { spotifyAPIHandler } from "../lib/stores";
     import ContentContainer from "./ContentContainer.svelte";
     import OtherContainer from "./OtherContainer.svelte";
     import PreGameButton from "./PreGameButton.svelte";
-    import Error from "../commom/Error.svelte";
+    import Error from "../common/Error.svelte";
 
     let playlistsList = [];
     let albumsList = [];
@@ -21,6 +21,7 @@
         quickDescription: "",
         fullDescription: "",
         show: false,
+        then: "",
     }
 
     let dispatch = createEventDispatcher();
@@ -48,6 +49,7 @@
                     "quickDescription": "Spotify couldn't load your liked playlists. Please refresh the page or try again later.",
                     "fullDescription": JSON.parse(err.responseText).error.message,
                     show: true,
+                    then: "goBack"
                 }
                 
             });
@@ -76,15 +78,51 @@
                     "quickDescription": "Spotify couldn't load your liked albums. Please refresh the page or try again later.",
                     "fullDescription": JSON.parse(err.responseText).error.message,
                     show: true,
+                    then: "goBack"
+
                 }
                 
             })
     }
 
     function handleSelectUpdate(e) {
+        console.log(e);
+        selectedInfo = {
+            uri: e.detail.uri,
+            name: e.detail.name,
+        }
         selectedContext = e.detail.type;
-        selectedInfo.uri = e.detail.uri;
-        selectedInfo.name = e.detail.name;
+        console.log(selectedInfo);
+        console.log(selectedContext);
+    }
+
+    function validateAndSubmit() {
+        // you can only submit if there is an uri loaded and valid
+        // so, validate the uri content (album/playlist) and submit
+        validadeAndReturn($spotifyAPIHandler, selectedInfo.uri)
+            .then(validated => dispatch("submit", {
+                content: validated,
+            }))
+            .catch(err => {
+                console.error(err);
+                pregameError = {
+                    "title": "Invalid Playlist/Album",
+                    "quickDescription": "The selected playlist/album is invalid. Please select another one.",
+                    "fullDescription": JSON.parse(err.responseText).error.message,
+                    show: true,
+                    then: "goBack"
+                }
+            });
+    }
+
+    function errorOnClose() {
+        if (pregameError.then === "goBack") {
+            pregameError.show = false;
+            selectedInfo.uri = "";
+
+        } else if (pregameError.then === "reset") {
+            dispatch("reset");
+        }
     }
 
 
@@ -95,7 +133,7 @@
 
 </script>
 
-<Error {...pregameError} on:close={() => dispatch("reset")} />
+<Error {...pregameError} on:close={errorOnClose} />
 
 <div class="pregame-screen">
 
@@ -120,6 +158,7 @@
     <PreGameButton
         valid={selectedInfo.uri !== ""}
         name={selectedInfo.name}
+        on:click={validateAndSubmit}
     />
 
 </div>

@@ -12,9 +12,8 @@
     
     let gameInfo = {
         score: 0,
-        maxRounds: 7,
-        musicPlaylist: [],  // to be filled
-        playlistUri: ""     // to be filled
+        maxRounds: 5,
+        content: {}
     }
 
     function goToSelection() {
@@ -22,6 +21,15 @@
             $spotifyAPIHandler.setAccessToken($accessToken);
             nextMode = "pregame";
             currentMode = "";
+        }
+    }
+
+    function goToGame(event) {
+        const content = event.detail.content;
+        gameInfo = {
+            score: 0,
+            maxRounds: 5,
+            content: content
         }
     }
 
@@ -54,12 +62,12 @@
 
 {:else if currentMode === "pregame"}
     <PreGameScreen 
-        on:reset={goToLanding}   
+        on:reset={goToLanding}
+        on:submit={goToGame}   
     />
 
 {:else if currentMode === "game"}
     <GamePlay 
-        playlistId={playlistId} 
         gameInfo={gameInfo}
     />
 

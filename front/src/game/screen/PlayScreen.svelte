@@ -45,7 +45,7 @@
     />
 
     <Results 
-        fullContent={gameInfo.musicPlaylist} 
+        fullContent={gameInfo.content.tracks} 
         searchedText={searchedText} 
         bind:selectedIndex
         on:submit={submission}
