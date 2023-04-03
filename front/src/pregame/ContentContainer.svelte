@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import ContentBox from "./ContentBox.svelte";
+    import ContentBox from "../common/ContentBox.svelte";
     import { getImage } from "../lib/utils";
 
     export let content;

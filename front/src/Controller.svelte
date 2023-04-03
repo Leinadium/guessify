@@ -7,8 +7,6 @@
 
     let currentMode = "landing";    // landing | pregame | game
     let nextMode = currentMode;
-
-    let playlistId = "1Hno5OKWwHag0fuRBrXzWL";
     
     let gameInfo = {
         score: 0,
@@ -25,12 +23,13 @@
     }
 
     function goToGame(event) {
-        const content = event.detail.content;
         gameInfo = {
             score: 0,
             maxRounds: 5,
-            content: content
+            content: event.detail.content
         }
+        nextMode = "game";
+        currentMode = "";
     }
 
     function resetAll() {
@@ -63,7 +62,8 @@
 {:else if currentMode === "pregame"}
     <PreGameScreen 
         on:reset={goToLanding}
-        on:submit={goToGame}   
+        on:submit={goToGame}
+        on:outroend={update}   
     />
 
 {:else if currentMode === "game"}

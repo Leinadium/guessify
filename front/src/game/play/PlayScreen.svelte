@@ -1,9 +1,9 @@
 <script>
     import { isPlaying } from '../../lib/stores';
     import { createEventDispatcher, onMount } from 'svelte';
-    import AudioInterface from "../audio/AudioInterface.svelte";
-    import SearchBar from "../search/SearchBar.svelte";
-    import Results from "../list/Results.svelte";
+    import AudioInterface from "./audio/AudioInterface.svelte";
+    import SearchBar from "./search/SearchBar.svelte";
+    import Results from "./list/Results.svelte";
 
     let dispatch = createEventDispatcher();
 

@@ -83,7 +83,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        font-size: 1.5vh;
+        font-size: 2vmin;
         font-weight: bold;
     }
     .total {

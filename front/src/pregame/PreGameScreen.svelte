@@ -2,6 +2,7 @@
     import { onMount, createEventDispatcher } from "svelte";
     import { getPlaylists, getAlbums, validadeAndReturn } from "../lib/utils";
     import { spotifyAPIHandler } from "../lib/stores";
+    import { fade } from "svelte/transition";
     import ContentContainer from "./ContentContainer.svelte";
     import OtherContainer from "./OtherContainer.svelte";
     import PreGameButton from "./PreGameButton.svelte";
@@ -135,7 +136,7 @@
 
 <Error {...pregameError} on:close={errorOnClose} />
 
-<div class="pregame-screen">
+<div class="pregame-screen" transition:fade on:outroend>
 
     <div class="pregame-select">
         <spam class="title">Choose from your library</spam>

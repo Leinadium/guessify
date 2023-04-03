@@ -21,3 +21,6 @@ export const isAuthValid = writable(false);
 
 // spotify username
 export const username = writable(null);
+
+// game score
+export const gameScore = writable(0);

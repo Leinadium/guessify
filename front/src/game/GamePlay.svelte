@@ -1,16 +1,15 @@
 <script>
     import SpotifyLib from "../lib/SpotifyLib.svelte";
-    import PlayScreen from "./screen/PlayScreen.svelte";
-    import ReadyScreen from "./screen/ReadyScreen.svelte";
-    import StartScreen from "./screen/StartScreen.svelte";
-    import { spotifyAPIHandler, isPlaying } from "../lib/stores"
+    import PlayScreen from "./play/PlayScreen.svelte";
+    import ReadyScreen from "./ready/ReadyScreen.svelte";
+    import StartScreen from "./start/StartScreen.svelte";
+    import { spotifyAPIHandler, isPlaying, gameScore } from "../lib/stores"
     import GameTick from "../lib/GameTick.svelte";
-    import { getFullPlaylistInfo, removeDuplicates } from "../lib/utils";
+    import Scoreboard from "./scoreboard/Scoreboard.svelte";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
     export let gameInfo = {
-        score: 0,           // total score of all rounds combined
         maxRounds: 5,       // number of rounds to be played
         content: {}         // playlist/album object
     }
@@ -89,8 +88,8 @@
         currentInfo.round += 1;
         // update score
         if (idx !== -1 && currentInfo.musicIndex === idx) {
-            gameInfo.score += currentInfo.roundScore;
-            endInfo.scoreEarned = currentInfo.roundScore;
+            $gameScore += currentInfo.roundScore;
+            endInfo.scoreEarned = currentInfo.roundScore;       // TODO: remove
             endInfo.success = true;
         } else {
             endInfo.scoreEarned = 0;
@@ -165,44 +164,59 @@
     on:state={stateHandler}
 />
 
-{#if currentInfo.state === "start"}
-    <StartScreen 
-        enable={gameStatus.canStart}
-        on:click={startRound}
+<div class="gameplay">
+    <Scoreboard
+        rounds={currentInfo.round}
+        maxRounds={gameInfo.maxRounds}    
     />
 
-
-{:else if currentInfo.state === "game"}
-    {#if isPlaying}
-        <GameTick 
-            bind:currentInfo={currentInfo}
-            ms={DEFAULT_INTERVAL}
+    {#if currentInfo.state === "start"}
+        <StartScreen 
+            enable={gameStatus.canStart}
+            on:click={startRound}
         />
+
+
+    {:else if currentInfo.state === "game"}
+        {#if isPlaying}
+            <GameTick 
+                bind:currentInfo={currentInfo}
+                ms={DEFAULT_INTERVAL}
+            />
+        {/if}
+
+        <PlayScreen
+            gameInfo={gameInfo}
+            bind:currentInfo={currentInfo}
+            on:submit="{(e) => {endRound(e.detail.index)}}"
+            on:giveup="{() => {endRound(-1)}}"
+            on:pauseplay={handleOnToggle}
+        />
+
+    {:else if currentInfo.state === "ready"}
+        <ReadyScreen
+            gameInfo={gameInfo}
+            currentInfo={currentInfo}
+            endInfo={endInfo}
+            on:click={startRound}
+        />
+
+    {:else if currentInfo.state === "end"}
+        <!-- TODO: End screen -->
+        <span>End score: {$gameScore}</span>
+
+    {:else }
+        <!-- TODO: Error screen -->
+
     {/if}
+</div>
 
-    <PlayScreen
-        gameInfo={gameInfo}
-        bind:currentInfo={currentInfo}
-        on:submit="{(e) => {endRound(e.detail.index)}}"
-        on:giveup="{() => {endRound(-1)}}"
-        on:pauseplay={handleOnToggle}
-    />
-
-{:else if currentInfo.state === "ready"}
-    <ReadyScreen
-        gameInfo={gameInfo}
-        currentInfo={currentInfo}
-        endInfo={endInfo}
-        on:click={startRound}
-    />
-
-{:else if currentInfo.state === "end"}
-    <!-- TODO: End screen -->
-    <span>End score: {gameInfo.score}</span>
-
-{:else }
-    <!-- TODO: Error screen -->
-
-{/if}
-
+<style>
+    .gameplay {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        padding-top: 5vh;
+    }
+</style>
 

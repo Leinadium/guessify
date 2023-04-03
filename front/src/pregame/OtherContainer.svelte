@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import { spotifyAPIHandler } from "../lib/stores";
-    import ContentBox from "./ContentBox.svelte";
+    import ContentBox from "../common/ContentBox.svelte";
 
     let url = "";
     export let isSelected = false;
