@@ -30,7 +30,7 @@
             </div>
             <div class="footer-description">
                 Guessify has no association with Spotify.
-                Guessify doesn't use cookies and doesn't track you data
+                Guessify doesn't use cookies and doesn't track your data
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
     }
 
     .footer-description {
-        font-size: 1.3vh;
+        font-size: min(1.3vh, 1.5vw);
         font-weight: 100;
     }
 
