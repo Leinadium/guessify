@@ -1,33 +1,38 @@
 <script>
+    import { onMount } from "svelte";
     import ContentBox from "../../common/ContentBox.svelte";
     import StartButton from "./StartButton.svelte";
+    import { getImage } from "../../lib/utils";
     
-    export let enable = false;
+    
     export let loading = {
         text: "",
-        progress: 0
+        progress: 0.3,
+        done: false
     };
-    export let maxRounds = 5;
+    export let content = {};
+
 
 </script>
 
 <div class="start-screen">
     <div class="wrapper-box">
         <spam class="content-header">Playlist/Album selected:</spam>
-        <ContentBox />
+        <ContentBox 
+            name={content.name}
+            image={getImage(content.images)}
+            total={content.tracks.length}
+            externUrl={content.external_urls.spotify}
+            isSelected={false}
+            isUnique={true}
+        />
     </div>
     
-
-    <StartButton />
-</div>"
-
-
-
-{#if enable }
-    <button on:click>Start</button>
-{:else }
-    <span>Loading...</span>
-{/if}
+    <StartButton 
+        loading={loading}
+        on:start
+    />
+</div>
 
 
 <style>

@@ -6,6 +6,7 @@
     import { spotifyAPIHandler, isPlaying, gameScore } from "../lib/stores"
     import GameTick from "../lib/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
+  import { onMount } from "svelte";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
@@ -13,8 +14,6 @@
         maxRounds: 5,       // number of rounds to be played
         content: {}         // playlist/album object
     }
-
-    // export let playlistId = "";   
 
     let currentInfo = {
         state: "start",     // possible states: [start, game, ready, end, error]
@@ -25,12 +24,18 @@
         playedMs: -1,       // total milliseconds of music played
     } 
 
-    let gameStatus = {
-        canStart: false,    // every lib has been loaded and ready
-        sdkLoaded: false,   // sdk is loaded (the js library is set)
-        sdkReady: false,    // sdk is ready (the sdk returned ready)
-        sdkConfigured: false,   // sdk is configured to play
-        apiLoaded: false,   // the api has loaded the playlist
+    // let gameStatus = {
+    //     canStart: false,    // every lib has been loaded and ready
+    //     sdkLoaded: false,   // sdk is loaded (the js library is set)
+    //     sdkReady: false,    // sdk is ready (the sdk returned ready)
+    //     sdkConfigured: false,   // sdk is configured to play
+    //     apiLoaded: false,   // the api has loaded the playlist
+    // }
+
+    let loadingStatus = {
+        done: false,
+        text: "",
+        progress: 0,
     }
 
     let endInfo = {
@@ -48,10 +53,11 @@
     }
 
     function errorHandler(args) {
-        // :(
+        // TODO: error screen
         console.log("error: ", args);
     }
     function stateHandler(state) {
+        // TODO: handle state change
         // https://developer.spotify.com/documentation/web-playback-sdk/reference/#object-web-playback-state
         $isPlaying = !state.paused;
     }
@@ -101,14 +107,9 @@
     }
 
     function setPlayback() {
-        // getFullPlayListInfo --> calls getPlaylist and getPlaylistTracks
-        // getFullPlaylistInfo($spotifyAPIHandler, playlistId).then((val) => {
-        //     // setting up variables
-        //     gameInfo.playlistUri = val.uri;
-        //     gameInfo.musicPlaylist = removeDuplicates(val.tracks.map(v => v.track));
-        //     gameStatus.apiLoaded = true; 
+        loadingStatus.text = "Preparing playback... (1st attempt)";
+        loadingStatus.progress = 0.7;
 
-        gameStatus.apiLoaded = true;
         // to avoid some 502 bad gateways during transfer,
         // https://github.com/spotify/web-api/issues/700#issuecomment-340192774
         // attempting to play something before transfer
@@ -117,10 +118,12 @@
         }).then(() =>
             // transfering playback to new device id 
             $spotifyAPIHandler.transferMyPlayback([spotifyDeviceId]).catch(() => {
+                loadingStatus.text = "Preparing playback... (2nd attempt)";
                 console.log("Failed to transfer. Plan B");
+
                 // if 502 still happens, try to play some music in the new device directly
                 console.log("Plan B (1): Muting sdk player");
-                spotifySdkPlayer.setVolume(0).then(() => {
+                return spotifySdkPlayer.setVolume(0).then(() => {
                     console.log("Plan B (2): using /play directly");
                     return $spotifyAPIHandler.play({
                         device_id: spotifyDeviceId,
@@ -141,16 +144,35 @@
             })
         ).then(() => {
             // sdk is ready at least!
-            gameStatus.sdkConfigured = true;
+            loadingStatus.text = "Done!";
+            loadingStatus.progress = 1;
+            loadingStatus.done = true;
+
         }).catch(errorHandler);
     }
 
-    $: gameStatus.canStart = (
-        gameStatus.sdkLoaded && 
-        gameStatus.sdkReady && 
-        gameStatus.apiLoaded && 
-        gameStatus.sdkConfigured
-    );
+    // $: gameStatus.canStart = (
+    //     gameStatus.sdkLoaded && 
+    //     gameStatus.sdkReady && 
+    //     gameStatus.apiLoaded && 
+    //     gameStatus.sdkConfigured
+    // );
+
+    onMount(() => {
+        loadingStatus.text = "Connecting to Spotify SDK...";
+        loadingStatus.progress = 0.2;
+    })
+
+    function onSdkLoaded() {
+        loadingStatus.text = "Spotify SDK has loaded";
+        loadingStatus.progress = 0.5;
+    }
+
+    function onSdkNotReady() {
+        loadingStatus.text = "Spotify SDK disconnected";
+        loadingStatus.progress = 0.5;
+        loadingStatus.done = false;
+    }
 
 </script>
 
@@ -158,9 +180,9 @@
     bind:spotifyPlayer={spotifySdkPlayer}
     bind:deviceId={spotifyDeviceId}
     on:error={errorHandler}
-    on:loaded="{() => {gameStatus.sdkLoaded = true;}}"
-    on:ready="{() => {gameStatus.sdkReady = true; setPlayback()}}"
-    on:notReady="{() => {gameStatus.sdkReady = false;}}"
+    on:loaded={onSdkLoaded}
+    on:ready={setPlayback}
+    on:notReady={onSdkNotReady}
     on:state={stateHandler}
 />
 
@@ -172,8 +194,9 @@
 
     {#if currentInfo.state === "start"}
         <StartScreen 
-            enable={gameStatus.canStart}
-            on:click={startRound}
+            loading={loadingStatus}
+            content={gameInfo.content}
+            on:start={startRound}
         />
 
 

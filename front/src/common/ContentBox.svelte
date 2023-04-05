@@ -5,7 +5,7 @@
     export let total;
     export let externUrl;
     export let isSelected = false;
-
+    export let isUnique = false;
     export let expand = false;
         
 </script>
@@ -21,7 +21,11 @@
 
         <div class="texts">
         <spam class="name">{name}</spam>
-        <spam class="total">{total} track{#if (total != 1)}s{/if}</spam>
+        <spam class="total">
+            {total} 
+            {#if isUnique}unique {/if} 
+            track{#if (total != 1)}s{/if}
+        </spam>
     </div>
     
     <div class="powered-by">

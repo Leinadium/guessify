@@ -28,6 +28,7 @@
             maxRounds: 5,
             content: event.detail.content
         }
+        console.log(gameInfo.content);
         nextMode = "game";
         currentMode = "";
     }

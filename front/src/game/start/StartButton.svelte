@@ -1,39 +1,134 @@
 <script>
-    export let enable = false;
+    import { fade } from "svelte/transition";
+    import { tweened } from "svelte/motion";
+    import { cubicInOut, cubicOut } from "svelte/easing";
+    import { onMount, createEventDispatcher } from "svelte";
+
+    let dispatch = createEventDispatcher();
+
     export let loading = {
         text: "",
-        progress: 0.5
+        progress: 0,
+        done: false
     };
+
+    const loadingProgress = tweened(0, {
+        duration: 500,
+        easing: cubicOut
+    });
+
+    const readySize = tweened(0.125, {
+        duration: 1000,
+        easing: cubicInOut
+    })
+
+    let showStartText = false;
+
+    // update loading progress
+    $: loadingProgress.set(loading.progress);
+
+    $: if (loading.done) { 
+        readySize.set(1);
+        setTimeout(() => {showStartText = true;}, 1000); 
+    }
+
+    function handleClick() {
+        if (loading.done)
+            dispatch("start");
+    }
+
+    onMount(() => {
+        loadingProgress.set(loading.progress);
+    })
 
 </script>
 
-{#if !enable}
-    <button class="btn-start" on:click>
-        <div class="loading-progress" style="width: {loading.progress * 100}%"></div>
-        <span class="start">Start</span>
+
+<div class="wrapper-btn">
+    <button class="btn-start" on:click={handleClick}>
+        {#if !loading.done}
+            <div class="loading-wrapper">
+                <div class="loading-progress" style="width: {$loadingProgress * 100}%" in:fade></div>
+            </div>
+
+        {:else}
+            <div class="ready" style="height: calc({$readySize} * var(--max-height))">
+                {#if showStartText}<div class="text" in:fade>Start</div>{/if}
+            </div>
+        {/if}
     </button>
-{/if}
+    {#if !loading.done}
+        <div class="loading-texts">
+            <spam class="loading-text">{loading.text}</spam>    
+            <spam class="loading-text">{Math.floor(loading.progress * 100)}%</spam>
+        </div>
+    {/if}
+</div>
+
+
 
 <style>
+    .wrapper-btn {
+        color: #787878;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
     .btn-start {
-        height: 7vh;
-        aspect-ratio: 3 / 1;
-        border-radius: 2vh;
-        background: #787878;
+        width: 20vh;
+        height: fit-content;
         border: 0;
+        background: transparent;
         position: relative;
 
         display: flex;
         flex-flow: column nowrap;
-        align-items: center;
+        align-items: flex-start;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .loading-wrapper {
+        width: 100%;
+        height: 100%;
+        border-radius: 2vh;
+        background: #fff;
     }
 
     .loading-progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background: blue;
+        height: 1vh;
+        background: #5A5A5A;
         border-radius: 2vh;
+        border: 0;
+    }
+
+    .loading-texts {
+        margin-top: 0.3vh;
+        height: 1vh;
+        font-size: 1.5vh;
+        font-weight: 800;
+
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.2vh;
+    }
+
+    .ready {
+        width: 100%;
+        --max-height: 8vh;
+        background: #3034BA;
+        border-radius: 2vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: #fff;
+        font-weight: bold;
+        font-size: 3vh;
     }
 </style>

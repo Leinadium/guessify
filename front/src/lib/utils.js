@@ -1,6 +1,7 @@
 const PAGE_LIMIT = 50;
 const ALBUM_LIMIT = 10;    // lower limit to prevent loading all tracks of an album
-const MIN_TRACKS = 5;
+export const MAX_ROUNDS = 5;
+const MIN_TRACKS = MAX_ROUNDS;
 
 const BASE_URL = "http://localhost:5000"
 
@@ -22,7 +23,7 @@ export function getFullPlaylistInfo(spotifyConnection, playlistId) {
     /* generated via copilot :D */
     return new Promise((resolve, reject) => {
         return spotifyConnection.getPlaylist(playlistId, {
-            fields: "uri,name,images,tracks.items",
+            fields: "uri,name,images,tracks.items,external_urls",
             limit: PAGE_LIMIT
         }).then((playlist) => {
             let tracks = playlist.tracks.items;
@@ -41,7 +42,8 @@ export function getFullPlaylistInfo(spotifyConnection, playlistId) {
                             uri: playlist.uri,
                             name: playlist.name,
                             images: playlist.images,
-                            tracks: tracks
+                            tracks: tracks,
+                            external_urls: playlist.external_urls
                         });
                     }
                 })
@@ -53,7 +55,13 @@ export function getFullPlaylistInfo(spotifyConnection, playlistId) {
             if (totalTracks > PAGE_LIMIT) 
                 getTracks(offset);
             else
-                resolve({ uri: playlist.uri, name: playlist.name, images: playlist.images, tracks: tracks });
+                resolve({ 
+                    uri: playlist.uri, 
+                    name: playlist.name, 
+                    images: playlist.images, 
+                    tracks: tracks,
+                    external_urls: playlist.external_urls 
+                });
         })
         .catch((err) => {
             reject(err);
@@ -236,7 +244,8 @@ export async function validadeAndReturn(spotifyApi, uri) {
                                 uri: uri,
                                 name: album.name,
                                 images: album.images,
-                                tracks: tracks
+                                tracks: tracks,
+                                external_urls: album.external_urls
                             });
                         }
                     })
@@ -255,7 +264,8 @@ export async function validadeAndReturn(spotifyApi, uri) {
                         uri: uri,
                         name: album.name,
                         images: album.images,
-                        tracks: tracks
+                        tracks: tracks,
+                        external_urls: album.external_urls
                     });
                 }
             })

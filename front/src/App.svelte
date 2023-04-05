@@ -13,11 +13,9 @@
 
 {#if showContent}
     <div class="main">
-        <!-- HEADER -->
         <div class="header">
             <a class="header-title" href="/">Guessify</a>
         </div>
-        <!-- MAIN CONTENT -->
         <div class="content">
             <Controller />
         </div>
