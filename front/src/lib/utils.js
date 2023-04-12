@@ -1,15 +1,17 @@
 const PAGE_LIMIT = 50;
 const ALBUM_LIMIT = 10;    // lower limit to prevent loading all tracks of an album
-export const MAX_ROUNDS = 5;
-const MIN_TRACKS = MAX_ROUNDS;
 
-const BASE_URL = "http://localhost:5000"
+const API_URL = "http://localhost:5000";
+const FRONT_URL = "http://localhost:5173";
 
-export const AUTH_URL = `${BASE_URL}/auth`;
-export const CB_URL = `http://localhost:5173`;         // TODO: change to real api callback
-export const REFRESH_URL = `${BASE_URL}/get_refresh`;
-export const ACCESS_URL = `${BASE_URL}/get_access`;
+export const AUTH_URL = `${API_URL}/auth`;
+export const CB_URL = FRONT_URL;
+export const REFRESH_URL = `${API_URL}/get_refresh`;
+export const ACCESS_URL = `${API_URL}/get_access`;
 export const REFRESH_KEY = "refresh";
+export const MAX_ROUNDS = 5;
+
+const MIN_TRACKS = MAX_ROUNDS;
 
 /** Get all the tracks recursively of a spotify playlist, paginating through all
  *  the pages of the api request. Uses the `spotify-web-api-js` library.
@@ -21,21 +23,24 @@ export const REFRESH_KEY = "refresh";
  */
 export function getFullPlaylistInfo(spotifyConnection, playlistId) {
     /* generated via copilot :D */
+    console.log("getfullplaylistinfo");
     return new Promise((resolve, reject) => {
         return spotifyConnection.getPlaylist(playlistId, {
-            fields: "uri,name,images,tracks.items,external_urls",
+            fields: "uri,name,images,tracks(total,items),external_urls",
             limit: PAGE_LIMIT
         }).then((playlist) => {
             let tracks = playlist.tracks.items;
             let totalTracks = playlist.tracks.total;
             let offset = PAGE_LIMIT;
+            console.log("pegando de um total de ", totalTracks);        
             let getTracks = (offset) => {
                 return spotifyConnection.getPlaylistTracks(playlistId, {
+                    limit: PAGE_LIMIT,
                     offset: offset,
-                    fields: "items.track(uri,id,name,artists.name,duration_ms,album(images,name))"
+                    fields: "total,items.track(uri,id,name,artists.name,duration_ms,album(images,name))"
                 }).then((data) => {
                     tracks = tracks.concat(data.items);
-                    if (tracks.length < totalTracks) {
+                    if (data.items.length === PAGE_LIMIT) {
                         getTracks(offset + PAGE_LIMIT);
                     } else {
                         resolve({
