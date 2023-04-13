@@ -4,16 +4,19 @@ const UPPER_LIMIT = 50;
 const LOWER_LIMIT = 10;
 
 const FIELD_TRACK = "total,items.track(uri,id,name,artists.name,duration_ms,album(images,name),external_urls.spotify)";
-const FIELD_COMPLETE = `name,images,tracks(${FIELD_TRACK}),external_urls.spotify`; 
+const FIELD_COMPLETE = `uri,name,images,tracks(${FIELD_TRACK}),external_urls.spotify`; 
 
 /** Removes duplicate tracks out of a list of tracks */
-export function removeDuplicates(tracks) {
+export function filterTracks(tracks) {
     let trackIds = new Set();
     let uniqueTracks = [];
     tracks.forEach((track) => {
-        if (!trackIds.has(track.uri)) {
-            trackIds.add(track.uri);
-            uniqueTracks.push(track);
+        let t = track.track;
+        if (!t) return;
+
+        if (!trackIds.has(t.uri)) {
+            trackIds.add(t.uri);
+            uniqueTracks.push(t);
         }
     });
     return uniqueTracks;
@@ -111,8 +114,10 @@ export async function validateAndReturn(conn, uri) {
     console.log("Validating ", uri, " of type ", uriType);
     let content = await getAllTracks(conn, uriId, uriType);
 
+    console.log(content);
+
     // removing duplicates
-    content.tracks = removeDuplicates(content.tracks.map(v => v.track));
+    content.tracks = filterTracks(content.tracks);
     if (content.tracks.length < 5) {
         return {responseText: JSON.stringify({error: {
             message: `${uriType} must have at least ${MAX_ROUNDS} unique tracks`

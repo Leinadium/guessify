@@ -4,15 +4,16 @@
     import ReadyScreen from "./ready/ReadyScreen.svelte";
     import StartScreen from "./start/StartScreen.svelte";
     import { spotifyAPIHandler, isPlaying, gameScore } from "../lib/stores"
-    import GameTick from "../lib/GameTick.svelte";
+    import GameTick from "./play/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
     export let gameInfo = {
         maxRounds: 5,       // number of rounds to be played
-        content: {}         // playlist/album object
+        content: {},        // playlist/album object
+        played: []          // array of indexes of played tracks  
     }
 
     let currentInfo = {
@@ -24,14 +25,6 @@
         playedMs: -1,       // total milliseconds of music played
     } 
 
-    // let gameStatus = {
-    //     canStart: false,    // every lib has been loaded and ready
-    //     sdkLoaded: false,   // sdk is loaded (the js library is set)
-    //     sdkReady: false,    // sdk is ready (the sdk returned ready)
-    //     sdkConfigured: false,   // sdk is configured to play
-    //     apiLoaded: false,   // the api has loaded the playlist
-    // }
-
     let loadingStatus = {
         done: false,
         text: "",
@@ -42,6 +35,13 @@
         success: false,
         scoreEarned: 0,
         correctTrack: {}
+    }
+
+    let playerStateInfo = {
+        hasToPause: false,          // whenever the player may not play music
+        // isTryingToPause: false,
+        hasToStart: false,          // whenever the player has to play some music (attempt 3)
+        isTryingToStart: false,
     }
 
     /* BINDS */ 
@@ -56,29 +56,44 @@
         // TODO: error screen
         console.log("error: ", args);
     }
-    function stateHandler(state) {
-        // TODO: handle state change
-        // https://developer.spotify.com/documentation/web-playback-sdk/reference/#object-web-playback-state
+    function stateHandler(event) {
+        const state = event.detail;
+
+        // update isPlaying
         $isPlaying = !state.paused;
+
+        console.log(state);
+
+        // update pause status accordingly
+        if (!state.paused && playerStateInfo.hasToPause) {
+            spotifySdkPlayer.pause().then(() => console.log("Done pausing SDK")).catch(errorHandler);
+            console.log("Forcing pause");
+        }
     }
 
     /* resets variable and updates currentState */
     function startRound() {
-
         // getting random music
-        const newIdx = Math.floor(Math.random() * gameInfo.content.tracks.length);
+        let possibleIndexes = [];
+        for (let i = 0; i < gameInfo.content.tracks.length; i++) {
+            if (!gameInfo.played.includes(i)) {
+                possibleIndexes.push(i);
+            }
+        }
+        console.log("Possible tracks: ", possibleIndexes.length);
+        const newIdx = possibleIndexes[Math.floor(Math.random() * possibleIndexes.length)];
         currentInfo.musicIndex = newIdx;
         currentInfo.musicInfo = gameInfo.content.tracks[newIdx];
         currentInfo.playedMs = 0;
 
         // playing music
+        playerStateInfo.hasToPause = false;
         $spotifyAPIHandler.play({
             device_id: spotifyDeviceId,
             uris: [currentInfo.musicInfo.uri]
         }).then(() => {
             currentInfo.state = "game";
-            $isPlaying = true;
-        })
+        }).catch(errorHandler);
 
         
     }
@@ -86,12 +101,10 @@
     /* updates scores and updates state to "end" or "ready" */
     function endRound(idx) {
         // pausing the player via sdk
-        spotifySdkPlayer.pause().then(() => {
-            $isPlaying = false;
-        })
-
+        spotifySdkPlayer.pause();
         // update round
         currentInfo.round += 1;
+        gameInfo.played.push(currentInfo.musicIndex);
         // update score
         if (idx !== -1 && currentInfo.musicIndex === idx) {
             $gameScore += currentInfo.roundScore;
@@ -106,107 +119,52 @@
         currentInfo.state = currentInfo.round === gameInfo.maxRounds ? "end" : "ready";
     }
 
-    function setPlaybackOld() {
-        loadingStatus.text = "Preparing playback... (1st attempt)";
-        loadingStatus.progress = 0.7;
-
-        // to avoid some 502 bad gateways during transfer,
-        // https://github.com/spotify/web-api/issues/700#issuecomment-340192774
-        // attempting to play something before transfer
-        $spotifyAPIHandler.play().catch(() => {
-            console.log("Attempting to play before transfer failed. That's ok");
-        }).then(() =>
-            // transfering playback to new device id 
-            $spotifyAPIHandler.transferMyPlayback([spotifyDeviceId]).catch(() => {
-                loadingStatus.text = "Preparing playback... (2nd attempt)";
-                console.log("Failed to transfer. Plan B");
-
-                // if 502 still happens, try to play some music in the new device directly
-                console.log("Plan B (1): Muting sdk player");
-                return spotifySdkPlayer.setVolume(0)
-                    .then(() => 
-                        console.log("Plan B (2): using /play directly")
-                    ).then(() => 
-                        $spotifyAPIHandler.play({
-                            device_id: spotifyDeviceId,
-                            context_uri: gameInfo.content.uri
-                        })
-                    ).then(() => 
-                        console.log("Plan B (3): pausing playback")
-                    ).then(() => 
-                        spotifySdkPlayer.pause()
-                    ).then(() => 
-                        console.log("Plan B (4): restoring volume")
-                    ).then(() => 
-                        spotifySdkPlayer.setVolume(0.7)
-                    )
-            })
-        ).then(() =>
-            // pause the playback on the browser
-            setTimeout(() => {
-                spotifySdkPlayer.pause().catch(() => {
-                    console.log("Attempting to pause after transfer failed. That's ok");
-                }).then(() => {
-                    console.log("Sucessfully paused playback after transfer");
-                })
-            }, 2000) 
-            // spotifySdkPlayer.pause().then(() => {
-            //     console.log("Sucessfully paused playback after transfer");
-            // }).catch(() => {
-            //     console.log("Attempting to pause after transfer failed. That's ok");
-            // })
-
-        ).then(() => {
-            console.log("finished");
-            // sdk is ready at least!
-            loadingStatus.text = "Done!";
-            loadingStatus.progress = 1;
-            loadingStatus.done = true;
-
-        }).catch(errorHandler);
-    }
-
     async function setPlayback() {
         loadingStatus.text = "Preparing playback ... (1st attempt)";
         loadingStatus.progress = 0.7;
+        try {
+            // trying to avoid 502 during transfer
+            try {
+                await $spotifyAPIHandler.play();
+            } catch {
+                console.log("Attempting to play before transfer failed. That's ok");
+            }
 
-        // trying to avoid 502 during transfer
-        try {
-            await $spotifyAPIHandler.play();
-        } catch {
-            console.log("Attempting to play before transfer failed. That's ok");
+            // transfering playback to new device id
+            try {
+                await $spotifyAPIHandler.transferMyPlayback([spotifyDeviceId]);
+            } catch {
+                // if 502 happens anyways, try to play some music in the new device directly
+                loadingStatus.text = "Preparing playback ... (2nd attempt)";
+                console.log("Plan B (1): Muting sdk player");
+                await spotifySdkPlayer.setVolume(0);
+                console.log("Plan B (2): using /play directly");
+                await $spotifyAPIHandler.play({
+                    device_id: spotifyDeviceId,
+                    context_uri: gameInfo.content.uri
+                });
+                console.log("Plan B (3): pausing playback");
+                await spotifySdkPlayer.pause();
+                console.log("Plan B (4): restoring volume");
+                await spotifySdkPlayer.setVolume(0.6);
+            }
+            
+            // pause the playback on the browser
+            try {
+                await spotifySdkPlayer.pause();
+                // this method may fail silently because the sdk is still transfering the playback
+                // so, to be sure, use .hasToPause
+                playerStateInfo.hasToPause = true;
+            } catch {
+                console.log("Attempting to pause after transfer failed. That's ok");
+            }        
+            console.log("finished");
+            loadingStatus.text = "Done!";
+            loadingStatus.progress = 1;
+            loadingStatus.done = true;
+        } catch (error) {
+            errorHandler(error);
         }
-
-        // transfering playback to new device id
-        try {
-            await $spotifyAPIHandler.transferMyPlayback([spotifyDeviceId]);
-        } catch {
-            // if 502 happens anyways, try to play some music in the new device directly
-            loadingStatus.text = "Preparing playback ... (2nd attempt)";
-            console.log("Plan B (1): Muting sdk player");
-            await spotifySdkPlayer.setVolume(0);
-            console.log("Plan B (2): using /play directly");
-            await $spotifyAPIHandler.play({
-                device_id: spotifyDeviceId,
-                context_uri: gameInfo.content.uri
-            });
-            console.log("Plan B (3): pausing playback");
-            await spotifySdkPlayer.pause();
-            console.log("Plan B (4): restoring volume");
-            await spotifySdkPlayer.setVolume(0.7);
-        }
-        
-        // pause the playback on the browser
-        try {
-            await spotifySdkPlayer.pause();
-            console.log("Successfully paused playback after transfer");
-        } catch {
-            console.log("Attempting to pause after transfer failed. That's ok");
-        }        
-        console.log("finished");
-        loadingStatus.text = "Done!";
-        loadingStatus.progress = 1;
-        loadingStatus.done = true;
     }
 
     onMount(() => {

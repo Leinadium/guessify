@@ -10,9 +10,9 @@
     let nextMode = currentMode;
     
     let gameInfo = {
-        score: 0,
         maxRounds: 5,
-        content: {}
+        content: {},
+        played: []
     }
 
     function goToSelection() {
@@ -25,9 +25,9 @@
 
     function goToGame(event) {
         gameInfo = {
-            score: 0,
             maxRounds: MAX_ROUNDS,
-            content: event.detail.content
+            content: event.detail.content,
+            played: []
         }
         console.log(gameInfo.content);
         nextMode = "game";

@@ -25,8 +25,6 @@
     <span>Current round: {currentInfo.round}/{gameInfo.maxRounds}</span>
 
     <span>Score earned: {endInfo.scoreEarned}</span>
-
-    <span>Total score: {gameInfo.score}</span>
 </div>
 
 <button on:click={returnToGame}>Ready</button>

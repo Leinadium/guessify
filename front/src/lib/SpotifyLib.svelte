@@ -46,7 +46,7 @@
             });
 
             spotifyPlayer.addListener('player_state_changed', (args) => {
-                console.log("Player state has changed: ", args);
+                console.log("Player state has changed");
                 dispatch('state', args);
             });
 

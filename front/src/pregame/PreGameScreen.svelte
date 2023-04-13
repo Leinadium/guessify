@@ -1,6 +1,5 @@
 <script>
     import { onMount, createEventDispatcher } from "svelte";
-    // import { getPlaylists, getAlbums, validadeAndReturn } from "../lib/utils";
     import { getPlaylists, getAlbums, validateAndReturn } from "../lib/spotify-utils";
     import { spotifyAPIHandler } from "../lib/stores";
     import { fade } from "svelte/transition";
@@ -35,7 +34,6 @@
         contentList = [];
         contentList.push(...playlistsList);
         contentList.push(...albumsList);
-        console.log(contentList);
     }
 
     async function loadContent() {

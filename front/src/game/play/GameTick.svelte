@@ -1,5 +1,5 @@
 <script>
-    import { isPlaying } from "./stores";
+    import { isPlaying } from "../../lib/stores";
     import { onDestroy } from "svelte";
     
     export let ms = 100;
