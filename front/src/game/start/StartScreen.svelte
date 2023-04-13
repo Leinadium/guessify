@@ -22,7 +22,7 @@
             name={content.name}
             image={getImage(content.images)}
             total={content.tracks.length}
-            externUrl={content.external_urls.spotify}
+            externUrl={content.link}
             isSelected={false}
             isUnique={true}
         />
@@ -48,7 +48,7 @@
     }
 
     .wrapper-box {
-        width: 80%;
+        width: 60%;
         display: flex;
         flex-flow: column nowrap;
         gap: 0.3vh;
