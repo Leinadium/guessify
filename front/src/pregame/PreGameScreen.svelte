@@ -1,6 +1,7 @@
 <script>
     import { onMount, createEventDispatcher } from "svelte";
-    import { getPlaylists, getAlbums, validadeAndReturn } from "../lib/utils";
+    // import { getPlaylists, getAlbums, validadeAndReturn } from "../lib/utils";
+    import { getPlaylists, getAlbums, validateAndReturn } from "../lib/spotify-utils";
     import { spotifyAPIHandler } from "../lib/stores";
     import { fade } from "svelte/transition";
     import ContentContainer from "./ContentContainer.svelte";
@@ -10,11 +11,12 @@
 
     let playlistsList = [];
     let albumsList = [];
-    let loadingReady = 0;   // 2 when ready
+    let loadingReady = false;
     let selectedInfo = {
         uri: "",
         name: "",
     }
+    let isValidating = false;
     let selectedContext = "select";     // select | new
 
     let pregameError = {
@@ -37,53 +39,47 @@
     }
 
     async function loadContent() {
-        await getPlaylists($spotifyAPIHandler)
-            .then(playlists => {playlistsList = playlists.filter(p => p.tracks.total > 0)})
-            .then(() => { 
-                console.log("Playlists collected: ", playlistsList.length);
-                loadingReady++; 
-            })
-            .catch(err => {
-                console.log("Error collecting liked playlists: ", err); 
-                pregameError = {
-                    "title": "Error collecting liked playlists",
-                    "quickDescription": "Spotify couldn't load your liked playlists. Please refresh the page or try again later.",
-                    "fullDescription": JSON.parse(err.responseText).error.message,
-                    show: true,
-                    then: "goBack"
+        try {
+            let playlists = await getPlaylists($spotifyAPIHandler)
+            playlistsList = playlists.filter(p => p.tracks.total > 0)
+    
+            console.log("Playlists collected: ", playlistsList.length);
+        } catch (err) {
+            console.log("Error collecting liked playlists: ", err); 
+            pregameError = {
+                "title": "Error collecting liked playlists",
+                "quickDescription": "Spotify couldn't load your liked playlists. Please refresh the page or try again later.",
+                "fullDescription": JSON.parse(err.responseText).error.message,
+                show: true,
+                then: "goBack"
+            }
+        }
+
+        try {
+            let albums = await getAlbums($spotifyAPIHandler);
+            albumsList = albums.map(a => {
+                return {
+                    uri: a.album.uri,
+                    id: a.album.id,
+                    name: a.album.name,
+                    images: a.album.images,
+                    tracks: {total: a.album.tracks.total},
+                    external_urls: {spotify: a.album.external_urls}
                 }
-                
             });
+            console.log("Albums collected: ", albumsList.length);
+        } catch (err) {
+            console.log("Error collecting liked albums: ", err); 
+            pregameError = {
+                "title": "Error collecting liked albums",
+                "quickDescription": "Spotify couldn't load your liked albums. Please refresh the page or try again later.",
+                "fullDescription": JSON.parse(err.responseText).error.message,
+                show: true,
+                then: "goBack"
+            }
+        }
 
-        await getAlbums($spotifyAPIHandler)
-            .then(albums => {
-                albumsList = albums.map(a => {
-                    return {
-                        uri: a.album.uri,
-                        id: a.album.id,
-                        name: a.album.name,
-                        images: a.album.images,
-                        tracks: {total: a.album.tracks.total},
-                        external_urls: {spotify: a.album.external_urls}
-                    }
-                });
-            })
-            .then(() => { 
-                console.log("Albums collected: ", albumsList.length);
-                loadingReady++; 
-            })
-            .catch(err => {
-                console.log("Error collecting liked albums: ", err); 
-                pregameError = {
-                    "title": "Error collecting liked albums",
-                    "quickDescription": "Spotify couldn't load your liked albums. Please refresh the page or try again later.",
-                    "fullDescription": JSON.parse(err.responseText).error.message,
-                    show: true,
-                    then: "goBack"
-
-                }
-                
-            })
+        loadingReady = true;
     }
 
     function handleSelectUpdate(e) {
@@ -98,9 +94,10 @@
     }
 
     function validateAndSubmit() {
+        isValidating = true;
         // you can only submit if there is an uri loaded and valid
         // so, validate the uri content (album/playlist) and submit
-        validadeAndReturn($spotifyAPIHandler, selectedInfo.uri)
+        validateAndReturn($spotifyAPIHandler, selectedInfo.uri)
             .then(validated => dispatch("submit", {
                 content: validated,
             }))
@@ -120,6 +117,7 @@
         if (pregameError.then === "goBack") {
             pregameError.show = false;
             selectedInfo.uri = "";
+            isValidating = false;
 
         } else if (pregameError.then === "reset") {
             dispatch("reset");
@@ -128,7 +126,7 @@
 
 
     onMount(() => {
-        if (loadingReady === 0) loadContent();
+        if (!loadingReady) loadContent();
         pregameError.show = false;
     })
 
@@ -142,7 +140,7 @@
         <spam class="title">Choose from your library</spam>
         <ContentContainer 
             content={contentList}
-            loaded={loadingReady === 2}
+            loaded={loadingReady}
             isSelected={selectedContext === "select"}
             on:select={handleSelectUpdate}
         />
@@ -159,6 +157,7 @@
     <PreGameButton
         valid={selectedInfo.uri !== ""}
         name={selectedInfo.name}
+        loading={isValidating}
         on:click={validateAndSubmit}
     />
 

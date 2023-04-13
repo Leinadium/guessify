@@ -27,7 +27,7 @@ def auth():
     args = {
         "client_id": getenv("CLIENT_ID"),
         "response_type": "code",
-        "redirect_uri": "http://localhost:5000/cb",
+        "redirect_uri": f"{getenv('API_URL')}/cb",
         "scope": scope,
         "show_dialog": False
     }
@@ -36,7 +36,7 @@ def auth():
 
 @api_blueprint.route("/cb", methods=["GET"])
 def callback():
-    return redirect(f"http://localhost:5173?{urlencode(request.args)}")
+    return redirect(f"{getenv('FRONT_URL')}?{urlencode(request.args)}")
 
     # if "code" in request.args:
     #     return "<h1>Authenticated</h1>"
@@ -51,7 +51,7 @@ def refresh(code: str):
     payload = {
         "grant_type": "authorization_code",
         "code": code,
-        "redirect_uri": "http://localhost:5000/cb"
+        "redirect_uri": f"{getenv('API_URL')}/cb"
     }
 
     headers = {

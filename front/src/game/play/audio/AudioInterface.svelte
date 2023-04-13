@@ -1,5 +1,7 @@
 <script>
+    import VolumeSlider from "./VolumeSlider.svelte";
     import AudioPlayer from "./AudioPlayer.svelte";
+    import PlayPause from "./PlayPause.svelte";
     import { createEventDispatcher } from "svelte";
     
     export let playing = false;
@@ -16,36 +18,26 @@
 </script>
 
 <div class="audio-interface">
-    <!-- player de audio -->
-    <AudioPlayer 
-        {currentMillis}
-        {maxMillis}
-        {currentVolume}
-    />
-
-    <button on:click={toggle}>
-        {#if playing}
-            Pause
-        {:else}
-            Play
-        {/if}
-    </button>
+    <PlayPause playing={playing} on:click={toggle} />
+    <AudioPlayer {currentMillis} {maxMillis} />
+    <VolumeSlider value={currentVolume}/>
 </div>
 
 
 <style>
     .audio-interface {
         width: 80%;
+        height: 7vh;
 
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
-        align-items: stretch;
-        gap: 10px;
+        align-items: center;
+        gap: 0.5vw;
     }
 
-    button {
-        width: 20%;
 
-    }
+
+    
+
 </style>

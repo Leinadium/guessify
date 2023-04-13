@@ -24,7 +24,7 @@
     $: searchedText, updateLists();
     function updateLists() {
         // list of indexes of musics with the searched term inside the parsed string above
-        showStatusContent = parsedContent.map((v) => v.includes(searchedText));
+        showStatusContent = parsedContent.map((v) => v.includes(searchedText.toLowerCase()));
 
         // list of current available indexes to be selected
         availableIndexes = showStatusContent.reduce((acc, v, i) => {

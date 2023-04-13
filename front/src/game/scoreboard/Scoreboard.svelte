@@ -38,8 +38,6 @@
     onMount(() => {
         currentValue.set(0);
         oldValue = 0;
-
-        setTimeout(() => {gameScore.set(500);}, 600)
     })
 
 </script>
@@ -50,7 +48,9 @@
         <spam class="points-text">points</spam>
         
         {#if doShowNew}
-            <spam class="points-new" in:fly={{x: -100, duration: 500}} out:fade>+{dif}</spam>
+            <spam class="points-new" in:fly={{x: -100, duration: 500}} out:fade>
+                +{dif.toFixed(0)}
+            </spam>
         {/if}
     </div>
 

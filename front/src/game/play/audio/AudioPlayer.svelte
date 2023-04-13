@@ -1,10 +1,11 @@
 <script>
+    import PoweredBy from "../../../common/PoweredBy.svelte";
+    
     // the audio time style was based on this code from "Ychnightder-both"
     // https://codepen.io/bold02/pen/XWKMXNe
-    import VolumeSlider from "./VolumeSlider.svelte";
     export let currentMillis = 0;
     export let maxMillis = 1000;
-    export let currentVolume = 0.7;
+    export let contentName = "Daily Mix #1";
 
     // to protected agains -1, 0 or undefined. who knows?
     $: safeCurrent = currentMillis > 0 ? currentMillis : 0.0;
@@ -17,56 +18,81 @@
 
 <div class="audio-player">
     
-    <span>{currentTimeStr}</span>
+    <spam class="now-playing">Now playing from: <spam class="content-name">{contentName}</spam></spam>
 
-    <div class="progress-player">
-        <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
+    <div class="middle">
+        <spam>{currentTimeStr}</spam>
+        <div class="progress-player">
+            <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
+        </div>
     </div>
 
-    <VolumeSlider value={currentVolume}/>
+    <div class="powered-by">
+        <PoweredBy externUrl="https://open.spotify.com/" text="Powered by"/>
+    </div>
 
 </div>
 
 
 <style>
-    .audio-player span {
-        color: #333333;
-    }
 
     .audio-player {
-        flex: 5 0 60%;
-        
+        width: 80%; 
+        height: 100%;
         display: flex;
-        justify-content: space-between;
+        flex-flow: column nowrap;
+        justify-content: center;
         align-items: center;
-        gap: 4px;
-        background-color: aqua;
-        height: 30px;
+        color: #EEEEEE;
+        font-size: 1.0vh;
     }
 
-    span {
-        width: 10%;
-        font-size: small;
+    spam {
+        height: 1.2vh;
+    }
 
+    .now-playing {
+        color: #A0A0A0;
+        font-size: 1.2vh;
+        padding-bottom: 0.2vh;
+        align-self: flex-end;
+    }
+
+    .content-name {
+        font-weight: bold;
+    }
+
+    .middle {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5vw;
+    }
+
+    .powered-by {
+        height: 1.2vh;
+        align-self: flex-end;
     }
 
     .progress-player {
         flex: 5 1 auto;
         box-sizing: border-box;
-        height: 100%;
+        height: 60%;
         width: 100%;
-        border: 8px solid black;
+        border: 0;
+        background-color: #FAFAFA;
         border-radius: 15px;
     }
 
     .progress-bar {
         position: relative;
-        background-color: red;
+        background-color: #0BBA48;
         width: 5%;
         height: 100%;
         border-radius: 15px;
 
     }
-    
 
 </style>

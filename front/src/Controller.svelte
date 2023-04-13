@@ -1,5 +1,6 @@
 <script>
     import { refreshToken, accessToken, spotifyAPIHandler, username, isAuthValid } from "./lib/stores";
+    import { MAX_ROUNDS } from "./lib/utils";
     import LoadAuth from "./lib/LoadAuth.svelte";
     import GamePlay from "./game/GamePlay.svelte";
     import LandingContent from "./landing/LandingContent.svelte";
@@ -25,7 +26,7 @@
     function goToGame(event) {
         gameInfo = {
             score: 0,
-            maxRounds: 5,
+            maxRounds: MAX_ROUNDS,
             content: event.detail.content
         }
         console.log(gameInfo.content);

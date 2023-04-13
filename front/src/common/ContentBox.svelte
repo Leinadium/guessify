@@ -1,4 +1,6 @@
 <script>
+    import PoweredBy from "./PoweredBy.svelte";
+
     // https://developer.spotify.com/documentation/web-api/reference/#/operations/get-featured-playlists
     export let image;
     export let name;
@@ -28,11 +30,9 @@
         </spam>
     </div>
     
+    
     <div class="powered-by">
-        <a href="{externUrl}" class="extern">
-            <spam>Open in</spam>
-            <img class="open-in-logo" src="/assets/spotify-logo-green.png" alt="Spotify logo">
-        </a>
+        <PoweredBy externUrl={externUrl}/>
     </div>
     
 </div>
@@ -94,35 +94,11 @@
         font-size: 1.5vh;
         font-weight: 300;
     }
-
     .powered-by {
         position: absolute;
         bottom: 0.3vh;
         right: 0.3vw;
 
         height: fit-content;
-    }
-    .extern {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-end;
-        align-items: flex-end;
-        width: fit-content;
-        gap: 0.3vw;
-        text-decoration: none;
-        width: fit-content;
-    }
-
-    .extern > spam {
-        color: #1ED760;
-        font-size: 1.2vh;
-        font-weight: 500;
-
-        white-space: nowrap;
-    }
-
-    .open-in-logo {
-        height: 1.5vh;
-        aspect-ratio: 3.37 / 1;
     }
 </style>

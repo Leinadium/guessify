@@ -1,10 +1,14 @@
 <script>
+    export let loading = false;
     export let valid = true;
     export let name = "";
 
 </script>
-
-{#if valid}
+{#if loading}
+    <button class="btn-play loading">
+        <spam class="play">Loading...</spam>
+    </button>
+{:else if valid}
     <button class="btn-play" class:valid={valid} on:click>
         <spam class="play">Play</spam>
         <spam class="name">{name}</spam>       
@@ -47,6 +51,15 @@
     }
 
     .disabled > .play {
+        color: #aaa !important;
+    }
+
+    .loading {
+        background-color: #777;
+        cursor: progress;
+    }
+
+    .loading > .play {
         color: #aaa !important;
     }
 

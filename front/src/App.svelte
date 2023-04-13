@@ -21,7 +21,7 @@
         </div>
         <div class="footer">
             <div class="footer-copyright">
-                Copyright © 2023 Leinadium
+                Copyright © 2023 Daniel Guimarães
                 <a href="https://github.com/Leinadium/guessify">
                     <img class="icon" src='/assets/github-mark.svg' alt="Github">
                 </a>
@@ -94,7 +94,7 @@
         font-weight: 300;
         display: flex;
         align-items: center;
-        gap: 0.5vw;
+        gap: 0.2vw;
     }
 
     .footer-description {
@@ -107,5 +107,9 @@
         height: 85vh;
         margin-left: 10vw;
         margin-right: 10vw;
+
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
     }
 </style>
