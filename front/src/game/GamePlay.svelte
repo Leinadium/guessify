@@ -81,8 +81,6 @@
                     endRound(-1);
             }
         }
-        
-        
 
     }
 
@@ -240,8 +238,8 @@
             gameInfo={gameInfo}
             bind:currentInfo={currentInfo}
             on:submit="{(e) => {endRound(e.detail.index)}}"
-            on:giveup="{() => {endRound(-1)}}"
-            on:pauseplay={handleOnToggle}
+            on:skip="{() => {endRound(-1)}}"
+            on:toggle={handleOnToggle}
         />
 
     {:else if currentInfo.state === "ready"}
@@ -267,8 +265,8 @@
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
-        padding-top: 5vh;
-        width: 100vh;
+        padding-top: 5vmin;
+        width: 100vw;
     }
 </style>
 

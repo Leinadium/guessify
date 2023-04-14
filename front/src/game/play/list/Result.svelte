@@ -62,22 +62,22 @@
     }
 
     .track-name {
-        font-size: 5vh;
+        font-size: 5vmin;
         font-weight: bold;
     }
 
     .track-name-artist {
-        font-size: 4vh;
+        font-size: 4vmin;
     }
 
     .track-album-name {
-        font-size: 3vh;
+        font-size: 3vmin;
         font-style: italic;
         color: gray;
     }
 
     .track-image img {
-        height: 10vh;
+        height: 10vmin;
         aspect-ratio: 1 / 1;
     }
 

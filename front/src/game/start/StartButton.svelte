@@ -77,7 +77,7 @@
     }
 
     .btn-start {
-        width: 20vh;
+        width: 20vmin;
         height: fit-content;
         border: 0;
         background: transparent;
@@ -93,35 +93,35 @@
     .loading-wrapper {
         width: 100%;
         height: 100%;
-        border-radius: 2vh;
+        border-radius: 2vmin;
         background: #fff;
     }
 
     .loading-progress {
-        height: 1vh;
+        height: 1vmin;
         background: #5A5A5A;
-        border-radius: 2vh;
+        border-radius: 2vmin;
         border: 0;
     }
 
     .loading-texts {
-        margin-top: 0.3vh;
-        height: 1vh;
-        font-size: 1.5vh;
+        margin-top: 0.3vmin;
+        height: 1vmin;
+        font-size: 1.5vmin;
         font-weight: 800;
 
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: center;
-        gap: 0.2vh;
+        gap: 0.2vmin;
     }
 
     .ready {
         width: 100%;
-        --max-height: 8vh;
+        --max-height: 8vmin;
         background: #3034BA;
-        border-radius: 2vh;
+        border-radius: 2vmin;
 
         display: flex;
         justify-content: center;
@@ -129,6 +129,6 @@
 
         color: #fff;
         font-weight: bold;
-        font-size: 3vh;
+        font-size: 3vmin;
     }
 </style>

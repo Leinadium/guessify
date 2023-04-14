@@ -1,5 +1,5 @@
 <script>
-    export let externUrl = "#";
+    export let externUrl = "https://open.spotify.com";
     export let text = "Open in";
 </script>
 
@@ -23,14 +23,14 @@
 
     .extern > spam {
         color: #1ED760;
-        font-size: 1.2vh;
+        font-size: 1.2vmin;
         font-weight: 500;
 
         white-space: nowrap;
     }
 
     .open-in-logo {
-        height: 1.5vh;
+        height: 1.5vmin;
         aspect-ratio: 3.39 / 1;
     }
 </style>

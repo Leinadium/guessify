@@ -12,6 +12,22 @@
     };
     export let content = {};
 
+    const tips = [
+        "Press ENTER to submit the selected track",
+        "Click on a track to select, click again to submit",
+        "You can search using the name of the track, album or artist(s)",
+        "Use the arrow keys to navigate between tracks",
+        "You gain more points by guessing the track faster",
+        "A track can be played only once per game"
+    ];
+
+    let currentTip = "";
+
+    onMount(() => {
+        // choose a random tip
+        currentTip = tips[Math.floor(Math.random() * tips.length)];
+    })
+
 
 </script>
 
@@ -27,11 +43,19 @@
             isUnique={true}
         />
     </div>
-    
+
+    {#if currentTip }
+        <div class="tip">
+            <spam class="tip-title">Tip: </spam>
+            <spam class="tip-text">{currentTip}</spam>
+        </div>
+    {/if}
+
     <StartButton 
         loading={loading}
         on:start
     />
+   
 </div>
 
 
@@ -43,15 +67,15 @@
         flex-flow: column nowrap;
         align-items: center;    
         justify-content: flex-start;
-        gap: 10vh;
-        padding-top: 5vh;
+        gap: 10vmin;
+        padding-top: 5vmin;
     }
 
     .wrapper-box {
-        width: 60%;
+        width: 80vmin;
         display: flex;
         flex-flow: column nowrap;
-        gap: 0.3vh;
+        gap: 0.3vmin;
         align-items: center;
     }
 
@@ -59,4 +83,19 @@
         color: #ffffff;
         font-size: 500;
     }
+
+    .tip {
+        color: #CCC;
+        width: 80vmin;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 0.3vmin;
+        align-items: center;
+    }
+
+    .tip-title {
+        font-size: 2vmin;
+        font-weight: bold;
+    }
+
 </style>

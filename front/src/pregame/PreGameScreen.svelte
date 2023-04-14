@@ -130,7 +130,13 @@
 
 </script>
 
-<Error {...pregameError} on:close={errorOnClose} />
+<Error 
+    title={pregameError.title}
+    quickDescription={pregameError.quickDescription}
+    fullDescription={pregameError.fullDescription}
+    show={pregameError.show}
+    on:close={errorOnClose} 
+/>
 
 <div class="pregame-screen" transition:fade on:outroend>
 
@@ -191,7 +197,7 @@
     }
 
     .title {
-        font-size: 2vh;
+        font-size: 2vmin;
         font-weight: 500;
         color: #EEEEEE;
     }

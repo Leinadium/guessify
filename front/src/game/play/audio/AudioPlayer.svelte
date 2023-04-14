@@ -33,12 +33,12 @@
 <style>
     .now-playing {
         grid-area: nowplaying;
-        justify-self: end;
+        justify-self: center;
         align-self: end;
 
         color: #EEEEEE;
-        font-size: 1.2vh;
-        height: 1.2vh;
+        font-size: 1.2vmin;
+        height: 1.2vmin;
     }
 
     .content-name {
@@ -51,14 +51,15 @@
 
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
-        gap: 0.5vh;
+        gap: 0.5vmin;
     }
 
     .current-time {
         color: #fff;
-        font-size: 1.2vh;
+        font-size: 1.2vmin;
+        width: 4vmin;
     }
 
     .powered-by {

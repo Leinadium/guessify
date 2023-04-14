@@ -22,8 +22,8 @@
     .scorebar {
         box-sizing: border-box;
         width: 100%;
-        height: 0.8vh;
-        border-radius: 1vh;
+        height: 0.8vmin;
+        border-radius: 1vmin;
         background: #FAFAFA;
     }
 
@@ -31,6 +31,6 @@
         position: relative;
         height: 100%;
         background: #5A5A5A;
-        border-radius: 1vh;
+        border-radius: 1vmin;
     }
 </style>

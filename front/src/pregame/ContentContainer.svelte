@@ -86,11 +86,11 @@
     }
     
     .container-background {     
-        width: min(70vw, 80vh);
+        width: 80vmin;
         height: fit-content;
         background-color: black;
-        padding: 1vh 0 0.5vw 1vh;
-        border-radius: 2vh;
+        padding: 1vmin 0 0.5vmax 1vmin;
+        border-radius: 2vmin;
     }
 
     .container {
@@ -102,7 +102,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1vh;
-        padding: 1vh 1vw 2vh 1vw;
+        padding: 2vmin 1vmin 2vh 1vmin;
         margin-right: 1vh;
         background-color: black;
 

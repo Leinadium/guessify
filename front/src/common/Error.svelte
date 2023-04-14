@@ -70,8 +70,8 @@
         align-items: center;
         color: #ffffff;
         text-align: center;
-        padding: 1vh 1vw 1vh 1vw;
-        border-radius: 2vh;
+        padding: 1vmin 1vmax 1vmin 1vmax;
+        border-radius: 2vmin;
     }
 
     .header, .footer {
@@ -82,25 +82,25 @@
     }
 
     .error-big {
-        font-size: min(6vh, 6vw);
+        font-size: 6 vmin;
         font-weight: 500;
     }
 
     .title {
-        font-size: min(3vh, 6vw);
+        font-size: 3vmin;
     }
 
     .quick-description {
-        font-size: min(2vh, 2vw);
+        font-size: 2vmin;
     }
 
     spam.quick-description {
-        margin-bottom: 1vh;
+        margin-bottom: 1vmin;
     }
 
     .full-description {
         margin-top: 0;
-        font-size: min(1.5vh, 1.5vw);
+        font-size: 1.5vmin;
         color: #AAAAAA;
     }
 
@@ -108,9 +108,9 @@
         position: absolute;
         top: 0;
         right: 0%;
-        margin: 1vh;
-        width: min(6vh, 6vw);
-        height: min(6vh, 6vw);
+        margin: 1vmin;
+        width: 6vmin;
+        height: 6vmin;
 
         padding: 0;
         background-color: transparent;

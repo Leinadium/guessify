@@ -1,22 +1,15 @@
 <script>
     import VolumeSlider from "./VolumeSlider.svelte";
     import AudioPlayer from "./AudioPlayer.svelte";
-    import PlayPause from "./PlayPause.svelte";
-    import { createEventDispatcher } from "svelte";
+    import SkipPlayPause from "./SkipPlayPause.svelte";
     
     export let maxMillis;
     export let currentMillis;
 
-    const dispatch = createEventDispatcher();
-
-    function toggle() {
-        dispatch("pauseplay", {})
-    }
-
 </script>
 
 <div class="audio-interface">
-    <PlayPause on:click={toggle} />
+    <SkipPlayPause on:toggle on:skip />
     <AudioPlayer {currentMillis} {maxMillis} />
     <VolumeSlider/>
 </div>
@@ -24,17 +17,17 @@
 
 <style>
     .audio-interface {
-        width: 80%;
-        height: 7vh;
+        width: 60%;
+        height: 7vmin;
 
         display: grid;
-        grid-template-columns: auto 70% auto;
+        grid-template-columns: 20% auto 20%;
         grid-template-rows: 2fr 1fr 2fr;
         grid-template-areas: 
             "playpause nowplaying volume"
             "playpause progress volume"
             "playpause poweredby volume";
-        column-gap: 1vh;
+        column-gap: 0.5vmin;
     }
 
 

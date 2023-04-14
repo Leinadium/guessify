@@ -22,9 +22,9 @@
 
 <style>
     .btn-play {
-        width: 30vh;
+        width: 30vmin;
         aspect-ratio: 4 / 1;
-        border-radius: max(3vw, 4vh);
+        border-radius: 4vmin;
         border: 0px;
         box-sizing: border-box;
         cursor: pointer;
@@ -64,13 +64,13 @@
     }
 
     .play {
-        font-size: 3vh;
+        font-size: 3vmin;
         font-weight: bold;
         color: #fff;
     }
 
     .name {
-        font-size: 1.8vh;
+        font-size: 1.8vmin;
         font-weight: 400;
         font-style: italic;
         width: 100%;

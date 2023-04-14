@@ -65,7 +65,7 @@
     .header-title {
         text-decoration: none;
         color: #ffffff;
-        font-size: 5vh;
+        font-size: 5vmin;
         font-weight: 700;
     }
 
@@ -75,7 +75,7 @@
         bottom: 0;
         width: 100vw;
         height: fit-content;
-        margin-bottom: 1vh;
+        margin-bottom: 1vmin;
 
         display: flex;
         flex-flow: column nowrap;
@@ -85,12 +85,12 @@
     }
 
     .icon {
-        height: 1.5vh;
+        height: 1.5vmin;
         aspect-ratio: 1 / 1;
     }
 
     .footer-copyright {
-        font-size: 1.5vh;
+        font-size: 1.5vmin;
         font-weight: 300;
         display: flex;
         align-items: center;
@@ -98,7 +98,7 @@
     }
 
     .footer-description {
-        font-size: min(1.3vh, 1.5vw);
+        font-size: 1.3vmin;
         font-weight: 100;
     }
 

@@ -1,5 +1,4 @@
 <script>
-    import { isPlaying } from '../../lib/stores';
     import { createEventDispatcher, onMount } from 'svelte';
     import AudioInterface from "./audio/AudioInterface.svelte";
     import SearchBar from "./search/SearchBar.svelte";
@@ -34,8 +33,7 @@
     <AudioInterface 
         currentMillis={currentInfo.playedMs}
         maxMillis={currentInfo.musicInfo['duration_ms']}
-        playing={$isPlaying}
-        on:pauseplay
+        on:toggle on:skip
     />
 
     <SearchBar 

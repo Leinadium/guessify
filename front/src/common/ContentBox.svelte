@@ -42,15 +42,15 @@
     .content-box {
         flex-shrink: 0;
         width: 95%;
-        height: min(6vh, 8vw);
-        padding: 1vh 1vh 1vh 1vh;
+        height: 6vmin;
+        padding: 1vmin;
         background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);  
         border-radius: 10px;
         
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
-        gap: 1vw;
+        gap: 1vmax;
         cursor: pointer;
 
         position: relative;
@@ -91,13 +91,13 @@
         font-weight: bold;
     }
     .total {
-        font-size: 1.5vh;
+        font-size: 1.5vmin;
         font-weight: 300;
     }
     .powered-by {
         position: absolute;
-        bottom: 0.3vh;
-        right: 0.3vw;
+        bottom: 0.3vmin;
+        right: 0.3vmin;
 
         height: fit-content;
     }

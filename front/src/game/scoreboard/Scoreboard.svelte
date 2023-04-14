@@ -86,7 +86,7 @@
 
     .points-text {
         font-size: 1.5vmin;
-        margin-bottom: 0.5vh;
+        margin-bottom: 0.5vmin;
     }
 
     .points-new {

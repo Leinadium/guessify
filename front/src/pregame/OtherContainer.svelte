@@ -118,29 +118,29 @@
 
 <style>
     .other-container {
-        width: min(60vw, 80vh);
+        width: 80vmin;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: center;
-        gap: 0.5vh;
+        gap: 0.5vmin;
     }
 
     input {
-        height: 2vh;
+        height: 2vmin;
         width: 80%;
-        font-size: min(2vw, 1.5vh);
+        font-size: 1.5vmin;
         color: #BBB;
         background: rgb(24,20,20);
         border: 0;
-        border-radius: 1vh;
-        padding: 0 1vh 0 1vh;
+        border-radius: 1vmin;
+        padding: 0 1vmin 0 1vmin;
         white-space: nowrap;
         text-overflow: hidden;
     }
 
     .container-background {
-        margin-top: 1vh;
+        margin-top: 1vmin;
         width: 80%;
         height: fit-content;
         background-color: black;
@@ -149,11 +149,11 @@
 
     .new-error {
         /* copying spacing from container (there should be a better way to do this... anyway) */
-        height: min(6vh, 8vw);
-        margin-bottom: 3vh;
+        height: 6vmin;
+        margin-bottom: 3vmin;
 
         color: #BBB;
-        font-size: 1.5vh;
+        font-size: 1.5vmin;
         font-weight: bold;
         font-style: italic;
         text-align: center;

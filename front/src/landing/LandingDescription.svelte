@@ -85,20 +85,20 @@
 
     .short-description {
         color: #fff;
-        font-size: min(8vw, 10vh);
+        font-size: 10vmin;
         font-weight: 700;
-        margin-bottom: 10vh;
+        margin-bottom: 10vmin;
     }
 
     .long-description {
         color: #fefefe;
-        font-size: min(4vw, 5vh);
+        font-size: 4vmin;
         font-weight: 300;
     }
 
     .pagination {
         width: 50%;
-        gap: 3vw;
+        gap: 3vmax;
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-evenly;
@@ -107,7 +107,7 @@
     .goto {
         color: #717171;
         font-weight: 500;
-        font-size: min(3vw, 4vh);
+        font-size: 4vmin;
     }
 
     .goto-text {
