@@ -6,6 +6,7 @@ export const CB_URL = FRONT_URL;
 export const REFRESH_URL = `${API_URL}/get_refresh`;
 export const ACCESS_URL = `${API_URL}/get_access`;
 export const REFRESH_KEY = "refresh";
+export const VOLUME_KEY = "volume";
 export const MAX_ROUNDS = 5;
 
 

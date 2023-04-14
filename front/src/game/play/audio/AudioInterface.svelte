@@ -4,10 +4,8 @@
     import PlayPause from "./PlayPause.svelte";
     import { createEventDispatcher } from "svelte";
     
-    export let playing = false;
     export let maxMillis;
     export let currentMillis;
-    export let currentVolume = 0.7;
 
     const dispatch = createEventDispatcher();
 
@@ -18,9 +16,9 @@
 </script>
 
 <div class="audio-interface">
-    <PlayPause playing={playing} on:click={toggle} />
+    <PlayPause on:click={toggle} />
     <AudioPlayer {currentMillis} {maxMillis} />
-    <VolumeSlider value={currentVolume}/>
+    <VolumeSlider/>
 </div>
 
 
@@ -29,11 +27,14 @@
         width: 80%;
         height: 7vh;
 
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5vw;
+        display: grid;
+        grid-template-columns: auto 70% auto;
+        grid-template-rows: 2fr 1fr 2fr;
+        grid-template-areas: 
+            "playpause nowplaying volume"
+            "playpause progress volume"
+            "playpause poweredby volume";
+        column-gap: 1vh;
     }
 
 

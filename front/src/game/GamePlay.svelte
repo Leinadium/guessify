@@ -3,7 +3,7 @@
     import PlayScreen from "./play/PlayScreen.svelte";
     import ReadyScreen from "./ready/ReadyScreen.svelte";
     import StartScreen from "./start/StartScreen.svelte";
-    import { spotifyAPIHandler, isPlaying, gameScore } from "../lib/stores"
+    import { spotifyAPIHandler, isPlaying, gameScore, volume } from "../lib/stores"
     import GameTick from "./play/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
     import { onMount } from "svelte";
@@ -157,7 +157,11 @@
                 playerStateInfo.hasToPause = true;
             } catch {
                 console.log("Attempting to pause after transfer failed. That's ok");
-            }        
+            }
+            
+            // binding volume to sdk player
+            volume.subscribe((v) => spotifySdkPlayer.setVolume(v));
+
             console.log("finished");
             loadingStatus.text = "Done!";
             loadingStatus.progress = 1;
@@ -165,7 +169,7 @@
         } catch (error) {
             errorHandler(error);
         }
-    }
+    }   
 
     onMount(() => {
         loadingStatus.text = "Connecting to Spotify SDK...";

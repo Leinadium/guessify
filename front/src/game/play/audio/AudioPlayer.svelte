@@ -13,73 +13,63 @@
 
     // https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript
     $: currentTimeStr = new Date(safeCurrent).toISOString().substring(14, 19)
+
+    // TODO: refazer o player como grid
 </script>
 
+<spam class="now-playing">Now playing from: <spam class="content-name">{contentName}</spam></spam>
 
-<div class="audio-player">
-    
-    <spam class="now-playing">Now playing from: <spam class="content-name">{contentName}</spam></spam>
-
-    <div class="middle">
-        <spam>{currentTimeStr}</spam>
-        <div class="progress-player">
-            <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
-        </div>
+<div class="progress">
+    <spam class="current-time">{currentTimeStr}</spam>
+    <div class="progress-player">
+        <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
     </div>
-
-    <div class="powered-by">
-        <PoweredBy externUrl="https://open.spotify.com/" text="Powered by"/>
-    </div>
-
 </div>
 
+<div class="powered-by">
+    <PoweredBy externUrl="https://open.spotify.com/" text="Powered by"/>
+</div>
 
 <style>
-
-    .audio-player {
-        width: 80%; 
-        height: 100%;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        color: #EEEEEE;
-        font-size: 1.0vh;
-    }
-
-    spam {
-        height: 1.2vh;
-    }
-
     .now-playing {
-        color: #A0A0A0;
+        grid-area: nowplaying;
+        justify-self: end;
+        align-self: end;
+
+        color: #EEEEEE;
         font-size: 1.2vh;
-        padding-bottom: 0.2vh;
-        align-self: flex-end;
+        height: 1.2vh;
     }
 
     .content-name {
         font-weight: bold;
     }
 
-    .middle {
-        width: 100%;
+    .progress {
+        grid-area: progress;
+        place-self: stretch;
+
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
-        gap: 0.5vw;
+        gap: 0.5vh;
+    }
+
+    .current-time {
+        color: #fff;
+        font-size: 1.2vh;
     }
 
     .powered-by {
-        height: 1.2vh;
-        align-self: flex-end;
+        grid-area: poweredby;
+        justify-self: end;
+        align-self: start;
     }
 
     .progress-player {
-        flex: 5 1 auto;
         box-sizing: border-box;
-        height: 60%;
+        height: 40%;
         width: 100%;
         border: 0;
         background-color: #FAFAFA;

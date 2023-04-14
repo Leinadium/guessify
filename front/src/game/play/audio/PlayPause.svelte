@@ -1,9 +1,9 @@
 <script>
-    export let playing = false;
+    import { isPlaying } from "../../../lib/stores";
 </script>
 
 <button on:click>
-    {#if playing}
+    {#if $isPlaying}
         <img src="/assets/pause.svg" alt="Pause"/>
     {:else}
         <img src="/assets/play.svg" alt="Play"/>
@@ -12,6 +12,10 @@
 
 <style>
     button {
+        grid-area: playpause;
+        justify-self: end;
+        align-self: center;
+
         width: 3vh;
         height: 3vh;
         padding: 0;

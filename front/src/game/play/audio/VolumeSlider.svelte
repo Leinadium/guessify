@@ -1,71 +1,94 @@
 <script>
-    export let value = 0.7;
-
-    let valueSlider = value * 100;
+    import { volume } from "../../../lib/stores";
+    
+    let valueSlider = $volume * 100;
     $: {
-        value = valueSlider / 100;
-        console.log(valueSlider, value);
+        $volume = valueSlider / 100;
     }
 
 </script>
 
 
-<input 
-    id="volume-slider"
-    type=range
-    bind:value={valueSlider}
-    min="0" 
-    max="100"
-    style="background-size: {valueSlider}% 100%"
->
+
+<div class="volume">
+    <img src="/assets/volume.svg" alt="Volume">
+
+    <input 
+        id="volume-slider" type=range
+        min="0" max="100"
+        style="background-size: {valueSlider}% 100%"
+        bind:value={valueSlider}
+    >
+</div>
+
+
 
 
 <style>
+
+    .volume {
+        margin-left: 0.5vh;
+        height: 100%;
+
+        grid-area: volume;
+        justify-self: start;
+        align-self: center;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5vh;
+    }
+
+    img {
+        width: 2vh;
+        height: 2vh;
+        align-self: center;
+    }
     
     /* fundo completo do slider */
     input {
         -webkit-appearance: none;
         
-        flex: 1 1 auto;
-        height: 20%;
-        width: 20%;
+        align-self: center;
+        height: 8%;
+        width: 50%;
         /* fundo do slider */
-        background: white;
-
-        /* fundo do slider preenchido */
-        background-image: linear-gradient(#ff4500, #ff4500);
-        /* background-size: 70% 100%; */
+        background-image: linear-gradient(#0BBA48, #0BBA48);
         background-repeat: no-repeat;
 
+        /* fundo do slider preenchido */
+        background-color: #FAFAFA;
         border-radius: 5px;
         
     }
 
     input::-webkit-slider-thumb {
         -webkit-appearance: none;
-        height: 20px;
-        width: 20px;
+        height: 1vh;
+        width: 1vh;
         border-radius: 50%;
-        background: #ff4500;
+        background: #0BBA48;
         cursor: pointer;
     }
 
     input::-moz-range-thumb {
         -webkit-appearance: none;
-        height: 10px;
-        width: 10px;
+        height: 1vh;
+        width: 1vh;
         border-radius: 50%;
-        background: #ff4500;
+        background: #0BBA48;
         cursor: pointer;
 
     }
 
     input::-ms-thumb {
         -webkit-appearance: none;
-        height: 20px;
-        width: 20px;
+        height: 1vh;
+        width: 1vh;
         border-radius: 50%;
-        background: #ff4500;
+        background: #0BBA48;
         cursor: pointer;
     }
 
@@ -77,7 +100,7 @@
     }
 
     input::-moz-range-track {
-        -webkit-appearance: none;
+        -webkit-appearance: none;   
         box-shadow: none;
         border: none;
         background: transparent;

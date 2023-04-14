@@ -1,5 +1,5 @@
 import { readable, writable } from "svelte/store";
-import { REFRESH_KEY } from "./utils";
+import { REFRESH_KEY, VOLUME_KEY } from "./utils";
 import SpotifyWebApi from "spotify-web-api-js";
 
 // game loop
@@ -24,3 +24,8 @@ export const username = writable(null);
 
 // game score
 export const gameScore = writable(0);
+
+// volume
+const volumeStored = parseFloat(localStorage.getItem(VOLUME_KEY)) || 0.7;
+export const volume = writable(volumeStored);
+volume.subscribe((v) => localStorage.setItem(VOLUME_KEY, v.toString()));
