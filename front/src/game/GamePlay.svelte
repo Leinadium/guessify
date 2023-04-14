@@ -58,17 +58,32 @@
     }
     function stateHandler(event) {
         const state = event.detail;
+        console.log(state);
 
         // update isPlaying
         $isPlaying = !state.paused;
-
-        console.log(state);
 
         // update pause status accordingly
         if (!state.paused && playerStateInfo.hasToPause) {
             spotifySdkPlayer.pause().then(() => console.log("Done pausing SDK")).catch(errorHandler);
             console.log("Forcing pause");
         }
+
+        // updating playedMs
+        currentInfo.playedMs = state.position;
+
+        // update end of track
+        if (currentInfo.state === "game" && state.position === 0) {
+            if (state.track_window.previous_tracks.length > 0) {
+                console.log(state.track_window.previous_tracks[0].uri);
+                console.log(currentInfo.musicInfo.uri);
+                if (state.track_window.previous_tracks[0].uri === currentInfo.musicInfo.uri)
+                    endRound(-1);
+            }
+        }
+        
+        
+
     }
 
     /* resets variable and updates currentState */
