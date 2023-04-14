@@ -24,7 +24,7 @@
     .volume {
         margin-left: 0.5vmin;
         height: 100%;
-        width: 15vmin;
+        width: min(15vmin, 100%);
 
         grid-area: volume;
         justify-self: start;
