@@ -44,8 +44,9 @@
         width: 95%;
         height: 6vmin;
         padding: 1vmin;
-        background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);  
-        border-radius: 10px;
+        /* background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);   */
+        background: #121212;
+        border-radius: 1vmin;
         
         display: flex;
         flex-flow: row nowrap;
@@ -63,7 +64,7 @@
 
     .selected {
         /* background: rgb(69, 199, 22, 0.7); */
-        background: #16873D;
+        background: #5a5a5a;
     }
 
     .image-not-found {

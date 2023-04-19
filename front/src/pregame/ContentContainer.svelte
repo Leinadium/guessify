@@ -88,7 +88,10 @@
     .container-background {     
         width: 80vmin;
         height: fit-content;
-        background-color: black;
+        
+        background-color: #121212;
+
+
         padding: 1vmin 0 0.5vmax 1vmin;
         border-radius: 2vmin;
     }
@@ -104,12 +107,13 @@
         gap: 1vh;
         padding: 2vmin 1vmin 2vh 1vmin;
         margin-right: 1vh;
-        background-color: black;
+        
+        background-color: #121212;
 
-        scrollbar-color: #999 black;
+        scrollbar-color: #999 #121212;
     }
 
     .container::-webkit-scrollbar-track {
-        background: black;
+        background: 121212;
     }
 </style>

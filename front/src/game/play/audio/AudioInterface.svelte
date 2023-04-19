@@ -21,7 +21,7 @@
         height: 7vmin;
 
         display: grid;
-        grid-template-columns: 20% 60% 20%;
+        grid-template-columns: 10% 70% 20%;
         grid-template-rows: 2fr 1fr 2fr;
         grid-template-areas: 
             "playpause nowplaying volume"

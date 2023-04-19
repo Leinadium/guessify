@@ -50,7 +50,8 @@
     .main {
         height: 100vh;
         position: relative;
-        background-color: #151757;
+        /* background-color: #151757; */
+        background: linear-gradient(0deg, rgba(18,18,18,1) 3%, rgba(21,23,87,1) 59%);
     }
 
     .header {
