@@ -265,7 +265,7 @@
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
-        padding-top: 5vmin;
+        padding-top: 5vh;
         width: 100vw;
     }
 </style>

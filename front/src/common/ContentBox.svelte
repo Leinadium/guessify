@@ -45,7 +45,7 @@
         height: 6vmin;
         padding: 1vmin;
         /* background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);   */
-        background: #121212;
+        background: #171717;
         border-radius: 1vmin;
         
         display: flex;

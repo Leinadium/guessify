@@ -18,26 +18,77 @@
     })
 </script>
 
-<div>
-    <input type="text" bind:value={searchedText} bind:this={inputElement}>
-    <button disabled="{!enableSubmit}" on:click>Submit</button>
+<div class="search-bar">
+    <div class="search">
+        <img src="/assets/search.svg" alt="Search"/>
+        <input type="text" 
+            placeholder="What are you listening?"
+            bind:value={searchedText} 
+            bind:this={inputElement}
+        >
+    </div>
+    
+    <button disabled="{!enableSubmit}" on:click>Guess</button>
 </div>
 
 <style>
-    div {
+    .search-bar {
+        width: 50vw;
+        height: 4vmin;
         display: flex;
-        justify-content: space-between;
+        flex-flow: row nowrap;
+        justify-content: center;
+        gap: 1vh;
     }
     button {
-        width: 15%;
+        width: fit-content;
+        padding: 0 3vmin 0 3vmin;
+        border-radius: 3vmin;
+        border: none;
+        background-color: #0BBA48;
+        color: #ffffff;
+        font-size: 1.8vmin;
+        font-weight: bold;
     }
 
     button:disabled {
-        background-color: black;
+        color: #bbb !important;
+        background-color: #787878 !important;
     }
-    input {
-        font-size: 30px;
+    .search {
         width: 80%;
-        height: 40px;
+        height: 100%;
+        background: #D9D9D9;
+        border-radius: 3vmin;
+        border: none;
+
+        padding-left: 1vmin;
+
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1%;
+        
+    }
+
+    img {
+        height: 70%;
+        aspect-ratio: 1 / 1;
+    }
+    
+    input {
+        height: 95%;
+        width: 100%;
+        white-space: nowrap;
+        /* text-overflow: hidden; */
+        background-color: transparent;
+        border: none;
+        font-size: 1.5vmin;
+    }
+
+    input:focus {
+        outline: none;
+        border: none;
     }
 </style>

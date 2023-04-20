@@ -15,82 +15,64 @@
     class="result" class:selected on:click
     in:fly|local="{{ y: 30, duration: 300}}"
     out:fade|local="{{duration: 100}}"
->
-
-    <div class="track-image">
-        <img src={trackAlbumImg} alt={trackAlbumName}>
-    </div>
-
+>    
+    <img class="track-image" src={trackAlbumImg} alt={trackAlbumName}>
     <div class="track-text">
-        <div class="track-name-artist">
-            <div class="track-name">{trackName}</div>
-            <div class="track-artist">{artists}</div>
-        </div>
-        
-        <div class="track-album-name">{trackAlbumName}</div>
+        <div class="track-name">{trackName}</div>
+        <div class="track-artists">{artists}</div>
     </div>
 </div>
 
 <style>
     /* flex box S2 */
     .result {
-        border: 2px solid black;
-        padding: 5px;
-        margin: 10px;
+        padding: 1vmin;
+        height: 6vmin;
+        width: 95%;
+        border-radius: 1.5vmin;
 
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: stretch;
-        gap: 10px;
+        gap: 1vmin;
+        background-color: #171717;
     }
 
     .track-text {
         display: flex;
         flex-flow: column nowrap;
-        justify-content: stretch;
+        justify-content: space-between;
         align-items: stretch;
-        gap: 10px;
-    }
 
-    .track-name-artist {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
     }
 
     .track-name {
-        font-size: 5vmin;
-        font-weight: bold;
-    }
-
-    .track-name-artist {
-        font-size: 4vmin;
-    }
-
-    .track-album-name {
         font-size: 3vmin;
-        font-style: italic;
+        font-weight: 500;
+        color: #D9D9D9
+    }
+
+    .track-artists {
+        font-size: 1.8vmin;
         color: gray;
     }
 
-    .track-image img {
-        height: 10vmin;
+    img {
+        height: 100%;
         aspect-ratio: 1 / 1;
     }
 
     .result:hover {
-        background-color: lightgreen;
+        background-color: #0bba48ad;
         cursor: pointer;
     }
 
     .selected {
-        background-color: rgb(34, 224, 34) !important;
-    }
-
-    .result {
-        font-family: 'Circular Std';
+        background-color: #0BBA48 !important;
     }
 </style>

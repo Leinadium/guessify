@@ -18,7 +18,7 @@
 <style>
     .audio-interface {
         width: 60%;
-        height: 7vmin;
+        height: 7vh;
 
         display: grid;
         grid-template-columns: 10% 70% 20%;

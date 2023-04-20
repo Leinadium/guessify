@@ -34,12 +34,13 @@
         flex-flow: row nowrap;
         justify-content: flex-end;
         align-items: center;
-        gap: 0.8vmin;
+        gap: 1.5vmin;
+        margin-right: 1.0vmin;
     }
 
     button {  
-        width: 3vmin;
-        height: 3vmin;
+        width: 5vmin;
+        height: 5vmin;
         padding: 0;
         border: 0;
         background-color: transparent;

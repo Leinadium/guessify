@@ -55,10 +55,11 @@
     .play-screen {
         display: flex;
         flex-flow: column nowrap;
-        gap: 20px;
+        gap: 2vh;
+        width: 100%;
+        height: 100%;
+        justify-content: flex-start;
         align-items: center;
-        padding-left: 100px;
-        padding-right: 100px;
-        padding-top: 50px;
+        padding-top: 2vh;
     }
 </style>

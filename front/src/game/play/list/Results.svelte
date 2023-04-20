@@ -42,12 +42,11 @@
             indexAvailable = 0;
             selectedIndex = availableIndexes[0];
         }
-        console.log("indexA: ", indexAvailable, " selectedI: ", selectedIndex);
+        // console.log("indexA: ", indexAvailable, " selectedI: ", selectedIndex);
     }
 
     // increment the indexes
     function incSelected() {
-        console.log("incrementa. sI: ", selectedIndex, " iA: ", indexAvailable);
         if (selectedIndex === -1 && availableIndexes.length > 0) {
             indexAvailable = 0;
             selectedIndex = 0;
@@ -60,7 +59,6 @@
 
     // decrement the indexes
     function decSelected() {
-        console.log("decrementa");
         if (indexAvailable > 0) {
             indexAvailable = indexAvailable - 1;
             selectedIndex = availableIndexes[indexAvailable];
@@ -96,23 +94,44 @@
 
 </script>
 
-<svelte:window on:keypress={handleKey}></svelte:window>
+<svelte:window on:keydown={handleKey}></svelte:window>
 
-<div class="results">
-    <!-- TODO: catch duplicate music -->
-    {#each fullContent as music, i (music.uri)}
-        {#if (showStatusContent[i])}
-            <Result 
-                content={music} 
-                selected={i===selectedIndex}
-                on:click="{() => {handleResultClick(i)}}"
-            />
-        {/if}
-    {/each}
+<div class="wrapper">
+    <div class="results">
+        {#each fullContent as music, i (music.uri)}
+            {#if (showStatusContent[i])}
+                <Result 
+                    content={music} 
+                    selected={i===selectedIndex}
+                    on:click="{() => {handleResultClick(i)}}"
+                />
+            {/if}
+        {/each}
+    </div>
 </div>
 
+
 <style>
+    .wrapper {
+        width: 70%;
+        height: 50vh;
+        padding: 1vmin;
+        background: #121212;
+        border-radius: 2vmin;
+
+        display: flex;
+        flex-flow: column nowrap;
+    }
     .results {
-        width: 60%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        overflow-y: scroll;
+        gap: 1vmin;
+
+        width: 99%;
+        margin-left: 1%;
+        height: 100%;    
+        overflow-y: scroll;
     }
 </style>
