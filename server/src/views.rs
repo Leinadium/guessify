@@ -7,6 +7,7 @@ use actix_web::{
     get, web::{Query, Redirect, Path, Data}, Responder,
     HttpResponse, http::StatusCode
 };
+use actix_files;
 use reqwest;
 use reqwest::Response;
 
@@ -130,6 +131,13 @@ pub async fn get_access(env: Data<EnvVars>, path: Path<Refresh>) -> impl Respond
     }
 }
 
+/// Simple not found view
 pub async fn not_found() -> impl Responder {
     HttpResponse::NotFound().finish()
+}
+
+/// front end index html
+#[get("/")]
+pub async fn index() -> impl Responder {
+    actix_files::NamedFile::open("index.html")
 }
