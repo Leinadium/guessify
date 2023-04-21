@@ -6,7 +6,7 @@
     export let maxPoints;
 
     const scorebarProgress = tweened(0, {
-        duration: 500,
+        duration: 1000,
         easing: cubicOut
     });
 

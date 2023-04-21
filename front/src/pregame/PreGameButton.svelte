@@ -42,7 +42,7 @@
     }
 
     .btn-play:hover {
-        transform: scale(1.10);
+        background-color: rgb(5, 23, 219);
     }
 
     .disabled {
