@@ -8,7 +8,7 @@ export const ACCESS_URL = `${API_URL}/get_access`;
 export const REFRESH_KEY = "refresh";
 export const VOLUME_KEY = "volume";
 export const MAX_ROUNDS = 5;
-
+export const MAX_SCORE = 1000;
 
 /**Get the last image of a track (smallest possible)
  * If there is no image available, return null

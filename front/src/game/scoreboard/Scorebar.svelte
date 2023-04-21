@@ -2,15 +2,20 @@
     import { tweened } from "svelte/motion";
     import { cubicOut } from "svelte/easing";
     
-    export let rounds;
-    export let maxRounds;
+    export let points;
+    export let maxPoints;
 
     const scorebarProgress = tweened(0, {
         duration: 500,
         easing: cubicOut
     });
 
-    $: scorebarProgress.set(rounds / maxRounds * 100);
+    $: {
+        if (maxPoints === 0) 
+            scorebarProgress.set(0);
+        else
+            scorebarProgress.set(points / maxPoints * 100);
+    }
 
 </script>
 
@@ -30,7 +35,7 @@
     .scorebar-progress {
         position: relative;
         height: 100%;
-        background: #5A5A5A;
+        background: #0BBA48;;
         border-radius: 1vmin;
     }
 </style>

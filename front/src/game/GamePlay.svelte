@@ -7,6 +7,7 @@
     import GameTick from "./play/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
     import { onMount } from "svelte";
+    import { MAX_SCORE } from "../lib/utils";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
@@ -214,6 +215,8 @@
 
 <div class="gameplay">
     <Scoreboard
+        points={$gameScore}
+        maxPoints={gameInfo.maxRounds * MAX_SCORE}
         rounds={currentInfo.round}
         maxRounds={gameInfo.maxRounds}    
     />

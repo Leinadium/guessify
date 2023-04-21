@@ -3,6 +3,7 @@
     import AudioInterface from "./audio/AudioInterface.svelte";
     import SearchBar from "./search/SearchBar.svelte";
     import Results from "./list/Results.svelte";
+    import {MAX_SCORE} from "../../lib/utils";
 
     let dispatch = createEventDispatcher();
 
@@ -11,7 +12,7 @@
 
     // currentScore update logic
     $: if (currentInfo.playedMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
-        currentInfo.roundScore = 1000 * (1 - (currentInfo.playedMs / currentInfo.musicInfo['duration_ms']));
+        currentInfo.roundScore = MAX_SCORE * (1 - (currentInfo.playedMs / currentInfo.musicInfo['duration_ms']));
     }
 
     let searchedText = "";
