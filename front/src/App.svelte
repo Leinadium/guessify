@@ -1,9 +1,13 @@
 <script>
     import Controller from "./Controller.svelte";
+    import { fade } from "svelte/transition";
 
     // TODO: change spotify callback
     const params = new URLSearchParams(window.location.search);
     const showContent = !params.has("code");
+
+    let showFullCopyright = true;
+    $: heightCopyright = showFullCopyright? "4vh" : "2vh";
 
 </script>
 
@@ -17,19 +21,22 @@
             <a class="header-title" href="/">Guessify</a>
         </div>
         <div class="content">
-            <Controller />
+            <Controller bind:showFullCopyright />
         </div>
-        <div class="footer">
+        <div class="footer" style="height: {heightCopyright}">
             <div class="footer-copyright">
                 Copyright © 2023 Daniel Guimarães
-                <a href="https://github.com/Leinadium/guessify">
+                <a class="icon" href="https://github.com/Leinadium/guessify">
                     <img class="icon" src='/assets/github-mark.svg' alt="Github">
                 </a>
             </div>
-            <div class="footer-description">
-                Guessify has no association with Spotify.
-                Guessify doesn't use cookies and doesn't track your data
-            </div>
+            {#if showFullCopyright}
+                <div class="footer-description" out:fade>
+                    <spam>Guessify has no association with Spotify.</spam>
+                    <spam>Guessify doesn't use cookies and doesn't track your data.</spam>
+                </div>
+            {/if}
+
         </div>
     </div>
 {:else}
@@ -66,7 +73,7 @@
     .header-title {
         text-decoration: none;
         color: #ffffff;
-        font-size: 5vmin;
+        font-size: 5vh;
         font-weight: 700;
     }
 
@@ -75,32 +82,35 @@
         left: 0;
         bottom: 0;
         width: 100vw;
-        height: fit-content;
-        margin-bottom: 1vmin;
-
+        padding-bottom: 1vh;
+        padding-top: 1vh;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
         color: #B9B9B9;
+        background: rgba(0, 0, 0, 0.2);
+        transition: height 1s ease-out;
     }
 
     .icon {
-        height: 1.5vmin;
+        height: 1.8vh;
         aspect-ratio: 1 / 1;
     }
 
     .footer-copyright {
-        font-size: 1.5vmin;
+        font-size: 2vh;
         font-weight: 300;
         display: flex;
         align-items: center;
-        gap: 0.2vw;
+        gap: 1vh;
     }
 
     .footer-description {
-        font-size: 1.3vmin;
+        font-size: 1.5vh;
+        text-align: center;
         font-weight: 100;
+        padding: 0 10vw;
     }
 
     .content {

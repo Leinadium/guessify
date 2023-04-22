@@ -17,8 +17,8 @@
         easing: cubicOut
     });
 
-    const readySize = tweened(0.125, {
-        duration: 1000,
+    const readySize = tweened(0.25, {
+        duration: 750,
         easing: cubicInOut
     })
 
@@ -29,7 +29,7 @@
 
     $: if (loading.done) { 
         readySize.set(1);
-        setTimeout(() => {showStartText = true;}, 1000); 
+        setTimeout(() => {showStartText = true;}, 600); 
     }
 
     function handleClick() {
@@ -45,7 +45,7 @@
 
 
 <div class="wrapper-btn">
-    <button class="btn-start" on:click={handleClick}>
+    <button class="btn-start" on:click={handleClick} disabled={!loading.done}>
         {#if !loading.done}
             <div class="loading-wrapper">
                 <div class="loading-progress" style="width: {$loadingProgress * 100}%" in:fade></div>
@@ -76,8 +76,12 @@
         align-items: center;
     }
 
+    .btn-start:disabled {
+        cursor: default;
+    }
+
     .btn-start {
-        width: 20vmin;
+        width: 20vh;
         height: fit-content;
         border: 0;
         background: transparent;
@@ -93,35 +97,35 @@
     .loading-wrapper {
         width: 100%;
         height: 100%;
-        border-radius: 2vmin;
+        border-radius: 2vh;
         background: #fff;
     }
 
     .loading-progress {
-        height: 1vmin;
+        height: 1.8vh;
         background: #5A5A5A;
-        border-radius: 2vmin;
+        border-radius: 3vh;
         border: 0;
     }
 
     .loading-texts {
-        margin-top: 0.3vmin;
-        height: 1vmin;
-        font-size: 1.5vmin;
+        margin-top: 0.3vh;
+        height: 1vh;
+        font-size: 2vh;
         font-weight: 800;
 
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: center;
-        gap: 0.2vmin;
+        gap: 0.2vh;
     }
 
     .ready {
         width: 100%;
-        --max-height: 8vmin;
+        --max-height: 8vh;
         background: #3034BA;
-        border-radius: 2vmin;
+        border-radius: 3vh;
 
         display: flex;
         justify-content: center;
@@ -129,6 +133,6 @@
 
         color: #fff;
         font-weight: bold;
-        font-size: 3vmin;
+        font-size: 3vh;
     }
 </style>

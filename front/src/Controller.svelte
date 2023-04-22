@@ -6,6 +6,8 @@
     import LandingContent from "./landing/LandingContent.svelte";
     import PreGameScreen from "./pregame/PreGameScreen.svelte";
 
+    export let showFullCopyright = false;
+    
     let currentMode = "landing";    // landing | pregame | game
     let nextMode = currentMode;
     
@@ -50,6 +52,7 @@
         currentMode = nextMode;
     }
 
+    $: showFullCopyright = currentMode === "landing";
 </script>
 
 <LoadAuth />

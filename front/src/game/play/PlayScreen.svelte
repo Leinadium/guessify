@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher, onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
     import AudioInterface from "./audio/AudioInterface.svelte";
     import SearchBar from "./search/SearchBar.svelte";
     import Results from "./list/Results.svelte";
@@ -30,8 +31,9 @@
 
 </script>
 
-<div class="play-screen">
-    <AudioInterface 
+<div class="play-screen" in:fade="{{duration: 200}}">
+    <AudioInterface
+        contentName={gameInfo.content.name}
         currentMillis={currentInfo.playedMs}
         maxMillis={currentInfo.musicInfo['duration_ms']}
         on:toggle on:skip

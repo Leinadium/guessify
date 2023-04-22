@@ -21,7 +21,7 @@
         <div class="image image-not-found"></div>
     {/if}
 
-        <div class="texts">
+    <div class="texts">
         <spam class="name">{name}</spam>
         <spam class="total">
             {total} 
@@ -42,16 +42,16 @@
     .content-box {
         flex-shrink: 0;
         width: 95%;
-        height: 6vmin;
-        padding: 1vmin;
+        height: 8vh;
+        padding: 1vh;
         /* background: linear-gradient(270deg, rgba(24,20,20,1) 30%, rgba(29,185,84,0.48156682027649766) 100%);   */
         background: #171717;
-        border-radius: 1vmin;
+        border-radius: 1vh;
         
         display: flex;
         flex-flow: row nowrap;
-        justify-content: space-between;
-        gap: 1vmax;
+        justify-content: flex-start;
+        gap: 1vh;
         cursor: pointer;
 
         position: relative;
@@ -82,24 +82,24 @@
         flex-flow: column nowrap;
         justify-content: flex-start;
         color: #fff;
-        width: 90%;
+        width: calc(95% - 8vh);
     }
     .name {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        font-size: 2vmin;
+        font-size: 2.5vh;
         font-weight: bold;
     }
     .total {
-        font-size: 1.5vmin;
+        font-size: 2vh;
         font-weight: 300;
     }
     .powered-by {
         position: absolute;
-        bottom: 0.3vmin;
-        right: 0.3vmin;
+        bottom: 2vh;
+        right: 1vh;
 
-        height: fit-content;
+        height: 1vh;
     }
 </style>

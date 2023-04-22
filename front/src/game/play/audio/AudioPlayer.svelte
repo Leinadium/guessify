@@ -33,12 +33,12 @@
 <style>
     .now-playing {
         grid-area: nowplaying;
-        justify-self: center;
+        justify-self: end;
         align-self: end;
 
-        color: #EEEEEE;
-        font-size: 1.2vmin;
-        height: 1.2vmin;
+        color: #999999;
+        font-size: 1.5vh;
+        height: 1.8vh;
     }
 
     .content-name {
@@ -53,13 +53,15 @@
         flex-flow: row nowrap;
         justify-content: flex-end;
         align-items: center;
-        gap: 0.5vmin;
+        gap: 0.5vh;
     }
 
     .current-time {
         color: #fff;
-        font-size: 1.2vmin;
-        width: 4vmin;
+        font-size: 2vh;
+        font-weight: 100;
+        width: fit-content;
+        padding-right: 0.3vh;
     }
 
     .powered-by {
@@ -70,11 +72,11 @@
 
     .progress-player {
         box-sizing: border-box;
-        height: 40%;
-        width: 100%;
+        height: 1vh;
+        width: 90%;
         border: 0;
         background-color: #FAFAFA;
-        border-radius: 15px;
+        border-radius: 1vh;
     }
 
     .progress-bar {
@@ -82,7 +84,7 @@
         background-color: #0BBA48;
         width: 5%;
         height: 100%;
-        border-radius: 15px;
+        border-radius: 1vh;
 
     }
 

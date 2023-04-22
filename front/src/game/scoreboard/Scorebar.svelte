@@ -27,15 +27,15 @@
     .scorebar {
         box-sizing: border-box;
         width: 100%;
-        height: 0.8vmin;
-        border-radius: 1vmin;
+        height: 1vh;
+        border-radius: 1vh;
         background: #FAFAFA;
     }
 
     .scorebar-progress {
         position: relative;
         height: 100%;
-        background: #0BBA48;;
-        border-radius: 1vmin;
+        background: #0BBA48;
+        border-radius: 1vh;
     }
 </style>

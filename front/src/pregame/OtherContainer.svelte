@@ -127,9 +127,9 @@
     }
 
     input {
-        height: 2vmin;
+        height: 3vh;
         width: 80%;
-        font-size: 1.5vmin;
+        font-size: 1.8vh;
         color: #BBB;
         background: rgb(24,20,20);
         border: 0;
@@ -141,7 +141,7 @@
 
     .container-background {
         margin-top: 1vmin;
-        width: 80%;
+        width: 82%;
         height: fit-content;
         background-color: black;
         border-radius: 10px;

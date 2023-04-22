@@ -83,21 +83,24 @@
     }
 
     .points-number {
-        font-size: 4.5vmin;
+        font-size: 4.5vh;
     }
 
     .points-text {
-        font-size: 1.5vmin;
-        margin-bottom: 0.5vmin;
+        margin-left: 0.5vh;
+        font-size: 2vh;
+        margin-bottom: 1vh;
     }
 
     .points-new {
-        font-size: 3.0vmin;
+        font-size: 3.0vh;
         color: rgba(11, 186, 72, 1);
         position: absolute;
         top: 10%;
         right: 0%;
         text-align: right;
+        width: 30%;
+        background: linear-gradient(90deg, rgba(21,23,87,0) 0%, rgba(21,23,87,1) 15%);
     }
 
     .rounds {
@@ -107,6 +110,7 @@
         align-items: flex-start;
         color: #787878;
         font-weight: 100;
+        font-size: 2vh;
     }
 
 </style>

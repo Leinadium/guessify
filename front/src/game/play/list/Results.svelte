@@ -97,6 +97,7 @@
 <svelte:window on:keydown={handleKey}></svelte:window>
 
 <div class="wrapper">
+    <spam class="help">Double click on a track to submit</spam>
     <div class="results">
         {#each fullContent as music, i (music.uri)}
             {#if (showStatusContent[i])}
@@ -115,19 +116,26 @@
     .wrapper {
         width: 70%;
         height: 50vh;
-        padding: 1vmin;
+        padding: 1vh;
         background: #121212;
         border-radius: 2vmin;
 
         display: flex;
         flex-flow: column nowrap;
     }
+    .help {
+        color: #aaa;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 1vh;
+        font-size: 2vh;
+    }
     .results {
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         overflow-y: scroll;
-        gap: 1vmin;
+        gap: 1vh;
 
         width: 99%;
         margin-left: 1%;

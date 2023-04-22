@@ -90,8 +90,9 @@
         height: 100%;
         display: flex;
         flex-flow: column nowrap;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
+        gap: 10%;
     }
 
 </style>

@@ -33,8 +33,8 @@
 
 <style>
     .search-bar {
-        width: 50vw;
-        height: 4vmin;
+        width: 60vw;
+        height: 4vh;
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
@@ -42,13 +42,18 @@
     }
     button {
         width: fit-content;
-        padding: 0 3vmin 0 3vmin;
-        border-radius: 3vmin;
+        padding: 0 3vh 0 3vh;
+        border-radius: 3vh;
         border: none;
         background-color: #0BBA48;
         color: #ffffff;
-        font-size: 1.8vmin;
+        font-size: 1.8vh;
         font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        cursor: not-allowed;
     }
 
     button:disabled {
@@ -59,7 +64,7 @@
         width: 80%;
         height: 100%;
         background: #D9D9D9;
-        border-radius: 3vmin;
+        border-radius: 3vh;
         border: none;
 
         padding-left: 1vmin;
@@ -84,7 +89,7 @@
         /* text-overflow: hidden; */
         background-color: transparent;
         border: none;
-        font-size: 1.5vmin;
+        font-size: 1.5vh;
     }
 
     input:focus {

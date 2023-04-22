@@ -41,9 +41,9 @@
 
 <style>
     .btn-landing {
-        width: 20vmax;
+        width: 30vh;
         aspect-ratio: 3.5 / 1;
-        border-radius: 3vmax;
+        border-radius: 3vh;
         border: 0px;
         box-sizing: border-box;
         cursor: pointer;
@@ -55,7 +55,7 @@
         justify-content: center;
         align-items: center;
 
-        transition-duration: 0.4s;
+        transition-duration: 0.33;
     }
 
     .btn-landing:hover {
@@ -79,7 +79,7 @@
     }
 
     .login {
-        font-size: 1.6vmax;
+        font-size: 2.5vh;
         font-weight: bold;
 
         display: flex;
@@ -89,31 +89,31 @@
     }
 
     .continue {
-        font-size: 1.6vmax;
+        font-size: 3vh;
         font-weight: bold;
     }
 
     .continue-username {
-        font-size: 1.2vmax;
+        font-size: 1.8vh;
         font-weight: 300;
         overflow: hidden;
     } 
 
     .spotify-logo-button {
         /* https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo */
-        height: 2.3vmax;
+        height: 3vh;
         padding-left: 1.15vmax;
         aspect-ratio: 3.37 / 1;
     }
 
     .requires {
-        margin-top: 0.8 vmax;
+        margin-top: 0.8vh;
         font-family: 'Circular Std';
-        font-size: 1vmax;
+        font-size: 2vh;
         font-weight: 300;
         font-style: italic;
         color: #d0d0d0;
-        margin-bottom: 0.5vmin;
+        margin-bottom: 0.5vh;
     }
 
     .logout {

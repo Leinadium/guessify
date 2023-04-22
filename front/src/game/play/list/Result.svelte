@@ -21,22 +21,28 @@
         <div class="track-name">{trackName}</div>
         <div class="track-artists">{artists}</div>
     </div>
+    {#if selected}
+        <div class="click-again" in:fade="{{duration: 200}}">Click again<br>to submit</div>
+    {:else}
+        <div class="fade-left"></div>
+    {/if}
 </div>
 
 <style>
     /* flex box S2 */
     .result {
-        padding: 1vmin;
-        height: 6vmin;
+        padding: 1vh;
+        height: 6vh;
         width: 95%;
-        border-radius: 1.5vmin;
+        border-radius: 1.5vh;
 
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: stretch;
-        gap: 1vmin;
+        gap: 1vh;
         background-color: #171717;
+        position: relative;
     }
 
     .track-text {
@@ -52,13 +58,13 @@
     }
 
     .track-name {
-        font-size: 3vmin;
+        font-size: 3vh;
         font-weight: 500;
         color: #D9D9D9
     }
 
     .track-artists {
-        font-size: 1.8vmin;
+        font-size: 1.8vh;
         color: gray;
     }
 
@@ -68,11 +74,39 @@
     }
 
     .result:hover {
-        background-color: #0bba48ad;
+        background-color: #2a2a2a;
         cursor: pointer;
     }
 
     .selected {
-        background-color: #0BBA48 !important;
+        background-color: #5a5a5a !important;
+    }
+
+    .click-again {
+        position: absolute;
+        right: 1vh;
+        top: 0;
+        height: 100%;
+        border-radius: 1.5vh;
+        padding-left: 40%;
+        background: linear-gradient(90deg, rgba(90,90,90,0) 0%, rgba(90,90,90,1) 50%);
+        font-size: 1.8vh;
+        color: #aaa;
+        text-align: center;
+        
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        width: fit-content;
+    }
+
+    .fade-left {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 1.5vh;
+        background: linear-gradient(90deg, rgba(23,23,23,0) 0%, rgba(23,23,23,1) 50%);
+        width: 20%;
+        height: 100%;
     }
 </style>

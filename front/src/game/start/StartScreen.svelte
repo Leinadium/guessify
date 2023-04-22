@@ -4,7 +4,6 @@
     import StartButton from "./StartButton.svelte";
     import { getImage } from "../../lib/utils";
     
-    
     export let loading = {
         text: "",
         progress: 0.3,
@@ -18,7 +17,9 @@
         "You can search using the name of the track, album or artist(s)",
         "Use the arrow keys to navigate between tracks",
         "You gain more points by guessing the track faster",
-        "A track can be played only once per game"
+        "A track can be played only once per game",
+        "You can skip a track, but you won't gain any points",
+        "Don't open the Spotify app while playing to look up the track name, this is cheating!",
     ];
 
     let currentTip = "";
@@ -81,7 +82,7 @@
 
     .content-header {
         color: #ffffff;
-        font-size: 500;
+        font-size: 2.2vh;
     }
 
     .tip {
@@ -91,10 +92,12 @@
         flex-flow: column nowrap;
         gap: 0.3vmin;
         align-items: center;
+        font-size: 2.5vh;
+        text-align: center;
     }
 
     .tip-title {
-        font-size: 2vmin;
+        font-size: 3vh;
         font-weight: bold;
     }
 

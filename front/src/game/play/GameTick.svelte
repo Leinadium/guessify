@@ -1,5 +1,4 @@
 <script>
-    import { isPlaying } from "../../lib/stores";
     import { onDestroy } from "svelte";
     
     export let ms = 100;
@@ -9,16 +8,14 @@
 
     // updates the .playedMs value
     function callback() {
-        if ($isPlaying) {
-            currentInfo.playedMs += ms;
+        
+        currentInfo.playedMs += ms;
 
-            if (currentInfo.playedMs >= maxDurationMs) {
-                currentInfo.playedMs = maxDurationMs;
-                $isPlaying = false;
-            }
-
-            currentInfo = currentInfo;
+        if (currentInfo.playedMs >= maxDurationMs) {
+            currentInfo.playedMs = maxDurationMs;
         }
+
+        currentInfo = currentInfo;
     }
 
     const interval = setInterval(callback, ms);    

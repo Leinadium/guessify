@@ -81,7 +81,6 @@
     }
 
     function handleSelectUpdate(e) {
-        console.log(e);
         selectedInfo = {
             uri: e.detail.uri,
             name: e.detail.name,
@@ -197,7 +196,7 @@
     }
 
     .title {
-        font-size: 2vmin;
+        font-size: 2.5vh;
         font-weight: 500;
         color: #EEEEEE;
     }

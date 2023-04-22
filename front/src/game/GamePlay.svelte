@@ -94,11 +94,11 @@
                 possibleIndexes.push(i);
             }
         }
-        console.log("Possible tracks: ", possibleIndexes.length);
         const newIdx = possibleIndexes[Math.floor(Math.random() * possibleIndexes.length)];
         currentInfo.musicIndex = newIdx;
         currentInfo.musicInfo = gameInfo.content.tracks[newIdx];
         currentInfo.playedMs = 0;
+        gameHasStarted = false;
 
         // playing music
         playerStateInfo.hasToPause = false;
@@ -183,7 +183,13 @@
         } catch (error) {
             errorHandler(error);
         }
-    }   
+    }
+
+    // check for game start to update internal timer
+    let gameHasStarted = false;
+    $: if (currentInfo.state === "game" && $isPlaying && !gameHasStarted) {
+        gameHasStarted = true;
+    }
 
     onMount(() => {
         loadingStatus.text = "Connecting to Spotify SDK...";
@@ -230,7 +236,7 @@
 
 
     {:else if currentInfo.state === "game"}
-        {#if isPlaying}
+        {#if gameHasStarted}
             <GameTick 
                 bind:currentInfo={currentInfo}
                 ms={DEFAULT_INTERVAL}

@@ -66,15 +66,17 @@
 
 <style>
     .landing-description {
-        height: 100%;
+        width: 100%;
+        height: 50%;
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-around;
         align-items: center;
+        gap: 10%;
     }
 
     .texts {
-        height: 70%;
+        height: fit-content;
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;

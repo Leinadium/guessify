@@ -82,7 +82,7 @@
 <style>
     p {
         color: #8B8B8B;
-        font-size: 1.5vw;
+        font-size: 3vh;
     }
     
     .container-background {     
@@ -93,7 +93,7 @@
 
 
         padding: 1vmin 0 0.5vmax 1vmin;
-        border-radius: 2vmin;
+        border-radius: 2vh;
     }
 
     .container {

@@ -14,23 +14,21 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: flex-end;
-        align-items: flex-end;
-        width: fit-content;
-        gap: 0.3vw;
+        align-items: center;
+        gap: 0.8vh;
         text-decoration: none;
         width: fit-content;
     }
 
     .extern > spam {
         color: #1ED760;
-        font-size: 1.2vmin;
-        font-weight: 500;
-
+        font-size: 1.3vh;
+        font-weight: bolder;
         white-space: nowrap;
     }
 
     .open-in-logo {
-        height: 1.5vmin;
+        height: 2.5vh;
         aspect-ratio: 3.39 / 1;
     }
 </style>
