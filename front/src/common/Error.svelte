@@ -17,29 +17,25 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 {#if show}
-<div class="black-fade" on:click={close} in:fade out:fade></div>
+    <div class="black-fade" on:click={close} in:fade out:fade></div>
 
-<div class="error-message" in:fly="{{y: -100, duration: 300}}" out:fade>
-    <div class="header">
-        <spam class="error-big">Error :(</spam>
-        <spam class="title">{title}</spam>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="error-message" in:fly="{{y: -100, duration: 300}}" out:fade on:click={close}>
+        <div class="header">
+            <spam class="error-big">Error :(</spam>
+            <spam class="title">{title}</spam>
+        </div>
+        
+        <p class="quick-description">{quickDescription}</p>
+        
+        <div class="footer">
+            <spam class="quick-description">Full error description:</spam>
+            <p class="full-description">{fullDescription}</p>
+        </div>
     </div>
-    
-    <p class="quick-description">{quickDescription}</p>
-    
-    <div class="footer">
-        <spam class="quick-description">Full error description:</spam>
-        <p class="full-description">{fullDescription}</p>
-    </div>
-    
-    
-    <button on:click={close}>
-        <img class="close" src="/assets/close.svg" alt="Close">
-    </button>
-</div>
 
 {:else}
-<div class="no-error"></div>
+    <div class="no-error"></div>
 {/if}
 
 <style>
@@ -54,13 +50,12 @@
     }
 
     .error-message {
-        --error-size: min(50vh, 50vw);
-
         position: absolute;
-        top: calc(50vh - var(--error-size) / 2);
-        left: calc(50vw - var(--error-size) / 2);
-        width: var(--error-size);
-        height: var(--error-size);
+        width: 80vw;
+        height: 60vh;
+
+        top: 20vh;
+        left: 10vw;
         z-index: 12;
 
         display: inline-flex;
@@ -70,8 +65,8 @@
         align-items: center;
         color: #ffffff;
         text-align: center;
-        padding: 1vmin 1vmax 1vmin 1vmax;
-        border-radius: 2vmin;
+        padding: 1vh;
+        border-radius: 3vh;
     }
 
     .header, .footer {
@@ -82,44 +77,27 @@
     }
 
     .error-big {
-        font-size: 6 vmin;
+        font-size: 5vh;
         font-weight: 500;
+        margin-bottom: 2vh;
     }
 
     .title {
-        font-size: 3vmin;
+        font-size: 3vh;
     }
 
     .quick-description {
-        font-size: 2vmin;
+        font-size: 2vh;
     }
 
     spam.quick-description {
-        margin-bottom: 1vmin;
+        margin-bottom: 1vh;
     }
 
     .full-description {
         margin-top: 0;
-        font-size: 1.5vmin;
+        font-size: 1.5vh;
         color: #AAAAAA;
-    }
-
-    button {
-        position: absolute;
-        top: 0;
-        right: 0%;
-        margin: 1vmin;
-        width: 6vmin;
-        height: 6vmin;
-
-        padding: 0;
-        background-color: transparent;
-        border: 0;
-    }
-
-    .close {
-        width: 100%;
-        aspect-ratio: 1 / 1;
     }
 
 </style>

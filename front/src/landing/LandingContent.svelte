@@ -1,6 +1,6 @@
 <script>
     import { onDestroy, createEventDispatcher } from 'svelte';
-    import { refreshToken, isAuthValid, username } from '../lib/stores';
+    import { isAuthValid, username } from '../lib/stores';
     import SpotifyAuth from '../lib/SpotifyAuth.svelte';
 
     import LandingButton from './LandingButton.svelte';

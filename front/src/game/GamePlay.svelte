@@ -1,13 +1,14 @@
 <script>
+    import { spotifyAPIHandler, isPlaying, gameScore, volume } from "../lib/stores"
+    import { onMount } from "svelte";
+    import { MAX_SCORE } from "../lib/utils";
     import SpotifyLib from "../lib/SpotifyLib.svelte";
     import PlayScreen from "./play/PlayScreen.svelte";
     import ReadyScreen from "./ready/ReadyScreen.svelte";
     import StartScreen from "./start/StartScreen.svelte";
-    import { spotifyAPIHandler, isPlaying, gameScore, volume } from "../lib/stores"
     import GameTick from "./play/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
-    import { onMount } from "svelte";
-    import { MAX_SCORE } from "../lib/utils";
+    import Error from "../common/Error.svelte";
 
     const DEFAULT_INTERVAL = 100;   // ms to update track size
 
@@ -52,11 +53,31 @@
     function handleOnToggle() {
         spotifySdkPlayer.togglePlay();
     }
+    
+    let errorInfo = {
+        title: "Error while communicating with Spotify",
+        quickDescription: "Spotify responded with an unexpected error. Unfortunately, there's nothing I can do. Please refresh the page or try again later",
+        fullDescription: "Today is not a good day :("
+    }
 
     function errorHandler(args) {
-        // TODO: error screen
+        errorInfo.title = "Error communicating with Spotify";
+        errorInfo.quickDescription = "Spotify responded with an unexpected error. Unfortunately, there's nothing I can do. Check your internet connection, refresh this page or try again later";
+        let info;
+        // welp I tried
+        try { info = JSON.parse(args.responseText).error.message; } 
+        catch { info = "No description provided"; }
+        
+        errorInfo.fullDescription = info;
+        currentInfo.state = "error";
         console.log("error: ", args);
     }
+
+    function onCloseError() {
+        // where should it go? Let's go to the start screen then, idk
+        currentInfo.state = "start";
+    }
+
     function stateHandler(event) {
         const state = event.detail;
         console.log(state);
@@ -260,14 +281,18 @@
         />
 
     {:else if currentInfo.state === "end"}
-        <!-- TODO: End screen -->
         <span>End score: {$gameScore}</span>
-
-    {:else }
-        <!-- TODO: Error screen -->
-
+        
     {/if}
 </div>
+
+<Error 
+    title={errorInfo.title}
+    quickDescription={errorInfo.quickDescription}
+    fullDescription={errorInfo.fullDescription}
+    show={currentInfo.state === "error"}
+    on:click={onCloseError}
+/>
 
 <style>
     .gameplay {
