@@ -11,14 +11,14 @@
 
 <style>
     button {
+        width: 30vh;
+        height: 7.5vh;
         border: none;
         background: #3034BA;
-        border-radius: 3vh;
+        border-radius: 2vh;
         cursor: pointer;
 
         margin-top: 3vh;
-        width: 20vh;
-        height: 8vh;
 
         display: flex;
         flex-flow: column nowrap;

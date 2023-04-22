@@ -24,7 +24,7 @@
     .btn-play {
         height: 7.5vh;
         aspect-ratio: 4 / 1;
-        border-radius: 4vmin;
+        border-radius: 3vh;
         border: 0px;
         box-sizing: border-box;
         cursor: pointer;

@@ -104,7 +104,7 @@
     .loading-progress {
         height: 1.8vh;
         background: #5A5A5A;
-        border-radius: 3vh;
+        border-radius: 2vh;
         border: 0;
     }
 
@@ -125,7 +125,7 @@
         width: 100%;
         --max-height: 8vh;
         background: #3034BA;
-        border-radius: 3vh;
+        border-radius: 2vh;
 
         display: flex;
         justify-content: center;

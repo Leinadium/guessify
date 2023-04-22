@@ -113,7 +113,7 @@
         font-weight: 300;
         font-style: italic;
         color: #d0d0d0;
-        margin-bottom: 0.5vh;
+        margin-bottom: 1vh;
     }
 
     .logout {
