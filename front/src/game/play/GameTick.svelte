@@ -1,6 +1,7 @@
 <script>
     import { onDestroy } from "svelte";
-    
+    import { isPlaying } from "../../lib/stores";
+
     export let ms = 100;
     export let currentInfo;
 
@@ -9,10 +10,12 @@
     // updates the .playedMs value
     function callback() {
         
-        currentInfo.playedMs += ms;
+        if ($isPlaying) { currentInfo.playedMs += ms; }
+        currentInfo.roundMs += ms;
 
         if (currentInfo.playedMs >= maxDurationMs) {
             currentInfo.playedMs = maxDurationMs;
+            currentInfo.roundMs = maxDurationMs;
         }
 
         currentInfo = currentInfo;

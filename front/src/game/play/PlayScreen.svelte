@@ -12,8 +12,9 @@
     export let gameInfo;
 
     // currentScore update logic
-    $: if (currentInfo.playedMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
-        currentInfo.roundScore = MAX_SCORE * (1 - (currentInfo.playedMs / currentInfo.musicInfo['duration_ms']));
+    $: if (currentInfo.roundMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
+        currentInfo.roundScore = MAX_SCORE * (1 - (currentInfo.roundMs / currentInfo.musicInfo['duration_ms']));
+        if (currentInfo.roundScore < 0) currentInfo.roundScore = 0;
     }
 
     let searchedText = "";

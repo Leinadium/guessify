@@ -25,6 +25,7 @@
         musicInfo: {},      // info of the current playing music
         roundScore: -1,     // score of the current round
         playedMs: -1,       // total milliseconds of music played
+        roundMs: -1
     } 
 
     let loadingStatus = {
@@ -119,6 +120,7 @@
         currentInfo.musicIndex = newIdx;
         currentInfo.musicInfo = gameInfo.content.tracks[newIdx];
         currentInfo.playedMs = 0;
+        currentInfo.roundMs = 0;
         gameHasStarted = false;
 
         // playing music
@@ -258,10 +260,7 @@
 
     {:else if currentInfo.state === "game"}
         {#if gameHasStarted}
-            <GameTick 
-                bind:currentInfo={currentInfo}
-                ms={DEFAULT_INTERVAL}
-            />
+            <GameTick bind:currentInfo={currentInfo} ms={DEFAULT_INTERVAL}/>
         {/if}
 
         <PlayScreen
