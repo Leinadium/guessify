@@ -1,5 +1,5 @@
 <script>
-    import { refreshToken, accessToken, spotifyAPIHandler, username, isAuthValid } from "./lib/stores";
+    import { refreshToken, accessToken, spotifyAPIHandler, username, isAuthValid, gameScore } from "./lib/stores";
     import { MAX_ROUNDS } from "./lib/utils";
     import LoadAuth from "./lib/LoadAuth.svelte";
     import GamePlay from "./game/GamePlay.svelte";
@@ -26,6 +26,7 @@
     }
 
     function goToGame(event) {
+        $gameScore = 0;
         gameInfo = {
             maxRounds: MAX_ROUNDS,
             content: event.detail.content,
@@ -49,6 +50,7 @@
     }
 
     function update() {
+        console.log("update");
         currentMode = nextMode;
     }
 
@@ -74,6 +76,9 @@
 {:else if currentMode === "game"}
     <GamePlay 
         gameInfo={gameInfo}
+        on:newGame={goToSelection}
+        on:playAgain={goToGame}
+        on:outroend={update}
     />
 
 {/if}

@@ -41,6 +41,13 @@
         height: 1.8vh;
     }
 
+    @media screen and (max-width: 800px) {
+        .now-playing {
+            display: none;
+        }
+    }
+
+
     .content-name {
         font-weight: bold;
     }

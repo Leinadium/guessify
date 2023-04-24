@@ -1,21 +1,16 @@
 <script>
     import { tweened } from "svelte/motion";
     import { cubicOut } from "svelte/easing";
+    import { MAX_SCORE } from "../../lib/utils";
     
     export let points;
-    export let maxPoints;
 
     const scorebarProgress = tweened(0, {
         duration: 1000,
         easing: cubicOut
     });
 
-    $: {
-        if (maxPoints === 0) 
-            scorebarProgress.set(0);
-        else
-            scorebarProgress.set(points / maxPoints * 100);
-    }
+    $: scorebarProgress.set(points / MAX_SCORE * 100);
 
 </script>
 

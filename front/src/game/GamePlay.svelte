@@ -2,10 +2,12 @@
     import { spotifyAPIHandler, isPlaying, gameScore, volume } from "../lib/stores"
     import { onMount } from "svelte";
     import { MAX_SCORE } from "../lib/utils";
+    import { fade } from "svelte/transition";
     import SpotifyLib from "../lib/SpotifyLib.svelte";
     import PlayScreen from "./play/PlayScreen.svelte";
     import ReadyScreen from "./ready/ReadyScreen.svelte";
     import StartScreen from "./start/StartScreen.svelte";
+    import EndScreen from "./end/EndScreen.svelte";
     import GameTick from "./play/GameTick.svelte";
     import Scoreboard from "./scoreboard/Scoreboard.svelte";
     import Error from "../common/Error.svelte";
@@ -34,10 +36,19 @@
         progress: 0,
     }
 
+    // why it is called endInfo? it should be called "endRoundInfo" or something
+    // well, TODO
     let endInfo = {
         success: false,
         scoreEarned: 0,
         correctTrack: {}
+    }
+
+    let endGameInfo = {
+        totalCorrect: 0,
+        percentScore: 0,
+        totalMs: 0,
+        history: [],    // {track: {}, score: 0, playedMs: 0}
     }
 
     let playerStateInfo = {
@@ -46,15 +57,23 @@
         hasToStart: false,          // whenever the player has to play some music (attempt 3)
         isTryingToStart: false,
     }
+    function restartGame() {
+        // TODO: reset all variables
+        currentInfo = {state: "start", round: 0, musicIndex: -1, musicInfo: {}, roundScore: -1, playedMs: -1, roundMs: -1};
+        endInfo = {success: false, scoreEarned: 0, correctTrack: {}};
+        endGameInfo = {totalCorrect: 0, percentScore: 0, totalMs: 0, history: []};
+        gameInfo.played = [];
+        gameScore.set(0);
+    }
 
-    /* BINDS */ 
+    // ----   BINDS   ----
     let spotifySdkPlayer;
     let spotifyDeviceId;
+    // ---- END BINDS ----
 
-    function handleOnToggle() {
-        spotifySdkPlayer.togglePlay();
-    }
+    function handleOnToggle() { spotifySdkPlayer.togglePlay(); }
     
+    // ----   ERROR HANDLING   ----
     let errorInfo = {
         title: "Error while communicating with Spotify",
         quickDescription: "Spotify responded with an unexpected error. Unfortunately, there's nothing I can do. Please refresh the page or try again later",
@@ -66,8 +85,17 @@
         errorInfo.quickDescription = "Spotify responded with an unexpected error. Unfortunately, there's nothing I can do. Check your internet connection, refresh this page or try again later";
         let info;
         // welp I tried
-        try { info = JSON.parse(args.responseText).error.message; } 
-        catch { info = "No description provided"; }
+        try { 
+            info = JSON.parse(args.responseText).error.message; 
+        } 
+        catch {
+            try {
+                info = args.detail.text;
+            } catch {
+                info = "No description provided";
+            }
+             
+        }
         
         errorInfo.fullDescription = info;
         currentInfo.state = "error";
@@ -75,10 +103,12 @@
     }
 
     function onCloseError() {
-        // where should it go? Let's go to the start screen then, idk
-        currentInfo.state = "start";
+        // where should it go? Let's try to restart the game, idk
+        restartGame();
     }
+    // ---- END ERROR HANDLING ----
 
+    
     function stateHandler(event) {
         const state = event.detail;
         console.log(state);
@@ -109,6 +139,12 @@
 
     /* resets variable and updates currentState */
     function startRound() {
+        // first, check if the game has ended
+        if (currentInfo.round >= gameInfo.maxRounds) {
+            currentInfo.state = "end";
+            return;
+        }
+
         // getting random music
         let possibleIndexes = [];
         for (let i = 0; i < gameInfo.content.tracks.length; i++) {
@@ -142,6 +178,7 @@
         // update round
         currentInfo.round += 1;
         gameInfo.played.push(currentInfo.musicIndex);
+
         // update score
         if (idx !== -1 && currentInfo.musicIndex === idx) {
             $gameScore += currentInfo.roundScore;
@@ -152,8 +189,20 @@
             endInfo.success = false;
             endInfo.correctTrack = currentInfo.musicInfo;
         }
-        // goto
-        currentInfo.state = currentInfo.round === gameInfo.maxRounds ? "end" : "ready";
+
+        // update endGameInfo
+        endGameInfo.totalCorrect += endInfo.success ? 1 : 0;
+        endGameInfo.totalMs += currentInfo.playedMs;
+        // the score formula is changing a lot, so I'll just leave it like this for now
+        endGameInfo.percentScore += endInfo.scoreEarned;
+        endGameInfo.history.push({
+            track: currentInfo.musicInfo,
+            score: endInfo.scoreEarned,
+            playedMs: currentInfo.playedMs
+        });
+
+        // goto (always to ready)
+        currentInfo.state = "ready";
     }
 
     async function setPlayback() {
@@ -242,13 +291,14 @@
     on:state={stateHandler}
 />
 
-<div class="gameplay">
-    <Scoreboard
-        points={$gameScore}
-        maxPoints={gameInfo.maxRounds * MAX_SCORE}
-        rounds={currentInfo.round}
-        maxRounds={gameInfo.maxRounds}    
-    />
+<div class="gameplay" out:fade on:outroend>
+    {#if currentInfo.state !== "end"}
+        <Scoreboard
+            points={$gameScore}
+            rounds={currentInfo.round}
+            maxRounds={gameInfo.maxRounds}    
+        />
+    {/if}
 
     {#if currentInfo.state === "start"}
         <StartScreen 
@@ -280,8 +330,14 @@
         />
 
     {:else if currentInfo.state === "end"}
-        <span>End score: {$gameScore}</span>
-        
+        <EndScreen 
+            gameInfo={gameInfo}
+            endGameInfo={endGameInfo}
+            on:newGame
+            on:playAgain
+        />
+    {:else}
+        <p style="color: #fff">Loading...</p>
     {/if}
 </div>
 
@@ -290,7 +346,7 @@
     quickDescription={errorInfo.quickDescription}
     fullDescription={errorInfo.fullDescription}
     show={currentInfo.state === "error"}
-    on:click={onCloseError}
+    on:close={onCloseError}
 />
 
 <style>

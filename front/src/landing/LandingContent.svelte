@@ -92,7 +92,7 @@
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
-        gap: 10%;
+        gap: 15%;
     }
 
 </style>

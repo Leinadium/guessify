@@ -1,0 +1,52 @@
+<script>
+    import { createEventDispatcher } from "svelte";
+    import { fade } from "svelte/transition";
+    import SomeButton from "./SomeButton.svelte";
+
+    let dispatch = createEventDispatcher();
+
+    function share() {
+        // TODO
+    }
+
+    function playAgain() {
+        console.log("play again")
+        dispatch("playAgain");
+    }
+
+    function newGame() {
+        console.log("new game")
+        dispatch("newGame");
+    }
+
+</script>
+
+<div class="buttons" in:fade="{{duration: 1000}}" on:introend>
+    <SomeButton text="Share" green={true} on:click={share}/>
+    <div class="buttons-lower">
+        <SomeButton text="Play again" on:click={playAgain}/>
+        <SomeButton text="New game" on:click={newGame}/>
+    </div>
+</div>
+
+<style>
+
+    .buttons {
+        width: 80%;
+        margin-top: 1vh;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 2.5vh;
+    }
+
+    .buttons-lower {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
+
+    }
+</style>

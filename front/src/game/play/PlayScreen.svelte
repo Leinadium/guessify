@@ -11,9 +11,10 @@
     export let currentInfo;
     export let gameInfo;
 
+    const MAX_SCORE_PER_ROUND = MAX_SCORE / gameInfo.maxRounds;
     // currentScore update logic
     $: if (currentInfo.roundMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
-        currentInfo.roundScore = MAX_SCORE * (1 - (currentInfo.roundMs / currentInfo.musicInfo['duration_ms']));
+        currentInfo.roundScore = Math.ceil(MAX_SCORE_PER_ROUND * (1 - (currentInfo.roundMs / currentInfo.musicInfo['duration_ms'])));
         if (currentInfo.roundScore < 0) currentInfo.roundScore = 0;
     }
 

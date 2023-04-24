@@ -7,7 +7,6 @@
     import { fade, fly } from "svelte/transition";
 
     export let points = 0;
-    export let maxPoints = 0;
     export let rounds = 0;
     export let maxRounds = 0;
 
@@ -56,7 +55,7 @@
         {/if}
     </div>
 
-    <Scorebar points={points} maxPoints={maxPoints} />
+    <Scorebar points={points} />
     
     <spam class="rounds">{rounds} / {maxRounds} rounds</spam>
     
