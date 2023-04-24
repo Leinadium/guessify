@@ -2,6 +2,10 @@
     import { createEventDispatcher } from "svelte";
     import { fade } from "svelte/transition";
     import SomeButton from "./SomeButton.svelte";
+    import ShareButton from "./ShareButton.svelte";
+
+    export let name;
+    export let score;
 
     let dispatch = createEventDispatcher();
 
@@ -22,7 +26,7 @@
 </script>
 
 <div class="buttons" in:fade="{{duration: 1000}}" on:introend>
-    <SomeButton text="Share" green={true} on:click={share}/>
+    <ShareButton score={score} name={name}/>
     <div class="buttons-lower">
         <SomeButton text="Play again" on:click={playAgain}/>
         <SomeButton text="New game" on:click={newGame}/>

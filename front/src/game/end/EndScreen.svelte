@@ -106,7 +106,9 @@
 
 
     {#if transition >= 3}
-        <CollectionButtons 
+        <CollectionButtons
+            name={gameInfo.content.name}
+            score={$gameScore}
             on:playAgain={handlePlayAgain} 
             on:newGame 
             on:introend={addTransition}
