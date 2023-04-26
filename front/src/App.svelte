@@ -32,8 +32,8 @@
             </div>
             {#if showFullCopyright}
                 <div class="footer-description" out:fade>
-                    <spam>Guessify has no association with Spotify.</spam>
-                    <spam>Guessify doesn't use cookies and doesn't track your data.</spam>
+                    <span>Guessify has no association with Spotify.</span>
+                    <span>Guessify doesn't use cookies and doesn't track your data.</span>
                 </div>
             {/if}
 

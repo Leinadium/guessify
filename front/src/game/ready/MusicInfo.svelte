@@ -9,15 +9,15 @@
 
 <div class="music-info">
     {#if !success}
-        <spam class="pretext">The correct track was:</spam>
+        <span class="pretext">The correct track was:</span>
     {:else}
-        <spam class="pretext">You guessed:</spam>
+        <span class="pretext">You guessed:</span>
     {/if}
     <div class="wrapper">
         <img src={image} alt="Cover"/>
         <div class="texts">
-            <spam class="name">{name}</spam>
-            <spam class="artists">{artists}</spam>
+            <span class="name">{name}</span>
+            <span class="artists">{artists}</span>
         </div>
     </div>
 </div>

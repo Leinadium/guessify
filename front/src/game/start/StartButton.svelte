@@ -59,8 +59,8 @@
     </button>
     {#if !loading.done}
         <div class="loading-texts">
-            <spam class="loading-text">{loading.text}</spam>    
-            <spam class="loading-text">{Math.floor(loading.progress * 100)}%</spam>
+            <span class="loading-text">{loading.text}</span>    
+            <span class="loading-text">{Math.floor(loading.progress * 100)}%</span>
         </div>
     {/if}
 </div>

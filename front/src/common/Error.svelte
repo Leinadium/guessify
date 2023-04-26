@@ -22,14 +22,14 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="error-message" in:fly="{{y: -100, duration: 300}}" out:fade on:click={close}>
         <div class="header">
-            <spam class="error-big">Error :(</spam>
-            <spam class="title">{title}</spam>
+            <span class="error-big">Error :(</span>
+            <span class="title">{title}</span>
         </div>
         
         <p class="quick-description">{quickDescription}</p>
         
         <div class="footer">
-            <spam class="quick-description">Full error description:</spam>
+            <span class="quick-description">Full error description:</span>
             <p class="full-description">{fullDescription}</p>
         </div>
     </div>

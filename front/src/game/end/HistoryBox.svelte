@@ -18,13 +18,13 @@
 <div class="history-box">
     <img class="cover" src={img} alt="Cover">
     <div class="text">
-        <spam class="text-name">{name}</spam>
-        <spam class="text-artists">{artists}</spam>
+        <span class="text-name">{name}</span>
+        <span class="text-artists">{artists}</span>
     </div>
     <div class="info">
-        <spam class="info-time">
+        <span class="info-time">
             {(playedMs / 1000).toFixed(1)}s
-        </spam>
+        </span>
         <img class="info-icon" src={icon[0]} alt={icon[1]}>
     </div>
 </div>

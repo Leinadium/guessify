@@ -6,16 +6,16 @@
 </script>
 {#if loading}
     <button class="btn-play loading">
-        <spam class="play">Loading...</spam>
+        <span class="play">Loading...</span>
     </button>
 {:else if valid}
     <button class="btn-play" class:valid={valid} on:click>
-        <spam class="play">Play</spam>
-        <spam class="name">{name}</spam>       
+        <span class="play">Play</span>
+        <span class="name">{name}</span>       
     </button>
 {:else}
     <button class="btn-play disabled">
-        <spam class="play">Play</spam>      
+        <span class="play">Play</span>      
     </button>
 {/if}
 

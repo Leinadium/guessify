@@ -106,9 +106,9 @@
         />
     </div>
     {:else if type === "invalid"}
-        <spam class="new-error">Invalid URL</spam>
+        <span class="new-error">Invalid URL</span>
     {:else if type === "notfound"}
-        <spam class="new-error">Could not find Playlist or Album</spam>
+        <span class="new-error">Could not find Playlist or Album</span>
     {:else if type === "empty"}
         <div class="new-error"></div>
     {/if}

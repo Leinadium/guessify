@@ -17,10 +17,10 @@
     // TODO: refazer o player como grid
 </script>
 
-<spam class="now-playing">Now playing from: <spam class="content-name">{contentName}</spam></spam>
+<span class="now-playing">Now playing from: <span class="content-name">{contentName}</span></span>
 
 <div class="progress">
-    <spam class="current-time">{currentTimeStr}</spam>
+    <span class="current-time">{currentTimeStr}</span>
     <div class="progress-player">
         <div class="progress-bar" style="width: {safeCurrent / safeMax * 100}%;"></div>
     </div>

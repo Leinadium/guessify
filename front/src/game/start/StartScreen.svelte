@@ -34,7 +34,7 @@
 
 <div class="start-screen">
     <div class="wrapper-box">
-        <spam class="content-header">Playlist/Album selected:</spam>
+        <span class="content-header">Playlist/Album selected:</span>
         <ContentBox 
             name={content.name}
             image={getImage(content.images)}
@@ -47,8 +47,8 @@
 
     {#if currentTip }
         <div class="tip">
-            <spam class="tip-title">Tip: </spam>
-            <spam class="tip-text">{currentTip}</spam>
+            <span class="tip-title">Tip: </span>
+            <span class="tip-text">{currentTip}</span>
         </div>
     {/if}
 

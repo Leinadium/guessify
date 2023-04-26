@@ -97,7 +97,7 @@
 <svelte:window on:keydown={handleKey}></svelte:window>
 
 <div class="wrapper">
-    <spam class="help">Double click on a track to submit</spam>
+    <span class="help">Double click on a track to submit</span>
     <div class="results">
         {#each fullContent as music, i (music.uri)}
             {#if (showStatusContent[i])}

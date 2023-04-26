@@ -4,7 +4,7 @@
     export let score = -1;
     export let name = "a playlist";
 
-    let text = "I got " + score.toFixed(0) + " on " + name + " on Guessify! Play at";
+    let text = "I got " + score.toFixed(0) + " on " + name + " on Guessify! Play at ";
     if (score === -1) {
         text = "I got a perfect score on " + name + " on Guessify!";
     }

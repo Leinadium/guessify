@@ -28,10 +28,10 @@
 {#if show}
 <button on:click in:fade="{{duration: 500}}">
     {#if !isEnd}
-        <spam class="big">Next</spam>
-        <spam class="small">{roundsToGo} round{roundsToGo > 1 ? "s" : ""} to go</spam>
+        <span class="big">Next</span>
+        <span class="small">{roundsToGo} round{roundsToGo > 1 ? "s" : ""} to go</span>
     {:else}
-        <spam class="big">End results</spam>
+        <span class="big">End results</span>
     {/if}
 </button>
 {/if}

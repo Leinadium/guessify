@@ -140,7 +140,7 @@
 <div class="pregame-screen" transition:fade on:outroend>
 
     <div class="pregame-select">
-        <spam class="title">Choose from your library</spam>
+        <span class="title">Choose from your library</span>
         <ContentContainer 
             content={contentList}
             loaded={loadingReady}
@@ -150,7 +150,7 @@
     </div>
 
     <div class="pregame-new">
-        <spam class="title">or load from an URL</spam>
+        <span class="title">or load from an URL</span>
         <OtherContainer
             isSelected={selectedContext === "new"}
             on:select={handleSelectUpdate}

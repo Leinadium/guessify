@@ -24,15 +24,15 @@
             {#if endInfo.success}
                 <img class="text-icon" src="/assets/correct.svg" alt="Correct">
                 <div class="texts correct">
-                    <spam class="title">Correct</spam>
-                    <spam class="description">You got {currentInfo.roundScore.toFixed(0)} points!</spam>
+                    <span class="title">Correct</span>
+                    <span class="description">You got {currentInfo.roundScore.toFixed(0)} points!</span>
                 </div>
                 
             {:else}
                 <img class="text-icon" src="/assets/wrong.svg" alt="Incorrect">
                 <div class="texts wrong">
-                    <spam class="title">Wrong</spam>
-                    <spam class="description">Try again!</spam>
+                    <span class="title">Wrong</span>
+                    <span class="description">Try again!</span>
                 </div>
                 
             {/if}          

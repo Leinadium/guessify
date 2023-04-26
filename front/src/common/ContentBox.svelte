@@ -22,12 +22,12 @@
     {/if}
 
     <div class="texts">
-        <spam class="name">{name}</spam>
-        <spam class="total">
+        <span class="name">{name}</span>
+        <span class="total">
             {total} 
             {#if isUnique}unique {/if} 
             track{#if (total != 1)}s{/if}
-        </spam>
+        </span>
     </div>
     
     

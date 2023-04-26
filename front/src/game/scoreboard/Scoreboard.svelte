@@ -45,19 +45,19 @@
 
 <div class="scoreboard">
     <div class="points">
-        <spam class="points-number">{$currentValue.toFixed(0)}</spam>
-        <spam class="points-text">points</spam>
+        <span class="points-number">{$currentValue.toFixed(0)}</span>
+        <span class="points-text">points</span>
         
         {#if doShowNew}
-            <spam class="points-new" in:fly={{x: -100, duration: 500}} out:fade>
+            <span class="points-new" in:fly={{x: -100, duration: 500}} out:fade>
                 +{dif.toFixed(0)}
-            </spam>
+            </span>
         {/if}
     </div>
 
     <Scorebar points={points} />
     
-    <spam class="rounds">{rounds} / {maxRounds} rounds</spam>
+    <span class="rounds">{rounds} / {maxRounds} rounds</span>
     
 </div>
 

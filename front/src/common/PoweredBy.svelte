@@ -4,7 +4,7 @@
 </script>
 
 <a href="{externUrl}" class="extern">
-    <spam>{text}</spam>
+    <span>{text}</span>
     <img class="open-in-logo" src="/assets/spotify-logo-green.png" alt="Spotify logo">
 </a>
 
