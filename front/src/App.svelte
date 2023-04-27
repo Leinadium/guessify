@@ -18,8 +18,11 @@
 {#if showContent}
     <div class="main">
         <div class="header">
-            <img src="/guessify-logo-white.svg" alt="">
-            <a class="header-title" href="/">Guessify</a>
+            <img class="header-logo" src="/guessify-logo-white.svg" alt="">
+            <a class="header-title" href="/">
+                <img class="header-title" src="/guessify-beta.svg" alt="Guessify Beta">
+            </a>
+            
         </div>
         <div class="content">
             <Controller bind:showFullCopyright />
@@ -72,9 +75,10 @@
         color: #ffffff;
         font-size: 5vh;
         font-weight: 700;
+        height: 65%;
     }
 
-    .header > img {
+    .header-logo {
         height: 62.5%;
         aspect-ratio: 1 / 1;
         margin-right: 1vh;
