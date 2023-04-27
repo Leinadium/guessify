@@ -50,10 +50,6 @@
         font-family: 'Circular Std', Sans-Serif, helvetica, Arial;
     }
 
-    :global(span) {
-        color:rgb(255, 255, 255)
-    }
-
     .main {
         height: 100vh;
         position: relative;

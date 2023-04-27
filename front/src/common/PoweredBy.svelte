@@ -20,7 +20,7 @@
         width: fit-content;
     }
 
-    .extern > spam {
+    .extern > span {
         color: #1ED760;
         font-size: 1.3vh;
         font-weight: bolder;

@@ -67,7 +67,8 @@
     }
 
     .btn-continue {
-        background-color: #0BBA48;    
+        background-color: #0BBA48;
+        color: #fff;
     }
 
     .div-login {

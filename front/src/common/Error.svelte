@@ -90,7 +90,7 @@
         font-size: 2vh;
     }
 
-    spam.quick-description {
+    span.quick-description {
         margin-bottom: 1vh;
     }
 
