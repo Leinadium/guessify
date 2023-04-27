@@ -92,6 +92,14 @@
         }
     }
 
+    // auto scroll
+    $: if (selectedIndex > -1) {
+        console.log(selectedIndex);
+        let element = document.getElementById("result-" + selectedIndex);
+        if (element)
+            element.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
+
 </script>
 
 <svelte:window on:keydown={handleKey}></svelte:window>
@@ -101,11 +109,13 @@
     <div class="results">
         {#each fullContent as music, i (music.uri)}
             {#if (showStatusContent[i])}
+            <div class="wrapper-result" id="result-{i}">
                 <Result 
                     content={music} 
                     selected={i===selectedIndex}
                     on:click="{() => {handleResultClick(i)}}"
                 />
+            </div>
             {/if}
         {/each}
     </div>
@@ -141,5 +151,10 @@
         margin-left: 1%;
         height: 100%;    
         overflow-y: scroll;
+    }
+
+    .wrapper-result {
+        width: 100%;
+        height: fit-content;
     }
 </style>
