@@ -1,6 +1,6 @@
 <script>
     import { onDestroy, createEventDispatcher } from 'svelte';
-    import { isAuthValid, username } from '../lib/stores';
+    import { isAuthValid, isAuthenticating, username } from '../lib/stores';
     import SpotifyAuth from '../lib/SpotifyAuth.svelte';
 
     import LandingButton from './LandingButton.svelte';
@@ -24,15 +24,15 @@
         fullDescription: "Error retrieving from Spotify API: Spotify API returned 502 with message \" \""
     };
     // is authenticating
-    let isAuthenticating = false;
+    let isNewAuthenticating = false;
 
     function startAuth() {
-        isAuthenticating = true;
+        isNewAuthenticating = true;
     }
 
     function startError(e) {
         hasError = true;
-        isAuthenticating = false;
+        isNewAuthenticating = false;
         authError.title = "Error while authenticating with Spotify";
         authError.quickDescription = "Something went wrong during authentication. Try again later."
         authError.fullDescription = e.detail.description;
@@ -41,14 +41,27 @@
     // resets the page after an error
     function resetError() {
         hasError = false;      // resets the page to base
-        isAuthenticating = false;  // enables auth
+        isNewAuthenticating = false;  // enables auth
     }
 
     // resets the authentication
     function resetAuth() {
-        isAuthenticating = false;
+        isNewAuthenticating = false;
         hasError = false;
         dispatch("reset");      // propagating
+    }
+
+    // type of button
+    let typeButton = "loading";
+    $: {
+        if ($isAuthenticating)
+            typeButton = "loading";
+        else if ($isAuthValid)
+            typeButton = "valid";
+        else
+            typeButton = "invalid";
+        
+        console.log(typeButton);
     }
 
     onDestroy(() => {
@@ -62,7 +75,7 @@
             on:outroend
         />
         <LandingButton 
-            valid={$isAuthValid}
+            type={typeButton}
             username={$username}
             on:auth={startAuth}
             on:reset={resetAuth}
@@ -78,7 +91,7 @@
 />
 
 <div>
-    {#if isAuthenticating }
+    {#if isNewAuthenticating }
         <SpotifyAuth on:error={startError} />
     {/if}
 </div>

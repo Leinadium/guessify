@@ -2,7 +2,7 @@
     import { onMount, createEventDispatcher, onDestroy } from "svelte";
     import { ACCESS_URL, AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
     import { refreshToken, accessToken } from "./stores";
-    import { username, isAuthValid, spotifyAPIHandler } from "./stores";
+    import { username, isAuthValid, spotifyAPIHandler, isAuthenticating } from "./stores";
 
     // https://javascript.plainenglish.io/how-to-create-a-popup-for-oauth-login-38dee97f5f3b
     let popup = undefined;
@@ -10,9 +10,8 @@
 
     let dispatch = createEventDispatcher();
 
-    $spotifyAPIHandler.getUserPlaylists
-
     function popupLogic() {
+        $isAuthenticating = true;
         popup = window.open(AUTH_URL, "popup", "popup=true");
         checkPopup = setInterval(() => {
             try {
@@ -40,16 +39,22 @@
                                         .then((data) => {
                                             $username = data.display_name || data.id;
                                             $isAuthValid = true;        // finally, auth is finished
+                                            $isAuthenticating = false;
                                         })
                                         .catch(() => {
+                                            $isAuthenticating = false;
                                             dispatch("error", {description: "Error fetching username"});
                                         })
 
                                 } else {
+                                    $isAuthenticating = false;
                                     dispatch("error", {description: data["error_description"]});
                                 }
                             })
-                            .catch(() => dispatch("error", {description: "Error fetching credentials via API"}))
+                            .catch(() => {
+                                $isAuthenticating = false;
+                                dispatch("error", {description: "Error fetching credentials via API"})
+                            })
                             .finally(() => {
                                 popup.close();
                             })
@@ -57,7 +62,11 @@
                 }
                 if (!popup || !popup.closed) return;
                 clearInterval(checkPopup);
-            } catch { dispatch("error", {description: "Error trying to access Spotify"}); }
+            } catch (e) {
+                console.log(e); 
+                $isAuthenticating = false;
+                dispatch("error", {description: "Error trying to access Spotify"});
+            }
         }, 1000);
     }
 

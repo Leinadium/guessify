@@ -2,12 +2,13 @@
     import { fade } from "svelte/transition";
     import { createEventDispatcher } from "svelte";
 
-    export let valid = false;
+    export let type = "loading";    // loading, valid, invalid
     export let username = ""; 
 
     let dispatch = createEventDispatcher();
 
     function startAuth() {
+        console.log("triggered auth");
         dispatch("auth");
     }
 
@@ -18,7 +19,9 @@
 </script>
 
 <div class="div-login">
-    {#if !valid}
+    {#if type === "loading"}
+        <span class="loading-msg">Loading...</span>
+    {:else if type === "invalid"}
         <span class="requires">
             Requires Spotify Premium
         </span>
@@ -29,7 +32,7 @@
         </button>
     {:else}
         <!-- svelte-ignore a11y-invalid-attribute -->
-        <a href="#" class="requires logout" on:click={resetAuth}>
+        <a href="#" class="requires logout" on:click|preventDefault={resetAuth}>
             Not {username}? Logout
         </a>
         <button class="btn-landing btn-continue" in:fade on:click="{() => {dispatch('ready')}}">
@@ -40,9 +43,15 @@
 </div>
 
 <style>
+    .loading-msg {
+        color: #fff;
+        font-size: 2.5vh;
+        font-weight: bolder;
+        text-align: center;
+    }
     .btn-landing {
         width: 30vh;
-        aspect-ratio: 3.5 / 1;
+        height: 10vh;
         border-radius: 3vh;
         border: 0px;
         box-sizing: border-box;
@@ -56,7 +65,7 @@
         justify-content: center;
         align-items: center;
 
-        transition-duration: 0.33;
+        transition-duration: 0.33s;
     }
 
     .btn-landing:hover {
@@ -72,6 +81,7 @@
     }
 
     .div-login {
+        height: 15vh;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;

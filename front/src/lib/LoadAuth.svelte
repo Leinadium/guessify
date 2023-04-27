@@ -27,7 +27,7 @@
         isAuthValid = username === nulll
     */
 
-    import { refreshToken, accessToken, username, isAuthValid } from "./stores";
+    import { refreshToken, accessToken, username, isAuthValid, isAuthenticating } from "./stores";
     import { spotifyAPIHandler } from "./stores";
     import { ACCESS_URL } from "./utils";
     import { onMount } from "svelte";
@@ -44,6 +44,7 @@
     }
 
     async function load() {
+        $isAuthenticating = true;
         if ($accessToken && $refreshToken) {
             const s = await updateUsername($accessToken);
             if (!s) { 
@@ -74,7 +75,8 @@
             }
         }
 
-        $isAuthValid = !! $username;    
+        $isAuthValid = !! $username;
+        $isAuthenticating = false;  
     }
     
     onMount(load)

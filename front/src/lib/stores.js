@@ -19,6 +19,9 @@ export const accessToken = writable(null);
 // refresh and access token is valid
 export const isAuthValid = writable(false);
 
+// is on the proccess of authenticatin
+export const isAuthenticating = writable(false);
+
 // spotify username
 export const username = writable(null);
 

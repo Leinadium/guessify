@@ -52,11 +52,11 @@
     <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="pagination">
         {#if page === "main"}
-            <a href="#" style="text-align: right" class="goto goto-text" on:click="{() => clear("about")}">About</a>
+            <a href="#" style="text-align: right" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">About</a>
             <span class="goto">|</span>
-            <a href="#" style="text-align: left" class="goto goto-text" on:click="{() => clear("tutorial")}">Tutorial</a>
+            <a href="#" style="text-align: left" class="goto goto-text" on:click|preventDefault="{() => clear("tutorial")}">Tutorial</a>
         {:else}
-            <a href="#" style="text-align: center"class="goto goto-text" on:click="{() => clear("main")}">Go back</a>
+            <a href="#" style="text-align: center"class="goto goto-text" on:click|preventDefault="{() => clear("main")}">Go back</a>
         {/if}
     </div>
     
