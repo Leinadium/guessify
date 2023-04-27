@@ -1,5 +1,5 @@
-const API_URL = "http://localhost:5000";
-const FRONT_URL = "http://localhost:5173";
+const API_URL = "http://10.201.254.139:5000";
+const FRONT_URL = "http://10.201.254.139:5173";
 
 export const AUTH_URL = `${API_URL}/auth`;
 export const CB_URL = FRONT_URL;

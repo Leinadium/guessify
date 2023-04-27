@@ -71,6 +71,7 @@
     }
 
     .text-artists {
+        width: 100%;
         font-size: 1.8vh;
         font-weight: 100;
         white-space: nowrap;
