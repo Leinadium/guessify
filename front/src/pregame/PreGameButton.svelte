@@ -6,7 +6,7 @@
 </script>
 {#if loading}
     <button class="btn-play loading">
-        <span class="play">Loading...</span>
+        <img class="loading-icon" src="/assets/spin.svg" alt="Loading">
     </button>
 {:else if valid}
     <button class="btn-play" class:valid={valid} on:click>
@@ -46,20 +46,11 @@
     }
 
     .disabled {
-        background-color: #777;
+        background-color: #777 !important;
         cursor: not-allowed;
     }
 
     .disabled > .play {
-        color: #aaa !important;
-    }
-
-    .loading {
-        background-color: #777;
-        cursor: progress;
-    }
-
-    .loading > .play {
         color: #aaa !important;
     }
 
@@ -76,5 +67,10 @@
         color: #aaa;
         white-space: nowrap;
         overflow: hidden;
+    }
+
+    .loading-icon {
+        height: 5vh;
+        aspect-ratio: 1 / 1;
     }
 </style>

@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onDestroy, onMount } from "svelte";
     import { fade } from "svelte/transition";
     import ReadyButton from "./ReadyButton.svelte";
     import MusicInfo from "./MusicInfo.svelte";
@@ -11,15 +11,36 @@
     let dispatch = createEventDispatcher();
 
     let show = true;
+    let canShowLoading = false;
+    let loadingHandle;
+
     function returnToGame() {
         show = false;
-        dispatch("click", {});
+        // hide the screen, and then call to game
     }
+
+    function afterHide() {
+        dispatch("click", {});
+        
+        loadingHandle = setInterval(() => {
+            canShowLoading = true;
+        }, 1500);
+    }
+
+    onMount(() => {
+        show = true;
+        canShowLoading = false;
+    })
+
+    onDestroy(() => {
+        canShowLoading = false;
+        clearInterval(loadingHandle);
+    });
 
 </script>
 
 {#if show}
-    <div class="ready-screen" transition:fade="{{duration: 500}}">
+    <div class="ready-screen" transition:fade="{{duration: 500}}" on:outroend={afterHide}>
         <div class="main-text">
             {#if endInfo.success}
                 <img class="text-icon" src="/assets/correct.svg" alt="Correct">
@@ -49,9 +70,30 @@
         />
 
     </div>
+{:else if canShowLoading}
+    <span class="loading-icon">
+        <img src="/assets/spin.svg" alt="">
+    </span>
 {/if}
 
 <style>
+    .loading-icon {
+        margin-top: 10vh;
+        width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 5vh;
+        font-weight: 600;
+        color: #777;
+    }
+    .loading-icon > img {
+        height: 8vh;
+        aspect-ratio: 1 / 1;
+    }
+
     .ready-screen {
         margin-top: 5vh;
         width: 100%;

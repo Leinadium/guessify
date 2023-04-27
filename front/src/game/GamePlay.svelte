@@ -338,8 +338,6 @@
             on:newGame
             on:playAgain
         />
-    {:else}
-        <p style="color: #fff; font-size: 5vh">Loading...</p>
     {/if}
 </div>
 

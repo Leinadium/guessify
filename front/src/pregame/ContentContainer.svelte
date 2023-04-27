@@ -72,7 +72,7 @@
             <p>No albums or playlist found</p>
         {/if}
     {:else}
-        <p>Loading...</p>
+        <img class="loading" src="/assets/spin.svg" alt="Loading">
     {/if}
     </div>
 </div>
@@ -115,5 +115,11 @@
 
     .container::-webkit-scrollbar-track {
         background: 121212;
+    }
+
+    .loading {
+        margin-top: 1vh;
+        width: 8vh;
+        aspect-ratio: 1 / 1;
     }
 </style>

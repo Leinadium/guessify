@@ -20,7 +20,7 @@
 
 <div class="div-login">
     {#if type === "loading"}
-        <span class="loading-msg">Loading...</span>
+        <img class="loading-icon" src="/assets/spin.svg" alt="">
     {:else if type === "invalid"}
         <span class="requires">
             Requires Spotify Premium
@@ -43,11 +43,9 @@
 </div>
 
 <style>
-    .loading-msg {
-        color: #fff;
-        font-size: 2.5vh;
-        font-weight: bolder;
-        text-align: center;
+    .loading-icon {
+        height: 10vh;
+        aspect-ratio: 1 / 1;
     }
     .btn-landing {
         width: 30vh;

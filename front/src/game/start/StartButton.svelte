@@ -23,6 +23,7 @@
     })
 
     let showStartText = false;
+    let disableButton = false;
 
     // update loading progress
     $: loadingProgress.set(loading.progress);
@@ -33,11 +34,14 @@
     }
 
     function handleClick() {
-        if (loading.done)
+        if (loading.done) {
             dispatch("start");
+            disableButton = true;
+        }
     }
 
     onMount(() => {
+        disableButton = false;
         loadingProgress.set(loading.progress);
     })
 
@@ -45,24 +49,33 @@
 
 
 <div class="wrapper-btn">
-    <button class="btn-start" on:click={handleClick} disabled={!loading.done}>
-        {#if !loading.done}
-            <div class="loading-wrapper">
-                <div class="loading-progress" style="width: {$loadingProgress * 100}%" in:fade></div>
-            </div>
+    <!-- button when loading or ready -->
+    {#if !disableButton}
+        <button class="btn-start" on:click={handleClick} disabled={!loading.done}>
+            {#if !loading.done}
+                <div class="loading-wrapper">
+                    <div class="loading-progress" style="width: {$loadingProgress * 100}%" in:fade></div>
+                </div>
 
-        {:else}
-            <div class="ready" style="height: calc({$readySize} * var(--max-height))">
-                {#if showStartText}<div class="text" in:fade>Start</div>{/if}
-            </div>
-        {/if}
-    </button>
-    {#if !loading.done}
+            {:else}
+                <div class="ready" style="height: calc({$readySize} * var(--max-height))">
+                    {#if showStartText}<div class="text" in:fade>Start</div>{/if}
+                </div>
+            {/if}
+        </button>
+        {#if !loading.done}
         <div class="loading-texts">
             <span class="loading-text">{loading.text}</span>    
             <span class="loading-text">{Math.floor(loading.progress * 100)}%</span>
         </div>
+        {/if}
+
+    {:else}
+        <!-- display after button is cliked-->
+        <img src="/assets/spin.svg" alt="Starting" class="after-start" in:fade="{{duration: 100}}">
     {/if}
+
+    
 </div>
 
 
@@ -134,5 +147,10 @@
         color: #fff;
         font-weight: bold;
         font-size: 3vh;
+    }
+
+    .after-start {
+        width: 8vh;
+        height: 8vh;
     }
 </style>
