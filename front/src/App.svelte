@@ -18,6 +18,7 @@
 {#if showContent}
     <div class="main">
         <div class="header">
+            <img src="/guessify-logo-white.svg" alt="">
             <a class="header-title" href="/">Guessify</a>
         </div>
         <div class="content">
@@ -71,6 +72,12 @@
         color: #ffffff;
         font-size: 5vh;
         font-weight: 700;
+    }
+
+    .header > img {
+        height: 62.5%;
+        aspect-ratio: 1 / 1;
+        margin-right: 1vh;
     }
 
     .footer {
