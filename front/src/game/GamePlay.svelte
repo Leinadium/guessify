@@ -139,6 +139,8 @@
 
     /* resets variable and updates currentState */
     function startRound() {
+        currentInfo.state == "loading";
+
         // first, check if the game has ended
         if (currentInfo.round >= gameInfo.maxRounds) {
             currentInfo.state = "end";
@@ -337,7 +339,7 @@
             on:playAgain
         />
     {:else}
-        <p style="color: #fff">Loading...</p>
+        <p style="color: #fff; font-size: 5vh">Loading...</p>
     {/if}
 </div>
 
