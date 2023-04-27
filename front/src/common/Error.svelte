@@ -22,7 +22,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="error-message" in:fly="{{y: -100, duration: 300}}" out:fade on:click={close}>
         <div class="header">
-            <span class="error-big">Error :(</span>
+            <span class="error-big">Oops...</span>
             <span class="title">{title}</span>
         </div>
         
@@ -51,11 +51,11 @@
 
     .error-message {
         position: absolute;
-        width: 80vw;
-        height: 60vh;
+        width: 60vmin;
+        height: 50vh;
 
-        top: 20vh;
-        left: 10vw;
+        top: 25vh;
+        left: calc(50% - 30vmin);
         z-index: 12;
 
         display: inline-flex;

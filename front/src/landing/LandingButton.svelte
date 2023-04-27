@@ -117,7 +117,6 @@
 
     .requires {
         margin-top: 0.8vh;
-        font-family: 'Circular Std';
         font-size: 2vh;
         font-weight: 300;
         font-style: italic;

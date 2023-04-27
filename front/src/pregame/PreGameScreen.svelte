@@ -188,7 +188,6 @@
         gap: 0.3vh;
 
         color: #fff;
-        font-family: 'Circular Std';
     }
 
     .pregame-new {

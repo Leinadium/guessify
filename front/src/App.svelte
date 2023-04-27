@@ -47,7 +47,7 @@
     :global(html), :global(body) {
         margin: 0px;
         height: 100%;
-        font-family: 'Circular Std', Sans-Serif, helvetica, Arial;
+        font-family: 'Circular Std', sans-serif, helvetica, arial;
     }
 
     .main {
