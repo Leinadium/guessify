@@ -1,5 +1,6 @@
 <script>
     import Controller from "./Controller.svelte";
+    import Text from "./common/Text.svelte";
     import { fade } from "svelte/transition";
 
     // TODO: change spotify callback
@@ -36,15 +37,15 @@
             </div>
             {#if showFullCopyright}
                 <div class="footer-description" out:fade>
-                    <span>Guessify has no association with Spotify.</span>
-                    <span>Guessify doesn't use cookies and doesn't track your data.</span>
+                    <span><Text key="copyright-text1"></Text></span>
+                    <span><Text key="copyright-text2"></Text></span>
                 </div>
             {/if}
 
         </div>
     </div>
 {:else}
-    <p>Authenticated. You can close this window<p>
+    <p><Text key="authenticated"></Text><p>
 {/if}
 
 <style>

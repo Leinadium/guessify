@@ -1,6 +1,7 @@
 <script>
     import { fade, fly } from 'svelte/transition';
     import { createEventDispatcher } from 'svelte';
+    import Text from '../common/Text.svelte';
     
     let dispatch = createEventDispatcher();
     let page = "main";      // main, tutorial, about
@@ -26,25 +27,25 @@
                 in:fly="{{ y: 30, duration: 1000}}" out:fade
                 on:outroend={update}
             >
-                Do you know your music?
+                <Text key="landing-title"></Text>
             </div>
             
             <div 
                 class="long-description" 
                 in:fly="{{ y: 30, duration: 1000}}" out:fade
             >
-                Some description, some description some description some description some description!
+                <Text key="landing-description"></Text>
             </div>
         
         {:else if page === "about"}
             <div transition:fly="{{ x: -200, duration: 500}}" on:outroend={update}>
                 <!-- TODO: about description -->
-                kkkk1about
+                <Text key="landing-about-content"></Text>
             </div>
         {:else if page === "tutorial"}
                 <!-- TODO: tutorial description -->
             <div transition:fly="{{ x: 200, duration: 500 }}" on:outroend={update}>
-                kkkk2tutorial
+                <Text key="landing-tutorial-content"></Text>
             </div>
         {/if}
     </div>
@@ -52,11 +53,17 @@
     <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="pagination">
         {#if page === "main"}
-            <a href="#" style="text-align: right" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">About</a>
+            <a href="#" style="text-align: right" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">
+                <Text key="landing-about"></Text>
+            </a>
             <span class="goto">|</span>
-            <a href="#" style="text-align: left" class="goto goto-text" on:click|preventDefault="{() => clear("tutorial")}">Tutorial</a>
+            <a href="#" style="text-align: left" class="goto goto-text" on:click|preventDefault="{() => clear("tutorial")}">
+                <Text key="landing-tutorial"></Text>
+            </a>
         {:else}
-            <a href="#" style="text-align: center"class="goto goto-text" on:click|preventDefault="{() => clear("main")}">Go back</a>
+            <a href="#" style="text-align: center"class="goto goto-text" on:click|preventDefault="{() => clear("main")}">
+                <Text key="landing-goback"></Text>
+            </a>
         {/if}
     </div>
     
@@ -87,9 +94,9 @@
 
     .short-description {
         color: #fff;
-        font-size: 10vmin;
+        font-size: 8vmin;
         font-weight: 700;
-        margin-bottom: 10vmin;
+        margin-bottom: 8vmin;
     }
 
     .long-description {

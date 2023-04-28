@@ -1,6 +1,6 @@
 <script>
     import { refreshToken, accessToken, spotifyAPIHandler, username, isAuthValid, gameScore } from "./lib/stores";
-    import { MAX_ROUNDS } from "./lib/utils";
+    import { MAX_ROUNDS, destroySdk } from "./lib/utils";
     import LoadAuth from "./lib/LoadAuth.svelte";
     import GamePlay from "./game/GamePlay.svelte";
     import LandingContent from "./landing/LandingContent.svelte";
@@ -54,7 +54,9 @@
         currentMode = nextMode;
     }
 
+    // dynamic content
     $: showFullCopyright = currentMode === "landing";
+    $: if (currentMode !== "game") destroySdk();
 </script>
 
 <LoadAuth />

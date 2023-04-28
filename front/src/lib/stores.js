@@ -29,3 +29,5 @@ export const gameScore = writable(0);
 const volumeStored = parseFloat(localStorage.getItem(VOLUME_KEY)) || 0.7;
 export const volume = writable(volumeStored);
 volume.subscribe((v) => localStorage.setItem(VOLUME_KEY, v.toString()));
+// text translation
+export const language = writable("br");

@@ -1,3 +1,6 @@
+import texts from "./texts.json";
+import { language } from "./stores";
+
 const API_URL = "http://localhost:5000";
 const FRONT_URL = "http://localhost:5173";
 
@@ -19,4 +22,17 @@ export function getImage(images) {
         return images[l - 1].url;
     }
     return null;
+}
+
+export function getText(lang, key) {
+    return texts[lang][key]
+}
+
+
+/**Removes the SDK from the web app,
+ * to prevent multiple SDK loaded
+ */
+export function destroySdk() {
+    // find the iframe loaded onto the page and remove
+    // TODO
 }

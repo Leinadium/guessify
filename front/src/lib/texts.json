@@ -1,0 +1,32 @@
+{
+    "br": {
+        "authenticated": "Autenticado. Você pode fechar essa janela",
+        "landing-title": "Você conhece as suas músicas?",
+        "landing-description": "Conecte sua conta do Spotify, escolha uma playlist/album e tente adivinhar rapidamente a música!",
+        "landing-login": "Entre com",
+        "landing-continue": "Jogar como",
+        "landing-about": "Sobre",
+        "landing-about-content": "xxxxx about xxxxx",
+        "landing-tutorial": "Tutorial",
+        "landing-tutorial-content": "xxxxx tutorial xxxxx",
+        "landing-goback": "Voltar",
+        "landing-requires": "Spotify Premium necessário",
+        "copyright-text1": "Guessify não possui associação com Spotify.",
+        "copyright-text2": "Guessify não usa cookies nem rastreia seus dados."
+    },
+    "en": {
+        "authenticated":"Authenticated. You can close this window",
+        "landing-title": "Do you know your music?",
+        "landing-description": "Connect with your Spotify account, choose a playlist/album and try to guess quickly the music!",
+        "landing-login": "Login with",
+        "landing-continue": "Play as",
+        "landing-about": "About",
+        "landing-about-content": "xxxxx about xxxxx",
+        "landing-tutorial": "Tutorial",
+        "landing-tutorial-content": "xxxxx tutorial xxxxx",
+        "landing-goback": "Go back",
+        "landing-requires": "Requires Spotify Premium",
+        "copyright-text1": "Guessify has no association with Spotify.",
+        "copyright-text2": "Guessify has no cookies and no data tracking."
+    }
+}
