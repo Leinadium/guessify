@@ -1,5 +1,4 @@
 import texts from "./texts.json";
-import { language } from "./stores";
 
 const API_URL = "http://localhost:5000";
 const FRONT_URL = "http://localhost:5173";
@@ -33,6 +32,5 @@ export function getText(lang, key) {
  * to prevent multiple SDK loaded
  */
 export function destroySdk() {
-    // find the iframe loaded onto the page and remove
-    // TODO
+
 }

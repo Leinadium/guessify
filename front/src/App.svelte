@@ -1,5 +1,6 @@
 <script>
     import Controller from "./Controller.svelte";
+  import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";
     import { fade } from "svelte/transition";
 
@@ -23,7 +24,7 @@
             <a class="header-title" href="/">
                 <img class="header-title" src="/guessify-beta.svg" alt="Guessify Beta">
             </a>
-            
+            <SwapLanguage />
         </div>
         <div class="content">
             <Controller bind:showFullCopyright />
@@ -69,6 +70,7 @@
         flex-flow: row nowrap;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 
     .header-title {

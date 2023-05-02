@@ -27,25 +27,25 @@
                 in:fly="{{ y: 30, duration: 1000}}" out:fade
                 on:outroend={update}
             >
-                <Text key="landing-title"></Text>
+                <Text key="landing-title" />
             </div>
             
             <div 
                 class="long-description" 
                 in:fly="{{ y: 30, duration: 1000}}" out:fade
             >
-                <Text key="landing-description"></Text>
+                <Text key="landing-description" />
             </div>
         
         {:else if page === "about"}
             <div transition:fly="{{ x: -200, duration: 500}}" on:outroend={update}>
                 <!-- TODO: about description -->
-                <Text key="landing-about-content"></Text>
+                <Text key="landing-about-content" />
             </div>
         {:else if page === "tutorial"}
                 <!-- TODO: tutorial description -->
             <div transition:fly="{{ x: 200, duration: 500 }}" on:outroend={update}>
-                <Text key="landing-tutorial-content"></Text>
+                <Text key="landing-tutorial-content" />
             </div>
         {/if}
     </div>
@@ -54,15 +54,15 @@
     <div class="pagination">
         {#if page === "main"}
             <a href="#" style="text-align: right" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">
-                <Text key="landing-about"></Text>
+                <Text key="landing-about" />
             </a>
             <span class="goto">|</span>
             <a href="#" style="text-align: left" class="goto goto-text" on:click|preventDefault="{() => clear("tutorial")}">
-                <Text key="landing-tutorial"></Text>
+                <Text key="landing-tutorial" />
             </a>
         {:else}
             <a href="#" style="text-align: center"class="goto goto-text" on:click|preventDefault="{() => clear("main")}">
-                <Text key="landing-goback"></Text>
+                <Text key="landing-goback" />
             </a>
         {/if}
     </div>

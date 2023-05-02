@@ -1,7 +1,11 @@
 <script>
-    import { getText } from "../lib/utils";
     import { language } from "../lib/stores";
+    import { getText } from "../lib/utils";
+    
     export let key;
-    const text = getText($language, key) || "???";
+
+    let text;
+    $: text = getText($language, key);
+
 </script>
 {text}
