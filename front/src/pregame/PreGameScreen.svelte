@@ -7,6 +7,7 @@
     import OtherContainer from "./OtherContainer.svelte";
     import PreGameButton from "./PreGameButton.svelte";
     import Error from "../common/Error.svelte";
+    import Text from "../common/Text.svelte";
 
     let playlistsList = [];
     let albumsList = [];
@@ -140,7 +141,7 @@
 <div class="pregame-screen" transition:fade on:outroend>
 
     <div class="pregame-select">
-        <span class="title">Choose from your library</span>
+        <span class="title"><Text key="pregame-choose" /></span>
         <ContentContainer 
             content={contentList}
             loaded={loadingReady}
@@ -150,7 +151,7 @@
     </div>
 
     <div class="pregame-new">
-        <span class="title">or load from an URL</span>
+        <span class="title"><Text key="pregame-load" /></span>
         <OtherContainer
             isSelected={selectedContext === "new"}
             on:select={handleSelectUpdate}

@@ -1,5 +1,6 @@
 <script>
     import PoweredBy from "./PoweredBy.svelte";
+  import Text from "./Text.svelte";
 
     // https://developer.spotify.com/documentation/web-api/reference/#/operations/get-featured-playlists
     export let image;
@@ -7,7 +8,7 @@
     export let total;
     export let externUrl;
     export let isSelected = false;
-    export let isUnique = false;
+    export const isUnique = false;    // DEPRECIATED
     export let expand = false;
         
 </script>
@@ -24,9 +25,10 @@
     <div class="texts">
         <span class="name">{name}</span>
         <span class="total">
-            {total} 
-            {#if isUnique}unique {/if} 
-            track{#if (total != 1)}s{/if}
+            {total}
+            
+            <Text key="contentbox-track" />
+            {#if (total != 1)}s{/if}
         </span>
     </div>
     

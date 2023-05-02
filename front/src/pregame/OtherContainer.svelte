@@ -1,7 +1,9 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { spotifyAPIHandler } from "../lib/stores";
+    import { spotifyAPIHandler, language } from "../lib/stores";
+    import { getText } from "../lib/utils";
     import ContentBox from "../common/ContentBox.svelte";
+    import Text from "../common/Text.svelte";
 
     let url = "";
     export let isSelected = false;
@@ -92,7 +94,7 @@
 <div class="other-container">    
     <input
         type="text"
-        placeholder='Click on "Share - Copy Link" and paste here'
+        placeholder="{getText($language, 'pregame-placeholder')}"
         bind:value={url}
     />
     {#if type === "valid"}
@@ -106,9 +108,9 @@
         />
     </div>
     {:else if type === "invalid"}
-        <span class="new-error">Invalid URL</span>
+        <span class="new-error"><Text key="pregame-invalidurl" /></span>
     {:else if type === "notfound"}
-        <span class="new-error">Could not find Playlist or Album</span>
+        <span class="new-error"><Text key="pregame-urlnotfound" /></span>
     {:else if type === "empty"}
         <div class="new-error"></div>
     {/if}

@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import ContentBox from "../common/ContentBox.svelte";
     import { getImage } from "../lib/utils";
+  import Text from "../common/Text.svelte";
 
     export let content;
     export let loaded = false;
@@ -69,7 +70,7 @@
                 />
             {/each}
         {:else}
-            <p>No albums or playlist found</p>
+            <p><Text key="pregame-not-found" /></p>
         {/if}
     {:else}
         <img class="loading" src="/assets/spin.svg" alt="Loading">

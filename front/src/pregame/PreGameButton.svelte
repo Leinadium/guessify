@@ -1,4 +1,6 @@
 <script>
+  import Text from "../common/Text.svelte";
+
     export let loading = false;
     export let valid = true;
     export let name = "";
@@ -10,12 +12,12 @@
     </button>
 {:else if valid}
     <button class="btn-play" class:valid={valid} on:click>
-        <span class="play">Play</span>
+        <span class="play"><Text key="pregame-play" /></span>
         <span class="name">{name}</span>       
     </button>
 {:else}
     <button class="btn-play disabled">
-        <span class="play">Play</span>      
+        <span class="play"><Text key="pregame-play" /></span>      
     </button>
 {/if}
 

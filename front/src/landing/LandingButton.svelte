@@ -1,6 +1,7 @@
 <script>
     import { fade } from "svelte/transition";
     import { createEventDispatcher } from "svelte";
+    import Text from "../common/Text.svelte";
 
     export let type = "loading";    // loading, valid, invalid
     export let username = ""; 
@@ -23,20 +24,21 @@
         <img class="loading-icon" src="/assets/spin.svg" alt="">
     {:else if type === "invalid"}
         <span class="requires">
-            Requires Spotify Premium
+            <Text key="landing-requires"></Text>
         </span>
         <button class="btn-landing btn-login" in:fade on:click={startAuth}>
             <span class="login">
-                Login with <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify">
+                <Text key="landing-login" />
+                <img class="spotify-logo-button" src="/assets/spotify-logo-white.png" alt="Spotify">
             </span>
         </button>
     {:else}
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="#" class="requires logout" on:click|preventDefault={resetAuth}>
-            Not {username}? Logout
+            <Text key="landing-not" /> {username}? <Text key="landing-logout" />
         </a>
         <button class="btn-landing btn-continue" in:fade on:click="{() => {dispatch('ready')}}">
-            <span class="continue">Play as</span>
+            <span class="continue"><Text key="landing-continue" /></span>
             <span class="continue-username">{username}</span>
         </button>
     {/if}
