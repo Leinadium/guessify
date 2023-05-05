@@ -27,7 +27,7 @@
     const dicas = [
         "Pressione ENTER para submeter a música selecionada",
         "Clique numa música para selecionar, clique novamente para submeter",
-        "Pode pesquisar usando o nome da música, álbum ou artista(s)",
+        "Pesquise usando o nome da música, álbum ou artista(s)",
         "Utilize as setas para navegar entre as músicas",   
         "Ganhe mais pontos ao adivinhar a música mais rápido",
         "Uma música só pode ser tocada uma vez por jogo",

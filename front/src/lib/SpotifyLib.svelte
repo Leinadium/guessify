@@ -103,7 +103,9 @@
     onDestroy(() => {
         if (spotifyPlayer != undefined) {
             console.log("Disconnecting");
+            spotifyPlayer.removeListener('ready');  //  this was triggering ready twice
             spotifyPlayer.disconnect();
+            spotifyPlayer = undefined;
         }
     });
 </script>

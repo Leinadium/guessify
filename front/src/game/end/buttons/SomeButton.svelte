@@ -1,12 +1,8 @@
 <script>
     export let text;
-    export let green = false;
-
 </script>
 
-<button class:green={green} on:click>
-    {text}
-</button>
+<button on:click>{text}</button>
 
 <style>
     button {
@@ -25,9 +21,5 @@
 
     button:hover {
         opacity: 0.8;
-    }
-
-    .green {
-        background: linear-gradient(0deg, rgba(11,186,71,0.8) 0%, rgba(11,186,71,1) 20%);
     }
 </style>

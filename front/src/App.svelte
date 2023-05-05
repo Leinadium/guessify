@@ -1,6 +1,6 @@
 <script>
     import Controller from "./Controller.svelte";
-  import SwapLanguage from "./common/SwapLanguage.svelte";
+    import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";
     import { fade } from "svelte/transition";
 
@@ -27,7 +27,7 @@
             <SwapLanguage />
         </div>
         <div class="content">
-            <Controller bind:showFullCopyright />
+            <Controller bind:showFullCopyright />       
         </div>
         <div class="footer" style="height: {heightCopyright}">
             <div class="footer-copyright">

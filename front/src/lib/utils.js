@@ -1,7 +1,7 @@
 import texts from "./texts.json";
 
 const API_URL = "http://localhost:5000";
-const FRONT_URL = "http://localhost:5173";
+export const FRONT_URL = "http://localhost:5173";
 
 export const AUTH_URL = `${API_URL}/auth`;
 export const CB_URL = FRONT_URL;
@@ -33,5 +33,8 @@ export function getText(lang, key) {
  * to prevent multiple SDK loaded
  */
 export function destroySdk() {
-
+    let iframes = document.getElementsByTagName("iframe");
+    if (iframes.length > 0) {
+        iframes[0].parentNode.removeChild(iframes[0]);
+    }
 }

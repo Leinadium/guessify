@@ -3,6 +3,8 @@
     import { fade } from "svelte/transition";
     import SomeButton from "./SomeButton.svelte";
     import ShareButton from "./ShareButton.svelte";
+    import { getText } from "../../../lib/utils";
+    import { language } from "../../../lib/stores";
 
     export let name;
     export let score;
@@ -28,8 +30,8 @@
 <div class="buttons" in:fade="{{duration: 1000}}" on:introend>
     <ShareButton score={score} name={name}/>
     <div class="buttons-lower">
-        <SomeButton text="Play again" on:click={playAgain}/>
-        <SomeButton text="New game" on:click={newGame}/>
+        <SomeButton text="{getText($language, 'game-playagain')}" on:click={playAgain}/>
+        <SomeButton text="{getText($language, 'game-newgame')}" on:click={newGame}/>
     </div>
 </div>
 

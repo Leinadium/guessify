@@ -46,7 +46,17 @@
         "game-next": "Próximo",
         "game-round": "rodada",
         "game-posnext": "",
-        "game-endresults": "Resultados"
+        "game-endresults": "Resultados",
+        "game-your-score": "Sua pontuação",
+        "game-seconds": "segundos",
+        "game-correct-guesses": "Escolhas corretas",
+        "game-average": "Média para escolhas corretas",
+        "game-total": "Tempo total",
+        "game-rounds-of": "rodadas de",
+        "game-share": "Copiar link",
+        "game-playagain": "Jogar novamente",
+        "game-newgame": "Novo jogo",
+        "game-copied": "Copiado!"
     },
     "en": {
         "authenticated":"Authenticated. You can close this window",
@@ -95,6 +105,16 @@
         "game-next": "Next",
         "game-round": "round",
         "game-posnext": " to go",
-        "game-endresults": "End results"
+        "game-endresults": "End results",
+        "game-your-score": "Your score",
+        "game-seconds": "seconds",
+        "game-correct-guesses": "Correct guesses",
+        "game-average": "Average for correct guesses",
+        "game-total": "Total time",
+        "game-rounds-of": "rounds of",
+        "game-share": "Share",
+        "game-playagain": "Play again",
+        "game-newgame": "New game",
+        "game-copied": "Copied!"
     }
 }
