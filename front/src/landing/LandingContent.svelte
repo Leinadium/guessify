@@ -101,11 +101,13 @@
     
     .landing {
         height: 100%;
+        padding-bottom: 2%;
+        
         display: flex;
         flex-flow: column nowrap;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        gap: 15%;
+        gap: 5%;
     }
 
 </style>

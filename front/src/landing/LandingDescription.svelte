@@ -40,7 +40,19 @@
         {:else if page === "about"}
             <div transition:fly="{{ x: -200, duration: 500}}" on:outroend={update}>
                 <!-- TODO: about description -->
-                <Text key="landing-about-content" />
+                <p class="small-text">
+                    Guessify é um jogo para você testar seus conhecimentos nas músicas que você costuma ouvir.
+                    Diferentemente dos outros jogos semelhantes, Guessify permite utilizar seu Spotify para escolher
+                    suas playlists e albums que costuma ouvir.
+                    <br>
+                    O jogo atualmente ainda está em desenvolvimento. Podem ocorrer vários problemas com a conexão com o Spotify,
+                    assim como inesperados bugs.
+                    <br>
+                    É seguro? Sim, Guessify não armazena nenhuma informação sua além do seu token de acesso fornecido pelo Spotify,
+                    pode ser removido a qualquer momento ao clicar no botão de sair na tela inicial.
+                    <br>
+                    Deseja contribuir? O código fonte está disponível no <a href="https://github.com/Leinadium/guessify">Github</a>.
+                </p>
             </div>
         {:else if page === "tutorial"}
                 <!-- TODO: tutorial description -->
@@ -74,29 +86,34 @@
 <style>
     .landing-description {
         width: 100%;
-        height: 50%;
-        display: flex;
+        height: 100%;
+
+        display: inline-flex;
         flex-flow: column nowrap;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         gap: 10%;
     }
 
     .texts {
-        height: fit-content;
+        box-sizing: border-box;
+        height: 50vh;
+        padding-top: 5%;
+
+
         display: flex;
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: center;
         text-align: center;
         color: #ffffff;
+        overflow-y: auto;
     }
 
     .short-description {
         color: #fff;
         font-size: 8vmin;
         font-weight: 700;
-        margin-bottom: 8vmin;
     }
 
     .long-description {
@@ -121,6 +138,22 @@
 
     .goto-text {
         width: 30vw;
+    }
+
+    p {
+        margin: none;
+        padding-left: 10vw;
+        padding-right: 10vw;
+        font-size: 3vmin;
+        font-weight: 300;
+        color: #fefefe;
+        text-align: center;
+    }
+    br {
+        box-sizing: content-box;
+        display: block;
+        content: "";
+        margin-top: 5%;
     }
 
 </style>

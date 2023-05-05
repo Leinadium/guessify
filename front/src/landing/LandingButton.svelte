@@ -52,6 +52,7 @@
     .btn-landing {
         width: 30vh;
         height: 10vh;
+        aspect-ratio: 3 / 1;
         border-radius: 3vh;
         border: 0px;
         box-sizing: border-box;
@@ -81,11 +82,12 @@
     }
 
     .div-login {
-        height: 15vh;
+        height: fit-content;
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
         align-items: center;
+        gap: 0.5vh;
         color: #fff;
     }
 
@@ -118,12 +120,11 @@
     }
 
     .requires {
-        margin-top: 0.8vh;
+        display: inline;
         font-size: 2vh;
         font-weight: 300;
         font-style: italic;
         color: #d0d0d0;
-        margin-bottom: 1vh;
     }
 
     .logout {
