@@ -13,6 +13,8 @@ export const LANG_KEY = "lang";
 export const MAX_ROUNDS = 5;
 export const MAX_SCORE = 100;
 
+const GRACE_PERIOD = 7000;
+
 /**Get the last image of a track (smallest possible)
  * If there is no image available, return null
  */
@@ -37,4 +39,16 @@ export function destroySdk() {
     if (iframes.length > 0) {
         iframes[0].parentNode.removeChild(iframes[0]);
     }
+}
+
+/**Calculate the current max score based on length of music and current ms */
+export function currentScore(currentMs, totalMs, maxRounds) {
+    const MAX_SCORE_PER_ROUND = MAX_SCORE / maxRounds;
+    
+    // grace period of 7s
+    if (currentMs < GRACE_PERIOD) { return MAX_SCORE_PER_ROUND; }
+    // linear gradient from 7s to half of the song
+    const score = MAX_SCORE_PER_ROUND * (1 - ((currentMs - GRACE_PERIOD) / ((totalMs - GRACE_PERIOD) / 3)));
+
+    return score > 0 ? Math.floor(score) : 0;
 }

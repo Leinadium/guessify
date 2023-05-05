@@ -4,18 +4,16 @@
     import AudioInterface from "./audio/AudioInterface.svelte";
     import SearchBar from "./search/SearchBar.svelte";
     import Results from "./list/Results.svelte";
-    import {MAX_SCORE} from "../../lib/utils";
+    import { currentScore } from "../../lib/utils";
 
     let dispatch = createEventDispatcher();
 
     export let currentInfo;
     export let gameInfo;
 
-    const MAX_SCORE_PER_ROUND = MAX_SCORE / gameInfo.maxRounds;
     // currentScore update logic
     $: if (currentInfo.roundMs > 0 && currentInfo.musicInfo['duration_ms'] > 0) {
-        currentInfo.roundScore = Math.ceil(MAX_SCORE_PER_ROUND * (1 - (currentInfo.roundMs / currentInfo.musicInfo['duration_ms'])));
-        if (currentInfo.roundScore < 0) currentInfo.roundScore = 0;
+        currentInfo.roundScore = currentScore(currentInfo.roundMs, currentInfo.musicInfo['duration_ms'], gameInfo.maxRounds);
     }
 
     let searchedText = "";
