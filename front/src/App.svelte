@@ -1,4 +1,5 @@
 <script>
+  import { get_current_component } from "svelte/internal";
     import Controller from "./Controller.svelte";
     import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";
@@ -22,7 +23,7 @@
         <div class="header">
             <img class="header-logo" src="/guessify-logo-white.svg" alt="">
             <a class="header-title" href="/">
-                <img class="header-title" src="/guessify-beta.svg" alt="Guessify Beta">
+                <img src="/guessify-beta.svg" alt="Guessify Beta">
             </a>
             <SwapLanguage />
         </div>
@@ -65,7 +66,7 @@
 
     .header {
         width: 100vw;
-        height: 8vh;        
+        height: 10vh;        
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
@@ -79,6 +80,11 @@
         font-size: 5vh;
         font-weight: 700;
         height: 65%;
+    }
+
+    .header-title > img {
+        height: 90%;
+        margin-top: 1vh;
     }
 
     .header-logo {
