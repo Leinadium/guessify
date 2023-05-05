@@ -3,6 +3,7 @@
     import { tweened } from "svelte/motion";
     import { cubicInOut, cubicOut } from "svelte/easing";
     import { onMount, createEventDispatcher } from "svelte";
+    import Text from "../../common/Text.svelte";
 
     let dispatch = createEventDispatcher();
 
@@ -59,7 +60,7 @@
 
             {:else}
                 <div class="ready" style="height: calc({$readySize} * var(--max-height))">
-                    {#if showStartText}<div class="text" in:fade>Start</div>{/if}
+                    {#if showStartText}<div class="text" in:fade><Text key="start-start" /></div>{/if}
                 </div>
             {/if}
         </button>

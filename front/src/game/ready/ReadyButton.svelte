@@ -1,4 +1,5 @@
 <script>
+    import Text from "../../common/Text.svelte";
     import { createEventDispatcher, onMount } from "svelte";
     import { fade } from "svelte/transition";
 
@@ -28,10 +29,19 @@
 {#if show}
 <button on:click in:fade="{{duration: 500}}">
     {#if !isEnd}
-        <span class="big">Next</span>
-        <span class="small">{roundsToGo} round{roundsToGo > 1 ? "s" : ""} to go</span>
+        <span class="big">
+            <Text key="game-next"/>
+        </span>
+
+        <span class="small">
+            <Text key="game-prenext" />
+            {roundsToGo}
+            <Text key="game-round"/>{roundsToGo > 1 ? "s" : ""}
+            <Text key="game-posnext"/>
+        </span>
+
     {:else}
-        <span class="big">End results</span>
+        <span class="big"><Text key="game-endresults" /></span>
     {/if}
 </button>
 {/if}

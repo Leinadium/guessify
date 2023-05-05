@@ -1,5 +1,6 @@
 <script>
     import Scorebar from "./Scorebar.svelte";
+    import Text from "../../common/Text.svelte";
     import { gameScore } from "../../lib/stores";
     import { onMount } from "svelte";
     import { tweened } from "svelte/motion";
@@ -46,7 +47,7 @@
 <div class="scoreboard">
     <div class="points">
         <span class="points-number">{$currentValue.toFixed(0)}</span>
-        <span class="points-text">points</span>
+        <span class="points-text"><Text key="game-points" /></span>
         
         {#if doShowNew}
             <span class="points-new" in:fly={{x: -100, duration: 500}} out:fade>
@@ -57,7 +58,7 @@
 
     <Scorebar points={points} />
     
-    <span class="rounds">{rounds} / {maxRounds} rounds</span>
+    <span class="rounds">{rounds} / {maxRounds} <Text key="game-rounds" /></span>
     
 </div>
 

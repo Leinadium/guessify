@@ -3,7 +3,9 @@
     import ContentBox from "../../common/ContentBox.svelte";
     import StartButton from "./StartButton.svelte";
     import { getImage } from "../../lib/utils";
-    
+    import Text from "../../common/Text.svelte";
+    import { language } from "../../lib/stores";
+
     export let loading = {
         text: "",
         progress: 0.3,
@@ -19,14 +21,29 @@
         "You gain more points by guessing the track faster",
         "A track can be played only once per game",
         "You can skip a track, but you won't gain any points",
-        "Don't open the Spotify app while playing to look up the track name, this is cheating!",
+        "Don't open the Spotify app while playing, this is cheating!",
     ];
 
+    const dicas = [
+        "Pressione ENTER para submeter a música selecionada",
+        "Clique numa música para selecionar, clique novamente para submeter",
+        "Pode pesquisar usando o nome da música, álbum ou artista(s)",
+        "Utilize as setas para navegar entre as músicas",   
+        "Ganhe mais pontos ao adivinhar a música mais rápido",
+        "Uma música só pode ser tocada uma vez por jogo",
+        "Pode pular uma música, mas não ganhará pontos na rodada",
+        "Não abra o Spotify durante o jogo, isso é roubar!"     
+    ]
+
     let currentTip = "";
+    let currentIndex = 0;
+
+    $: escolha = $language == "br" ? dicas : tips;
+    $: currentTip = escolha[currentIndex];
 
     onMount(() => {
         // choose a random tip
-        currentTip = tips[Math.floor(Math.random() * tips.length)];
+        currentIndex = Math.floor(Math.random() * escolha.length);
     })
 
 
@@ -34,7 +51,7 @@
 
 <div class="start-screen">
     <div class="wrapper-box">
-        <span class="content-header">Playlist/Album selected:</span>
+        <span class="content-header"><Text key="start-selected" /></span>
         <ContentBox 
             name={content.name}
             image={getImage(content.images)}
@@ -47,7 +64,7 @@
 
     {#if currentTip }
         <div class="tip">
-            <span class="tip-title">Tip: </span>
+            <span class="tip-title"><Text key="start-tip" /></span>
             <span class="tip-text">{currentTip}</span>
         </div>
     {/if}

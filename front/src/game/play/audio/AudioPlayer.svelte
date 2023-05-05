@@ -1,6 +1,9 @@
 <script>
     import PoweredBy from "../../../common/PoweredBy.svelte";
-    
+    import Text from "../../../common/Text.svelte";
+    import { getText } from "../../../lib/utils";
+    import { language } from "../../../lib/stores";
+
     // the audio time style was based on this code from "Ychnightder-both"
     // https://codepen.io/bold02/pen/XWKMXNe
     export let currentMillis = 0;
@@ -17,7 +20,7 @@
     // TODO: refazer o player como grid
 </script>
 
-<span class="now-playing">Now playing from: <span class="content-name">{contentName}</span></span>
+<span class="now-playing"><Text key="game-now-playing" /><span class="content-name">{contentName}</span></span>
 
 <div class="progress">
     <span class="current-time">{currentTimeStr}</span>
@@ -27,7 +30,7 @@
 </div>
 
 <div class="powered-by">
-    <PoweredBy externUrl="https://open.spotify.com/" text="Powered by"/>
+    <PoweredBy externUrl="https://open.spotify.com/" text="{getText($language, 'spotify-powered')}"/>
 </div>
 
 <style>

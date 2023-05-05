@@ -3,6 +3,7 @@
     import { fade } from "svelte/transition";
     import ReadyButton from "./ReadyButton.svelte";
     import MusicInfo from "./MusicInfo.svelte";
+    import Text from "../../common/Text.svelte";
 
     export let gameInfo;
     export let currentInfo;
@@ -45,15 +46,17 @@
             {#if endInfo.success}
                 <img class="text-icon" src="/assets/correct.svg" alt="Correct">
                 <div class="texts correct">
-                    <span class="title">Correct</span>
-                    <span class="description">You got {currentInfo.roundScore.toFixed(0)} points!</span>
+                    <span class="title"><Text key="game-correct" /></span>
+                    <span class="description">
+                        <Text key="game-you-got" /> {currentInfo.roundScore.toFixed(0)} <Text key="game-points" />!
+                    </span>
                 </div>
                 
             {:else}
                 <img class="text-icon" src="/assets/wrong.svg" alt="Incorrect">
                 <div class="texts wrong">
-                    <span class="title">Wrong</span>
-                    <span class="description">Try again!</span>
+                    <span class="title"><Text key="game-wrong" /></span>
+                    <span class="description"><Text key="game-try-again" /></span>
                 </div>
                 
             {/if}          

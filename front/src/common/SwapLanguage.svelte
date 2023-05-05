@@ -17,12 +17,18 @@
     const hide = () => {showInside = false;}
 
 
-    onMount(() => {
-        console.log(navigator.language);
+    function setFromNavigator() {
         if (/br\b/.test(navigator.language.toLowerCase())) {
             language.set("br");
         } else {
             language.set("en");
+        }
+    }
+
+
+    onMount(() => {
+        if ($language === "") {
+            setFromNavigator();
         }
     })
 

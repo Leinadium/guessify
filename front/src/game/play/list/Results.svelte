@@ -1,6 +1,8 @@
 <script>
     import Result from "./Result.svelte";
+    import Text from "../../../common/Text.svelte";
     import { createEventDispatcher } from "svelte";
+    
 
     export let searchedText;
     export let fullContent = [];
@@ -105,7 +107,7 @@
 <svelte:window on:keydown={handleKey}></svelte:window>
 
 <div class="wrapper">
-    <span class="help">Double click on a track to submit</span>
+    <span class="help"><Text key="game-double-click" /></span>
     <div class="results">
         {#each fullContent as music, i (music.uri)}
             {#if (showStatusContent[i])}

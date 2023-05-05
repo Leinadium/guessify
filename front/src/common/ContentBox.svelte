@@ -1,6 +1,8 @@
 <script>
     import PoweredBy from "./PoweredBy.svelte";
-  import Text from "./Text.svelte";
+    import Text from "./Text.svelte";
+    import { language } from "../lib/stores";
+    import { getText } from "../lib/utils";
 
     // https://developer.spotify.com/documentation/web-api/reference/#/operations/get-featured-playlists
     export let image;
@@ -26,15 +28,13 @@
         <span class="name">{name}</span>
         <span class="total">
             {total}
-            
-            <Text key="contentbox-track" />
-            {#if (total != 1)}s{/if}
+            <Text key="contentbox-track" />{#if (total != 1)}s{/if}
         </span>
     </div>
     
     
     <div class="powered-by">
-        <PoweredBy externUrl={externUrl}/>
+        <PoweredBy externUrl={externUrl} text={getText($language, "spotify-powered")}/>
     </div>
     
 </div>

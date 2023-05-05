@@ -1,4 +1,5 @@
 <script>
+    import Text from "../../common/Text.svelte";
     export let info;
     export let success = false;
 
@@ -9,9 +10,13 @@
 
 <div class="music-info">
     {#if !success}
-        <span class="pretext">The correct track was:</span>
+        <span class="pretext">
+            <Text key="game-correct-track" />
+        </span>
     {:else}
-        <span class="pretext">You guessed:</span>
+        <span class="pretext">
+            <Text key="game-you-guessed" />
+        </span>
     {/if}
     <div class="wrapper">
         <img src={image} alt="Cover"/>

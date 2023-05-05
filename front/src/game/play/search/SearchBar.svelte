@@ -1,6 +1,9 @@
 <script>
     import { onMount } from "svelte";
-    
+    import { language } from "../../../lib/stores";
+    import { getText } from "../../../lib/utils";
+    import Text from "../../../common/Text.svelte";
+
     export let searchedText = "";
     export let enableSubmit = false;
 
@@ -22,13 +25,13 @@
     <div class="search">
         <img src="/assets/search.svg" alt="Search"/>
         <input type="text" 
-            placeholder="What are you listening?"
+            placeholder="{getText($language, 'game-listening')}"
             bind:value={searchedText} 
             bind:this={inputElement}
         >
     </div>
     
-    <button disabled="{!enableSubmit}" on:click>Guess</button>
+    <button disabled="{!enableSubmit}" on:click><Text key="game-guess" /></button>
 </div>
 
 <style>

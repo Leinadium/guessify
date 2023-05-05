@@ -1,5 +1,5 @@
-import { readable, writable } from "svelte/store";
-import { REFRESH_KEY, VOLUME_KEY } from "./utils";
+import { writable } from "svelte/store";
+import { LANG_KEY, REFRESH_KEY, VOLUME_KEY } from "./utils";
 import SpotifyWebApi from "spotify-web-api-js";
 
 // STATES
@@ -13,7 +13,7 @@ export const isAuthValid = writable(false);
 // SPOTIFY
 // spotify handler
 export const spotifyAPIHandler = writable(new SpotifyWebApi());
-// refresh token
+// refresh token (localstorage)
 const stored = localStorage.getItem(REFRESH_KEY);
 export const refreshToken = writable(stored)
 refreshToken.subscribe((v) => localStorage.setItem(REFRESH_KEY, v));
@@ -29,5 +29,7 @@ export const gameScore = writable(0);
 const volumeStored = parseFloat(localStorage.getItem(VOLUME_KEY)) || 0.7;
 export const volume = writable(volumeStored);
 volume.subscribe((v) => localStorage.setItem(VOLUME_KEY, v.toString()));
-// text translation
-export const language = writable("br");
+// text translation (localstorage)
+const langStored = localStorage.getItem(LANG_KEY || "");
+export const language = writable(langStored);
+language.subscribe((v) => localStorage.setItem(LANG_KEY, v));

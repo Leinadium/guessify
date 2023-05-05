@@ -9,6 +9,7 @@ export const REFRESH_URL = `${API_URL}/get_refresh`;
 export const ACCESS_URL = `${API_URL}/get_access`;
 export const REFRESH_KEY = "refresh";
 export const VOLUME_KEY = "volume";
+export const LANG_KEY = "lang";
 export const MAX_ROUNDS = 5;
 export const MAX_SCORE = 100;
 

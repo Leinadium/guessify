@@ -1,5 +1,6 @@
 <script>
     import { fly, fade } from 'svelte/transition';
+    import Text from '../../../common/Text.svelte';
 
     export let content;
     export let selected;
@@ -22,7 +23,11 @@
         <div class="track-artists">{artists}</div>
     </div>
     {#if selected}
-        <div class="click-again" in:fade="{{duration: 200}}">Click again<br>to submit</div>
+        <div class="click-again" in:fade="{{duration: 200}}">
+            <Text key="game-click-again" />
+            <br>
+            <Text key="game-click-again2" />
+        </div>
     {:else}
         <div class="fade-left"></div>
     {/if}
