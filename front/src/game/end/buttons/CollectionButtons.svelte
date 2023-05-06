@@ -8,12 +8,9 @@
 
     export let name;
     export let score;
+    export let uri;
 
     let dispatch = createEventDispatcher();
-
-    function share() {
-        // TODO
-    }
 
     function playAgain() {
         console.log("play again")
@@ -28,7 +25,7 @@
 </script>
 
 <div class="buttons" in:fade="{{duration: 1000}}" on:introend>
-    <ShareButton score={score} name={name}/>
+    <ShareButton score={score} name={name} uri={uri}/>
     <div class="buttons-lower">
         <SomeButton text="{getText($language, 'game-playagain')}" on:click={playAgain}/>
         <SomeButton text="{getText($language, 'game-newgame')}" on:click={newGame}/>

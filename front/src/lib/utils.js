@@ -52,3 +52,15 @@ export function currentScore(currentMs, totalMs, maxRounds) {
 
     return score > 0 ? Math.floor(score) : 0;
 }
+
+/** type:id --> (t)(id) */
+export function uriToCompact(uri) {
+    const l = uri.split(":");
+    return l[1][0] + l[2];
+}
+
+/** (t)(id) --> spotify.com/type/id */
+export function compactToUrl(t, id) {
+    const tt = t === "a" ? "album" : "playlist";
+    return `https://open.spotify.com/${tt}/${id}`;
+}

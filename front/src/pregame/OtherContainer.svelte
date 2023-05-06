@@ -1,7 +1,7 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import { spotifyAPIHandler, language } from "../lib/stores";
-    import { getText } from "../lib/utils";
+    import { compactToUrl, getText } from "../lib/utils";
     import ContentBox from "../common/ContentBox.svelte";
     import Text from "../common/Text.svelte";
 
@@ -89,6 +89,20 @@
             type = "invalid";
         }
     }
+
+    onMount(() => {
+        // check if there is a uri in the url
+        const urlParams = new URLSearchParams(window.location.search);
+        const playUrl = urlParams.get("play");
+        if (playUrl) {
+            const compact = playUrl.match(/(a|p)(\w{22})/m)
+            if (compact) {
+                url = compactToUrl(compact[1], compact[2]);
+                window.history.pushState({}, document.title, "/");
+            }
+        }
+    })
+
 </script>
 
 <div class="other-container">    

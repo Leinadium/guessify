@@ -1,15 +1,15 @@
 <script>
     import { language } from "../../../lib/stores";
-    import { MAX_SCORE, FRONT_URL } from "../../../lib/utils";
+    import { MAX_SCORE, FRONT_URL, uriToCompact } from "../../../lib/utils";
     import CopyButton from "./CopyButton.svelte";
     import TwitterButton from "./TwitterButton.svelte";
     import WhatsappButton from "./WhatsappButton.svelte";
 
     export let score = 0;
     export let name = "a playlist";
-    export let id = "";
+    export let uri = "";
 
-    let url = FRONT_URL + (id ? "?play=" + id : "");
+    let url = FRONT_URL + (uri ? "?play=" + uriToCompact(uri) : "");
     let text;
     if ($language === "br") {
         text = `Eu fiz ${score.toFixed(0)}/${MAX_SCORE} pontos em "${name}" no Guessify! Jogue em ${url}`; 

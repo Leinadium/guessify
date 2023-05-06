@@ -114,6 +114,7 @@
         <CollectionButtons
             name={gameInfo.content.name}
             score={$gameScore}
+            uri={gameInfo.content.uri}
             on:playAgain={handlePlayAgain} 
             on:newGame 
             on:introend={addTransition}
