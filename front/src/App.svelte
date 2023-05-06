@@ -1,5 +1,5 @@
 <script>
-  import { get_current_component } from "svelte/internal";
+  import { get_current_component, space } from "svelte/internal";
     import Controller from "./Controller.svelte";
     import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";
@@ -131,12 +131,14 @@
 
     .content {
         width: 80vw;
-        height: 85vh;
+        height: 80vh;
         margin-left: 10vw;
         margin-right: 10vw;
 
         display: flex;
         flex-flow: column nowrap;
+        justify-content: flex-start;
         align-items: center;
+        box-sizing: border-box;
     }
 </style>

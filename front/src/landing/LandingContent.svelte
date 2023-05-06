@@ -101,8 +101,6 @@
     
     .landing {
         height: 100%;
-        padding-bottom: 2%;
-        
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-between;
