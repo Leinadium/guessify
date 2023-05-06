@@ -2,14 +2,14 @@
     export let text;
 
     const payload = {
-        send: text,
+        text: text,
     }
 
-    const url = "https://wa.me/" + (new URLSearchParams(payload)).toString();
+    const url = "https://api.whatsapp.com/send?" + (new URLSearchParams(payload)).toString();
 
 </script>
 
-<a class="whatsapp" href={url}>
+<a class="whatsapp" href={url} target="_blank" rel="noopener noreferrer">
     <img src="/assets/whatsapp-icon.svg" alt="WhatsApp">
 </a>
 

@@ -4,13 +4,13 @@
     const payload = {
         original_referer: window.location.href,
         text: text,
-        url: window.location.href,      // TODO
+        // url: window.location.href,      // TODO
     }
     const url = "https://twitter.com/intent/tweet?" + (new URLSearchParams(payload)).toString();
 
 </script>
 
-<a class='twitter' href={url}>
+<a class='twitter' href={url} target="_blank" rel="noopener noreferrer">
     <img src="/assets/twitter-icon.svg" alt="Tweet">
 </a>
 
