@@ -33,8 +33,6 @@ async fn main() -> std::io::Result<()> {
             .service(views::redirect_to_front)
             .service(views::get_refresh)
             .service(views::get_access)
-            .service(views::index)
-            .service(fs::Files::new("/assets", "./assets"))
             .default_service(web::to(views::not_found))
 
     }).bind(("0.0.0.0", 8080))?.run().await

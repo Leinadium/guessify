@@ -135,9 +135,3 @@ pub async fn get_access(env: Data<EnvVars>, path: Path<Refresh>) -> impl Respond
 pub async fn not_found() -> impl Responder {
     HttpResponse::NotFound().finish()
 }
-
-/// front end index html
-#[get("/")]
-pub async fn index() -> impl Responder {
-    actix_files::NamedFile::open("index.html")
-}
