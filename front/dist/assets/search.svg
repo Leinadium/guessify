@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48.646088mm"
+   height="49.11705mm"
+   viewBox="0 0 48.646088 49.11705"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (1:1.2.2+202212051552+b0a8486541)"
+   sodipodi:docname="guessify.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.70091522"
+     inkscape:cx="1514.4485"
+     inkscape:cy="294.6148"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-462.57518,21.120315)">
+    <g
+       id="g1034"
+       transform="rotate(-45,490.13646,-44.352629)"
+       inkscape:export-filename="projects/guessify/front/public/assets/search.svg"
+       inkscape:export-xdpi="14.63486"
+       inkscape:export-ydpi="14.63486">
+      <rect
+         style="fill:#000000;stroke:#000000;stroke-width:1.38704;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="rect396-2-7"
+         width="4.5948277"
+         height="22.529974"
+         x="451.58954"
+         y="-4.0928187" />
+      <circle
+         style="fill:none;stroke:#000000;stroke-width:5.42352;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         id="path476"
+         cx="454.21997"
+         cy="-19.421402"
+         r="17.098799" />
+    </g>
+  </g>
+</svg>
