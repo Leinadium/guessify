@@ -30,6 +30,6 @@ const volumeStored = parseFloat(localStorage.getItem(VOLUME_KEY)) || 0.7;
 export const volume = writable(volumeStored);
 volume.subscribe((v) => localStorage.setItem(VOLUME_KEY, v.toString()));
 // text translation (localstorage)
-const langStored = localStorage.getItem(LANG_KEY || "");
+const langStored = localStorage.getItem(LANG_KEY ) || "en";
 export const language = writable(langStored);
 language.subscribe((v) => localStorage.setItem(LANG_KEY, v));

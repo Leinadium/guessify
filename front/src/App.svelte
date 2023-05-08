@@ -1,5 +1,4 @@
 <script>
-  import { get_current_component, space } from "svelte/internal";
     import Controller from "./Controller.svelte";
     import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";

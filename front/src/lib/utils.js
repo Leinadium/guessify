@@ -26,8 +26,8 @@ export function getImage(images) {
     return null;
 }
 
-export function getText(lang, key) {
-    return texts[lang][key]
+export function getText(la, ke) {
+    return texts[la][ke]
 }
 
 
