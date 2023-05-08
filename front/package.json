@@ -6,14 +6,10 @@
   "scripts": {
     "dev": "vite",
     "devpub": "vite --host",
-    "build-vite": "vite build",
-    "build": "rollup -c",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.1.0",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.2",
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
     "rollup": "^3.21.5",
     "rollup-plugin-svelte": "^7.1.4",

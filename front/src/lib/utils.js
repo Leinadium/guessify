@@ -1,4 +1,4 @@
-import texts from "./texts.json";
+import texts from "./texts.js";
 
 const API_URL = "http://localhost:5000";
 export const FRONT_URL = "http://localhost:5173";
