@@ -6,7 +6,6 @@ use crate::consts::*;
 use dotenv::dotenv;
 use actix_web::{App, HttpServer, web::{self, Data}, middleware::Logger};
 use actix_cors::Cors;
-use actix_files as fs;
 use env_logger;
 
 
