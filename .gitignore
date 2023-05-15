@@ -3,7 +3,3 @@
 **/.env
 .env
 infra/
-server.Dockerfile
-api.Dockerfile
-docker-compose.yml
-Dockerfile
