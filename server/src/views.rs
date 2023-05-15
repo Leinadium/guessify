@@ -7,7 +7,6 @@ use actix_web::{
     get, web::{Query, Redirect, Path, Data}, Responder,
     HttpResponse, http::StatusCode
 };
-use actix_files;
 use reqwest;
 use reqwest::Response;
 
