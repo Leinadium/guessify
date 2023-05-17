@@ -55,8 +55,8 @@
         position: absolute;
         height: 4vh;
         width: 4vh;
-        top: 2.5vh;
-        right: 10%;
+        top: 3.5vh;
+        right: 5%;
         text-decoration: none;
         font-size: 2.0vh;
         color: #fff;

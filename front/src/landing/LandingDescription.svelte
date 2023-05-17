@@ -38,8 +38,7 @@
             </div>
         
         {:else if page === "about"}
-            <p class="small-text" transition:fly="{{ x: -200, duration: 500}}" on:outroend={update}>
-                <!-- TODO: about description -->
+            <p class="small-text" transition:fly="{{ y: -200, duration: 500}}" on:outroend={update}>
                 <br>
                 Guessify é um jogo para você testar seus conhecimentos nas músicas que você costuma ouvir.
                 Diferentemente dos outros jogos semelhantes, Guessify permite utilizar seu Spotify para escolher
@@ -56,16 +55,8 @@
             </p>
         {:else if page === "tutorial"}
                 <!-- TODO: tutorial description -->
-            <p transition:fly="{{ x: 200, duration: 500 }}" on:outroend={update}>
-                kkkk
-                <br>
-                kkkk
-                <br>
-                kkkk
-                <br>
-                kkkk
-                <br>
-                kkkk
+            <p class="small-text" transition:fly="{{ x: -200, duration: 500}}" on:outroend={update}>
+                <!-- tutorial was removed -->
             </p>
         {/if}
     </div>
@@ -73,12 +64,8 @@
     <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="pagination">
         {#if page === "main"}
-            <a href="#" style="text-align: right" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">
+            <a href="#" style="text-align: center" class="goto goto-text" on:click|preventDefault="{() => clear("about")}">
                 <Text key="landing-about" />
-            </a>
-            <span class="goto">|</span>
-            <a href="#" style="text-align: left" class="goto goto-text" on:click|preventDefault="{() => clear("tutorial")}">
-                <Text key="landing-tutorial" />
             </a>
         {:else}
             <a href="#" style="text-align: center"class="goto goto-text" on:click|preventDefault="{() => clear("main")}">
@@ -153,7 +140,7 @@
         padding: 0;
         padding-left: 10vw;
         padding-right: 10vw;
-        font-size: 3vmin;
+        font-size: 3vh;
         font-weight: 300;
         color: #fefefe;
         text-align: center;
