@@ -1,8 +1,10 @@
 <script>
+    import { onMount } from "svelte";
     import Controller from "./Controller.svelte";
     import SwapLanguage from "./common/SwapLanguage.svelte";
     import Text from "./common/Text.svelte";
     import { fade } from "svelte/transition";
+  import AuthCallback from "./lib/AuthCallback.svelte";
 
     // TODO: change spotify callback
     const params = new URLSearchParams(window.location.search);
@@ -46,7 +48,7 @@
         </div>
     </div>
 {:else}
-    <p><Text key="authenticated"></Text><p>
+    <AuthCallback />
 {/if}
 
 <style>
@@ -78,7 +80,7 @@
         color: #ffffff;
         font-size: 5vh;
         font-weight: 700;
-        height: 65%;
+        height: 50%;
     }
 
     .header-title > img {
@@ -87,7 +89,7 @@
     }
 
     .header-logo {
-        height: 62.5%;
+        height: 50%;
         aspect-ratio: 1 / 1;
         margin-right: 1vh;
     }

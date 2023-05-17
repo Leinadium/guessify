@@ -1,6 +1,6 @@
 <script>
     import { onMount, createEventDispatcher, onDestroy } from "svelte";
-    import { ACCESS_URL, AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
+    import { FRONT_URL, AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
     import { refreshToken, accessToken } from "./stores";
     import { username, isAuthValid, spotifyAPIHandler, isAuthenticating } from "./stores";
 
@@ -10,74 +10,72 @@
 
     let dispatch = createEventDispatcher();
 
-    function popupLogic() {
-        $isAuthenticating = true;
-        popup = window.open(AUTH_URL, "popup", "popup=true");
-        checkPopup = setInterval(() => {
-            try {
-                if (popup.window.location.href.includes(CB_URL)) {
-                    // get code token from url
-                    const urlParams = new URLSearchParams(popup.window.location.search);
-                    const maybeError = urlParams.get("error");
-                    if (maybeError) {
-                        popup.close();
-                        dispatch("error", {description: maybeError});
-                    } 
-                    else {
-                        // get refresh token using code
-                        const codeToken = urlParams.get("code");
-                        fetch(REFRESH_URL + `/${codeToken}`)
-                            .then((res) => res.json())
-                            .then((data) => {
-                                if (data["refresh_token"]) {
-                                    $refreshToken = data["refresh_token"];
-                                    $accessToken = data["access_token"];
-                                    
-                                    // update name
-                                    $spotifyAPIHandler.setAccessToken($accessToken);
-                                    $spotifyAPIHandler.getMe()
-                                        .then((data) => {
-                                            $username = data.display_name || data.id;
-                                            $isAuthValid = true;        // finally, auth is finished
-                                            $isAuthenticating = false;
-                                        })
-                                        .catch(() => {
-                                            $isAuthenticating = false;
-                                            dispatch("error", {description: "Error fetching username"});
-                                        })
-
-                                } else {
-                                    $isAuthenticating = false;
-                                    dispatch("error", {description: data["error_description"]});
-                                }
-                            })
-                            .catch(() => {
-                                $isAuthenticating = false;
-                                dispatch("error", {description: "Error fetching credentials via API"})
-                            })
-                            .finally(() => {
-                                popup.close();
-                            })
-                    }
-                }
-                if (!popup || !popup.closed) return;
-                clearInterval(checkPopup);
-            } catch (e) {
-                console.log(e); 
-                $isAuthenticating = false;
-                dispatch("error", {description: "Error trying to access Spotify"});
-            }
-        }, 1000);
+    function teste(e) {
+        console.log(e);
+        if (e.origin != FRONT_URL) return;
+        console.log(e.data);
     }
 
-    onMount(popupLogic);
-
-    onDestroy(() => {
-        if (checkPopup !== undefined) {
-            clearInterval(checkPopup);
+    function popupLogic(event) {
+        if (event.origin != FRONT_URL) return;
+        if (event.data.error) {
+            popup.close();
+            dispatch("error", {description: event.data.error});
         }
-    });
+        if (!event.data.code) {
+            popup.close();
+            dispatch("error", {description: "No code received from popup"});
+        }
 
+        try {
+        
+        // get refresh token using code
+        const codeToken = event.data.code;
+        fetch(REFRESH_URL + `/${codeToken}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data["refresh_token"]) {
+                    $refreshToken = data["refresh_token"];
+                    $accessToken = data["access_token"];
+                    
+                    // update name
+                    $spotifyAPIHandler.setAccessToken($accessToken);
+                    $spotifyAPIHandler.getMe()
+                        .then((data) => {
+                            $username = data.display_name || data.id;
+                            $isAuthValid = true;        // finally, auth is finished
+                            $isAuthenticating = false;
+                        })
+                        .catch(() => {
+                            $isAuthenticating = false;
+                            dispatch("error", {description: "Error fetching username"});
+                        })
+
+                } else {
+                    $isAuthenticating = false;
+                    dispatch("error", {description: data["error_description"]});
+                }
+            })
+            .catch(() => {
+                $isAuthenticating = false;
+                dispatch("error", {description: "Error fetching credentials via API"})
+            })
+            .finally(() => {
+                popup.close();
+            })
+            
+        } catch (e) {
+            console.log("Error in popup logic: ");
+            console.log(e); 
+            $isAuthenticating = false;
+            dispatch("error", {description: "Error authenticating with Spotify"});
+        }
+    }
+
+    onMount(() => {
+        $isAuthenticating = true;
+        popup = window.open(AUTH_URL, "popup", "popup=true");
+    });
 </script>
 
-<div class="spotify-auth"></div>
+<svelte:window on:message={popupLogic}></svelte:window>

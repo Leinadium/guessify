@@ -3,6 +3,9 @@ import texts from "./texts.js";
 const API_URL = "http://localhost:5000";
 export const FRONT_URL = "http://localhost:5173";
 
+// const API_URL = "https://guessify-api.guimaraes.eng.br";
+// export const FRONT_URL = "https://guessify.me";
+
 export const AUTH_URL = `${API_URL}/auth`;
 export const CB_URL = FRONT_URL;
 export const REFRESH_URL = `${API_URL}/get_refresh`;
