@@ -40,17 +40,18 @@
         {:else if page === "about"}
             <p class="small-text" transition:fly="{{ y: -200, duration: 500}}" on:outroend={update}>
                 <br>
-                Guessify é um jogo para você testar seus conhecimentos nas músicas que você costuma ouvir.
-                Diferentemente dos outros jogos semelhantes, Guessify permite utilizar seu Spotify para escolher
-                suas playlists e albums que costuma ouvir.
+                Guessify é um teste para verificar testar seus conhecimentos nas músicas que você costuma ouvir.
+                Diferentemente dos outros testes semelhantes, Guessify permite utilizar seu Spotify para escolher
+                suas playlists e albums que costuma ouvir e permite ouvir a música desde o seu início, utilizando o
+                Spotify Web Player.
                 <br>
-                O jogo atualmente ainda está em desenvolvimento. Podem ocorrer vários problemas com a conexão com o Spotify,
+                O teste atualmente ainda está em desenvolvimento. Podem ocorrer vários problemas com a conexão com o Spotify,
                 assim como inesperados bugs.
                 <br>
-                É seguro? Sim, Guessify não armazena nenhuma informação sua além do seu token de acesso fornecido pelo Spotify,
+                Guessify é seguro, não é armazenada nenhuma informação sua além do seu token de acesso fornecido pelo Spotify,
                 pode ser removido a qualquer momento ao clicar no botão de sair na tela inicial.
                 <br>
-                Deseja contribuir? O código fonte está disponível no <a href="https://github.com/Leinadium/guessify">Github</a>.
+                O código fonte está disponível no <a href="https://github.com/Leinadium/guessify">Github</a>.
                 
             </p>
         {:else if page === "tutorial"}

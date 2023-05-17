@@ -1,12 +1,11 @@
 <script>
-    import { onMount, createEventDispatcher, onDestroy } from "svelte";
-    import { FRONT_URL, AUTH_URL, CB_URL, REFRESH_URL } from "./utils";
+    import { onMount, createEventDispatcher } from "svelte";
+    import { FRONT_URL, AUTH_URL, REFRESH_URL } from "./utils";
     import { refreshToken, accessToken } from "./stores";
     import { username, isAuthValid, spotifyAPIHandler, isAuthenticating } from "./stores";
 
     // https://javascript.plainenglish.io/how-to-create-a-popup-for-oauth-login-38dee97f5f3b
     let popup = undefined;
-    let checkPopup = undefined;
 
     let dispatch = createEventDispatcher();
 
