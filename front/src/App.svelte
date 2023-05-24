@@ -24,7 +24,7 @@
         <div class="header">
             <img class="header-logo" src="/guessify-logo-white.svg" alt="">
             <a class="header-title" href="/">
-                <img src="/guessify-beta.svg" alt="Guessify Beta">
+                <img src="/guessify-beta.png" alt="Guessify Beta">
             </a>
             <SwapLanguage />
         </div>

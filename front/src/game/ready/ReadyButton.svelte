@@ -62,7 +62,7 @@
         display: flex;
         flex-flow: column nowrap;
         justify-content: center;
-        align-self: center;
+        align-items: center;
     }
 
     .big {
