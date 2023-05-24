@@ -110,7 +110,7 @@ export default {
       "game-rounds-of": "rounds of",
       "game-share": "Share",
       "game-playagain": "Test again",
-      "game-newgame": "New teste",
+      "game-newgame": "New test",
       "game-copied": "Copied!"
   }
 }
