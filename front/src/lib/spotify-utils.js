@@ -63,6 +63,13 @@ export async function getAllTracks(conn, uriId, uriType) {
         tracks = tracks.concat(nextTracks.items);
     }
 
+    // on albuns, the track content is the objects directly inside of items, no at .track
+    // lets fix that (because the rest of the code depends on this stupid behavior)
+    if (uriType === "album") {
+        // a.map((x) => {return {teste: x}}) 
+        tracks = tracks.map((t) => {return {track: {t}}});
+    }
+
     return {
         uri: content.uri,
         name: content.name,
