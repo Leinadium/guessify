@@ -38,9 +38,11 @@ export async function getAllTracks(conn, uriId, uriType) {
 
     // Checks if the uri is a playlist or an album
     if (uriType === "playlist") {
-        firstRequest = (uriId) => conn.getPlaylist(uriId, {fields: FIELD_COMPLETE, limit: UPPER_LIMIT}); 
+        firstRequest = (uriId) => conn.getPlaylist(uriId, {
+            limit: UPPER_LIMIT, // fields: FIELD_COMPLETE
+        }); 
         loopRequest = (uriId, offset) => conn.getPlaylistTracks(uriId, {
-            offset: offset, limit: UPPER_LIMIT, fields: FIELD_TRACK
+            offset: offset, limit: UPPER_LIMIT, // fields: FIELD_TRACK
         });
     } else if (uriType === "album") {
         firstRequest = (uriId) => conn.getAlbum(uriId, {limit: UPPER_LIMIT});
