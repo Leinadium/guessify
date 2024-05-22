@@ -1,0 +1,19 @@
+services:
+  guessify-server:
+    build: ./server
+    ports:
+      - "5000:8080"
+    env_file:
+      - .env
+    networks:
+      - internal
+  guessify-front:
+    build: ./front
+    ports:
+      - "3000:3000"
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: true
