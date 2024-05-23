@@ -1,8 +1,6 @@
-# building back
-FROM rust:latest AS back
+FROM rust:bookworm AS builder
 RUN USER=root cargo new --bin server
 WORKDIR /server
-COPY Cargo.toml Cargo.toml
 COPY Cargo.toml Cargo.toml
 RUN cargo build --release
 RUN rm src/*.rs
@@ -11,11 +9,11 @@ RUN rm ./target/release/deps/server*
 RUN cargo build --release
 
 # building final image
-FROM rust:buster
+FROM debian:bookworm-slim
 WORKDIR /app
-COPY --from=back /server/target/release/server .
-# copying env files
-COPY .env .env
+RUN apt-get update && apt-get install -y libssl3 && apt clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /server/target/release/server .
 # running server
-EXPOSE 5000
+EXPOSE 8080
 CMD ["./server"]
