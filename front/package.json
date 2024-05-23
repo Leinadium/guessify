@@ -15,7 +15,7 @@
     "rollup-plugin-svelte": "^7.1.4",
     "spotify-web-api-js": "^1.5.2",
     "svelte": "^3.55.1",
-    "vite": "^4.5.2"
+    "vite": "^4.5.3"
   },
   "dependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
