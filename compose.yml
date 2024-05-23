@@ -1,16 +1,14 @@
 services:
   guessify-server:
     build: ./server
-    ports:
-      - "5001:8080"
     env_file:
-      - server/.env
+      - .env
+    restart: unless-stopped
     networks:
       - internal
   guessify-front:
     build: ./front
-    ports:
-      - "3001:3000"
+    restart: unless-stopped
     networks:
       - internal
 

@@ -11,7 +11,7 @@ RUN cargo build --release
 # building final image
 FROM debian:bookworm-slim
 WORKDIR /app
-RUN apt-get update && apt-get install -y libssl3 && apt clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y ca-certificates libssl3 && apt clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /server/target/release/server .
 # running server
