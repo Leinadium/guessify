@@ -1,7 +1,7 @@
 import texts from "./texts.js";
 
-const API_URL = "https://guessify-api.guimaraes.eng.br";
-export const FRONT_URL = "https://guessify.me";
+const API_URL = "https://guessify-api.leinadium.dev";
+export const FRONT_URL = "https://guessify.leinadium.dev";
 
 export const AUTH_URL = `${API_URL}/auth`;
 export const CB_URL = FRONT_URL;
